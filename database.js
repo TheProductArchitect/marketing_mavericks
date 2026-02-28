@@ -6271,32 +6271,36 @@ function generateRealisticData() {
     // Base values from product data
     const baseRevenue = product.monthlyRevenue || 100000;
     const baseSearch = product.searchVolume || 200000;
-    const baseTAM = product.tam || 1000000000;
+    const baseTAM = (product.tam || 1000000000) / 1e9; // In billions
+    
+    // Use different pattern offsets for each metric to create variety
+    const revenuePattern = patterns[(index) % patterns.length];
+    const searchPattern = patterns[(index + 3) % patterns.length];
+    const tamPattern = patterns[(index + 5) % patterns.length];
     
     // Generate historical data (6 months: Sep-Feb)
-    const historical = generatePattern(pattern, baseRevenue, 6, 'historical');
-    const historicalSearch = generatePattern(pattern, baseSearch, 6, 'historical');
+    const historical = generatePattern(revenuePattern, baseRevenue, 6, 'historical');
+    const historicalSearch = generatePattern(searchPattern, baseSearch, 6, 'historical');
+    const historicalTAM = generatePattern(tamPattern, baseTAM, 6, 'historical');
     
     // Generate projections (6 months: Mar-Aug) - generally optimistic
-    const projections = generatePattern(pattern, historical[5], 6, 'projection');
-    const projectionsSearch = generatePattern(pattern, historicalSearch[5], 6, 'projection');
-    
-    // TAM growth rate projections (percentage points)
-    const tamGrowthBase = parseFloat(product.tamGrowthRate) || 10;
-    const tamGrowth = generateTAMGrowth(pattern, tamGrowthBase);
+    const projections = generatePattern(revenuePattern, historical[5], 6, 'projection');
+    const projectionsSearch = generatePattern(searchPattern, historicalSearch[5], 6, 'projection');
+    const projectionsTAM = generatePattern(tamPattern, historicalTAM[5], 6, 'projection');
     
     // Update product data
     product.historicalData = {
       labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
       revenue: historical.map(v => Math.round(v)),
-      searchVolume: historicalSearch.map(v => Math.round(v))
+      searchVolume: historicalSearch.map(v => Math.round(v)),
+      tam: historicalTAM.map(v => Math.round(v * 100) / 100) // Keep 2 decimal places for billions
     };
     
     product.projections = {
       labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
       revenue: projections.map(v => Math.round(v)),
       searchVolume: projectionsSearch.map(v => Math.round(v)),
-      tamGrowth: tamGrowth
+      tam: projectionsTAM.map(v => Math.round(v * 100) / 100)
     };
   });
 }
@@ -6372,46 +6376,6 @@ function generatePattern(pattern, baseValue, length, type) {
   }
   
   return data;
-}
-
-function generateTAMGrowth(pattern, baseRate) {
-  const growth = [];
-  
-  for (let i = 0; i < 6; i++) {
-    let rate = baseRate;
-    const progress = i / 5;
-    
-    switch (pattern) {
-      case 'steady_growth':
-        rate = baseRate * (1 + 0.1 * progress);
-        break;
-      case 'explosive_growth':
-        rate = baseRate * (1.2 + 0.5 * progress);
-        break;
-      case 'seasonal_peak':
-        rate = baseRate * (0.9 + 0.2 * Math.sin(progress * Math.PI));
-        break;
-      case 'gradual_decline':
-        rate = baseRate * (1 - 0.3 * progress);
-        break;
-      case 'recovery':
-        rate = baseRate * (0.8 + 0.4 * progress);
-        break;
-      case 'volatile':
-        rate = baseRate * (0.9 + 0.3 * Math.random());
-        break;
-      case 'plateau':
-        rate = baseRate * (1 + 0.05 * progress);
-        break;
-      case 'late_bloomer':
-        rate = baseRate * (0.7 + 0.6 * Math.pow(progress, 2));
-        break;
-    }
-    
-    growth.push(Math.round(rate * 10) / 10);
-  }
-  
-  return growth;
 }
 
 // Initialize

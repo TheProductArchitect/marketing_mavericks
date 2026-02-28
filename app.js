@@ -491,10 +491,13 @@ function initOverviewChart(type) {
   const displayProducts = currentProducts.slice(0, 5); // Limit to top 5 for readability
   const colors = ["#2563b0", "#f5c518", "#22c55e", "#f97316", "#8b5cf6", "#ec4899", "#14b8a6"];
 
+  // Map type to data keys
+  const dataKey = type === "revenue" ? "revenue" : type === "search" ? "searchVolume" : "tam";
+
   const datasets = displayProducts.map((p, i) => {
     const color = colors[i % colors.length];
-    const historical = p.historicalData[type === "revenue" ? "revenue" : type === "search" ? "searchVolume" : "revenue"];
-    const projected = p.projections[type === "revenue" ? "revenue" : type === "search" ? "searchVolume" : "tamGrowth"];
+    const historical = p.historicalData[dataKey] || [];
+    const projected = p.projections[dataKey] || [];
 
     const allData = [...historical, ...projected];
 
