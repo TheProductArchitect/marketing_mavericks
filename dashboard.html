@@ -28,10 +28,10 @@
       </a>
 
       <nav class="navbar-nav">
-        <a href="landing.html" class="nav-link">Home</a>
+        <a href="landing.html" class="nav-link nav-public-only">Home</a>
         <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
         <a href="index.html" class="nav-link nav-protected active">Dashboard</a>
-        <a href="index.html#pricing" class="nav-link">Pricing</a>
+        <a href="index.html#pricing" class="nav-link nav-public-only">Pricing</a>
       </nav>
 
       <div class="navbar-actions">
@@ -86,11 +86,12 @@
      ============================================================ -->
   <section class="search-section">
     <div class="search-inner">
-      <div class="search-box">
+      <div class="search-box" style="position: relative;">
         <span class="search-icon">🔍</span>
         <input type="text" class="search-input" id="searchInput" placeholder="Search products, categories, tags…"
           autocomplete="off" />
         <span class="search-clear" id="searchClear">✕</span>
+        <div class="search-dropdown" id="searchDropdown"></div>
       </div>
 
       <div class="filter-group">

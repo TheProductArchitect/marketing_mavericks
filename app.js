@@ -209,16 +209,74 @@ function goToProduct(id) {
 function bindSearch() {
   const input = document.getElementById("searchInput");
   const clear = document.getElementById("searchClear");
+  const dropdown = document.getElementById("searchDropdown");
 
   input.addEventListener("input", () => {
-    const val = input.value.trim();
+    const val = input.value.trim().toLowerCase();
     clear.classList.toggle("visible", val.length > 0);
+
+    if (val.length === 0) {
+      dropdown.classList.remove("visible");
+      applyFilters();
+      return;
+    }
+
+    // Build autocomplete
+    const matches = DB.products.filter(p =>
+      p.name.toLowerCase().includes(val) ||
+      p.category.toLowerCase().includes(val) ||
+      p.tags.some(t => t.includes(val))
+    ).slice(0, 6);
+
+    if (matches.length > 0) {
+      dropdown.innerHTML = matches.map(p => `
+        <div class="search-dropdown-item" data-id="${p.id}">
+          <span style="font-size:1.2rem">${p.emoji}</span>
+          <div>
+            <div style="font-weight:600;font-size:0.9rem">${p.name}</div>
+            <div style="font-size:0.75rem;color:var(--gray-500)">${p.category}</div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      dropdown.innerHTML = `<div class="search-dropdown-empty">No matching products found</div>`;
+    }
+    dropdown.classList.add("visible");
     applyFilters();
+  });
+
+  // Handle dropdown selection
+  dropdown?.addEventListener("click", (e) => {
+    const item = e.target.closest(".search-dropdown-item");
+    if (!item) return;
+
+    const product = DB.products.find(p => p.id === item.dataset.id);
+    if (product) {
+      input.value = product.name;
+      dropdown.classList.remove("visible");
+      clear.classList.add("visible");
+      applyFilters();
+    }
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown?.classList.remove("visible");
+    }
+  });
+
+  // Re-open on focus if text exists
+  input.addEventListener("focus", () => {
+    if (input.value.trim().length > 0 && dropdown.innerHTML.trim() !== "") {
+      dropdown.classList.add("visible");
+    }
   });
 
   clear.addEventListener("click", () => {
     input.value = "";
     clear.classList.remove("visible");
+    dropdown.classList.remove("visible");
     applyFilters();
   });
 }
