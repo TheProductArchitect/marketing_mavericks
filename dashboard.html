@@ -46,36 +46,33 @@
   </nav>
 
   <!-- ============================================================
-     HERO
+     DASHBOARD HEADER
      ============================================================ -->
-  <section class="page-hero">
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        🚀 AI-Powered Market Intelligence
+  <section class="dashboard-header">
+    <div class="dashboard-header-inner">
+      <div class="dashboard-title-row">
+        <h1 class="dashboard-title">Market Intelligence</h1>
+        <div class="live-indicator">
+          <span class="live-dot"></span>
+          <span id="statFreshness">Updated 4 min ago</span>
+        </div>
       </div>
-      <h1 class="hero-title">
-        Find Your Next<br /><span class="highlight">Winning Product</span>
-      </h1>
-      <p class="hero-subtitle">
-        Real-time intelligence scraped from Amazon, TikTok &amp; beyond. Discover undersold ratings, trending ranks, and
-        total addressable markets — before your competition does.
-      </p>
-      <div class="hero-stats" id="heroStats">
-        <div class="hero-stat">
-          <span class="hero-stat-value" id="statTracked">12,847</span>
-          <span class="hero-stat-label">Products Tracked</span>
+      <div class="dashboard-stats" id="overviewStats">
+        <div class="dash-stat">
+          <span class="dash-stat-value" id="totalProducts">60</span>
+          <span class="dash-stat-label">Products</span>
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value" id="statTrends">234</span>
-          <span class="hero-stat-label">New Trends Today</span>
+        <div class="dash-stat">
+          <span class="dash-stat-value" id="avgUndersold">60</span>
+          <span class="dash-stat-label">Avg Undersold</span>
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value" id="statGrowth">+17.3%</span>
-          <span class="hero-stat-label">Avg Market Growth</span>
+        <div class="dash-stat">
+          <span class="dash-stat-value" id="totalTAM">$202.6B</span>
+          <span class="dash-stat-label">Combined TAM</span>
         </div>
-        <div class="hero-stat">
-          <span class="hero-stat-value">Live</span>
-          <span class="hero-stat-label" id="statFreshness">Updated 4 min ago</span>
+        <div class="dash-stat">
+          <span class="dash-stat-value" id="avgMargin">77%</span>
+          <span class="dash-stat-label">Avg Margin</span>
         </div>
       </div>
     </div>
@@ -88,6 +85,7 @@
     <div class="search-inner">
       <div class="search-box" style="position: relative;">
         <span class="search-icon">🔍</span>
+        <div class="search-tags" id="searchTags"></div>
         <input type="text" class="search-input" id="searchInput" placeholder="Search products, categories, tags…"
           autocomplete="off" />
         <span class="search-clear" id="searchClear">✕</span>
@@ -108,22 +106,26 @@
 
       <div class="filter-group">
         <span class="filter-label">Category</span>
-        <select class="filter-select" id="categoryFilter">
-          <option value="all">All Categories</option>
-          <option value="Health & Wellness">Health &amp; Wellness</option>
-          <option value="Home Décor">Home Décor</option>
-          <option value="Kitchen & Fitness">Kitchen &amp; Fitness</option>
-          <option value="Productivity">Productivity</option>
-        </select>
+        <div class="dropdown-select" id="categoryFilter">
+          <input type="text" class="dropdown-select-input" placeholder="All Categories" readonly />
+          <span class="dropdown-select-arrow">▾</span>
+          <div class="dropdown-select-menu">
+            <input type="text" class="dropdown-select-search" placeholder="Search categories..." />
+            <div class="dropdown-select-options"></div>
+          </div>
+        </div>
       </div>
 
       <div class="filter-group">
         <span class="filter-label">Platform</span>
-        <select class="filter-select" id="platformFilter">
-          <option value="all">All Platforms</option>
-          <option value="Amazon">Amazon</option>
-          <option value="TikTok">TikTok</option>
-        </select>
+        <div class="dropdown-select" id="platformFilter">
+          <input type="text" class="dropdown-select-input" placeholder="All Platforms" readonly />
+          <span class="dropdown-select-arrow">▾</span>
+          <div class="dropdown-select-menu">
+            <input type="text" class="dropdown-select-search" placeholder="Search platforms..." />
+            <div class="dropdown-select-options"></div>
+          </div>
+        </div>
       </div>
 
       <span class="results-count" id="resultsCount">
@@ -136,75 +138,6 @@
      MAIN CONTENT
      ============================================================ -->
   <main class="main-content">
-
-    <!-- AI Market Summary -->
-    <div class="card"
-      style="margin-bottom: 24px; border-left: 4px solid var(--blue-500); background: linear-gradient(to right, var(--white), var(--blue-50));">
-      <div class="card-body" style="padding: 24px;">
-        <div style="display: flex; align-items: flex-start; gap: 16px;">
-          <div style="font-size: 2rem;">🧠</div>
-          <div>
-            <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--gray-800); margin-bottom: 8px;">AI Market
-              Summary & Opportunity Overview</h3>
-            <p style="font-size: 0.95rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 12px;">
-              Our algorithm has identified a macro shift towards <strong>Wellness & Sleep Recovery</strong> as the most
-              lucrative emerging dropship market for Q3 2026.
-              Specifically, products like <em>Posture Correctors</em> and <em>Sleep Tapes</em> are showing high
-              <strong>Undersold Scores (>80)</strong>, indicating that the current supply on Amazon and TikTok lacks
-              premium branding. By stepping in with superior positioning, dropshippers can capture immediate market
-              share in these high-margin (75%+) segments.
-            </p>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-              <span
-                style="background: var(--blue-100); color: var(--blue-700); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">#1
-                Trend: Wellness & Sleep</span>
-              <span
-                style="background: var(--green-100); color: var(--green-700); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Avg
-                Margin: 79%</span>
-              <span
-                style="background: var(--yellow-100); color: var(--yellow-800); padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600;">Short-term
-                Spikes Likely</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Overview Stats -->
-    <div class="stats-grid stagger-children" id="overviewStats">
-      <div class="stat-card animate-fade-in-up">
-        <div class="stat-icon blue">📦</div>
-        <div class="stat-info">
-          <div class="stat-value" id="totalProducts">4</div>
-          <div class="stat-label">Products Analysed</div>
-        </div>
-        <span class="stat-change up">↑ Live</span>
-      </div>
-      <div class="stat-card animate-fade-in-up">
-        <div class="stat-icon yellow">⭐</div>
-        <div class="stat-info">
-          <div class="stat-value" id="avgUndersold">87</div>
-          <div class="stat-label">Avg Undersold Score</div>
-        </div>
-        <span class="stat-change up">↑ High</span>
-      </div>
-      <div class="stat-card animate-fade-in-up">
-        <div class="stat-icon green">💰</div>
-        <div class="stat-info">
-          <div class="stat-value" id="totalTAM">$12.5B</div>
-          <div class="stat-label">Combined TAM</div>
-        </div>
-        <span class="stat-change up">↑ 17.3%</span>
-      </div>
-      <div class="stat-card animate-fade-in-up">
-        <div class="stat-icon orange">🔥</div>
-        <div class="stat-info">
-          <div class="stat-value" id="avgMargin">81%</div>
-          <div class="stat-label">Avg Gross Margin</div>
-        </div>
-        <span class="stat-change up">↑ Strong</span>
-      </div>
-    </div>
 
     <!-- Market Overview Chart -->
     <div class="section-header">

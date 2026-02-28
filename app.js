@@ -8,6 +8,9 @@ let overviewChartInstance = null;
 let tamChartInstance = null;
 let undersoldChartInstance = null;
 let activeChartType = "revenue";
+let selectedCategories = [];
+let selectedPlatforms = [];
+let selectedSearchItems = [];
 
 // ---- Init ----
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,26 +28,115 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function populateFilterOptions() {
-  const categorySelect = document.getElementById("categoryFilter");
-  const platformSelect = document.getElementById("platformFilter");
+  const categories = [...new Set(DB.products.map(p => p.category))].sort();
+  const platforms = [...new Set(DB.products.map(p => p.platform))].sort();
 
-  if (categorySelect && platformSelect) {
-    const categories = [...new Set(DB.products.map(p => p.category))].sort();
-    const platforms = [...new Set(DB.products.map(p => p.platform))].sort();
+  initDropdownSelect('categoryFilter', categories, 'All Categories', (selected) => {
+    selectedCategories = selected;
+    applyFilters();
+  });
 
-    categorySelect.innerHTML = '<option value="all">All Categories</option>' +
-      categories.map(c => `<option value="${c}">${c}</option>`).join("");
+  initDropdownSelect('platformFilter', platforms, 'All Platforms', (selected) => {
+    selectedPlatforms = selected;
+    applyFilters();
+  });
+}
 
-    platformSelect.innerHTML = '<option value="all">All Platforms</option>' +
-      platforms.map(p => `<option value="${p}">${p}</option>`).join("");
+function initDropdownSelect(id, options, placeholder, onChange) {
+  const container = document.getElementById(id);
+  if (!container) return;
+
+  const input = container.querySelector('.dropdown-select-input');
+  const search = container.querySelector('.dropdown-select-search');
+  const optionsContainer = container.querySelector('.dropdown-select-options');
+
+  // Populate options
+  optionsContainer.innerHTML = options.map(opt => `
+    <div class="dropdown-select-option" data-value="${opt}">
+      <span class="dropdown-select-checkbox"></span>
+      <span class="dropdown-select-label">${opt}</span>
+    </div>
+  `).join('');
+
+  // Toggle dropdown
+  input.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeAllDropdowns(container);
+    container.classList.toggle('open');
+    if (container.classList.contains('open')) {
+      search.value = '';
+      search.focus();
+      filterOptions('');
+    }
+  });
+
+  // Search/filter
+  search.addEventListener('input', (e) => {
+    filterOptions(e.target.value.toLowerCase());
+  });
+
+  search.addEventListener('click', (e) => e.stopPropagation());
+
+  function filterOptions(query) {
+    optionsContainer.querySelectorAll('.dropdown-select-option').forEach(opt => {
+      const label = opt.querySelector('.dropdown-select-label').textContent.toLowerCase();
+      opt.classList.toggle('hidden', query && !label.includes(query));
+    });
   }
+
+  // Handle option clicks
+  optionsContainer.addEventListener('click', (e) => {
+    const option = e.target.closest('.dropdown-select-option');
+    if (!option) return;
+    e.stopPropagation();
+
+    option.classList.toggle('selected');
+    updateSelection();
+  });
+
+  function updateSelection() {
+    const selected = [];
+    optionsContainer.querySelectorAll('.dropdown-select-option.selected').forEach(opt => {
+      selected.push(opt.dataset.value);
+    });
+
+    // Update input display
+    if (selected.length === 0) {
+      input.value = '';
+      input.placeholder = placeholder;
+    } else if (selected.length === 1) {
+      input.value = selected[0];
+    } else {
+      input.value = `${selected.length} selected`;
+    }
+
+    onChange(selected);
+  }
+
+  // Close on outside click
+  document.addEventListener('click', () => {
+    container.classList.remove('open');
+  });
+}
+
+function closeAllDropdowns(except) {
+  document.querySelectorAll('.dropdown-select.open').forEach(ds => {
+    if (ds !== except) ds.classList.remove('open');
+  });
 }
 
 // ============================================================
 // OVERVIEW STATS
 // ============================================================
-function updateOverviewStats() {
-  const products = DB.products;
+function updateOverviewStats(products = DB.products) {
+  if (products.length === 0) {
+    document.getElementById("avgUndersold").textContent = "0";
+    document.getElementById("totalProducts").textContent = "0";
+    document.getElementById("totalTAM").textContent = "$0";
+    document.getElementById("avgMargin").textContent = "0%";
+    return;
+  }
+  
   const avgUndersold = Math.round(
     products.reduce((s, p) => s + p.undersoldScore, 0) / products.length
   );
@@ -54,7 +146,7 @@ function updateOverviewStats() {
   );
 
   document.getElementById("avgUndersold").textContent = avgUndersold;
-  document.getElementById("totalProducts").textContent = DB.products.length; // Added
+  document.getElementById("totalProducts").textContent = products.length;
   document.getElementById("totalTAM").textContent = DB.formatCurrency(totalTAM);
   document.getElementById("avgMargin").textContent = avgMargin + "%";
 }
@@ -210,71 +302,122 @@ function bindSearch() {
   const input = document.getElementById("searchInput");
   const clear = document.getElementById("searchClear");
   const dropdown = document.getElementById("searchDropdown");
+  const tagsContainer = document.getElementById("searchTags");
 
-  input.addEventListener("input", () => {
-    const val = input.value.trim().toLowerCase();
-    clear.classList.toggle("visible", val.length > 0);
+  function renderTags() {
+    tagsContainer.innerHTML = selectedSearchItems.map(item => `
+      <span class="search-tag" data-id="${item.id}">
+        ${item.emoji} ${item.name}
+        <span class="search-tag-remove">×</span>
+      </span>
+    `).join('');
+    
+    // Update placeholder
+    input.placeholder = selectedSearchItems.length > 0 ? "Add more..." : "Search products, categories, tags…";
+  }
 
-    if (val.length === 0) {
-      dropdown.classList.remove("visible");
-      applyFilters();
-      return;
-    }
-
-    // Build autocomplete
+  function renderDropdown(val) {
     const matches = DB.products.filter(p =>
       p.name.toLowerCase().includes(val) ||
       p.category.toLowerCase().includes(val) ||
       (p.tags && p.tags.some(t => t.includes(val)))
-    ).slice(0, 6);
+    ).slice(0, 8);
 
     if (matches.length > 0) {
-      dropdown.innerHTML = matches.map(p => `
-        <div class="search-dropdown-item" data-id="${p.id}">
-          <span style="font-size:1.2rem">${p.emoji}</span>
-          <div>
-            <div style="font-weight:600;font-size:0.9rem">${p.name}</div>
-            <div style="font-size:0.75rem;color:var(--gray-500)">${p.category}</div>
+      dropdown.innerHTML = matches.map(p => {
+        const isSelected = selectedSearchItems.some(item => item.id === p.id);
+        return `
+          <div class="search-dropdown-item ${isSelected ? 'selected' : ''}" data-id="${p.id}">
+            <span class="search-dropdown-checkbox"></span>
+            <span style="font-size:1.2rem">${p.emoji}</span>
+            <div>
+              <div style="font-weight:600;font-size:0.9rem">${p.name}</div>
+              <div style="font-size:0.75rem;color:var(--gray-500)">${p.category}</div>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     } else {
       dropdown.innerHTML = `<div class="search-dropdown-empty">No matching products found</div>`;
     }
     dropdown.classList.add("visible");
-    applyFilters();
+  }
+
+  input.addEventListener("input", () => {
+    const val = input.value.trim().toLowerCase();
+    clear.classList.toggle("visible", val.length > 0 || selectedSearchItems.length > 0);
+
+    if (val.length === 0) {
+      dropdown.classList.remove("visible");
+      return;
+    }
+
+    renderDropdown(val);
   });
 
-  // Handle dropdown selection
+  // Handle dropdown selection (multi-select)
   dropdown?.addEventListener("click", (e) => {
     const item = e.target.closest(".search-dropdown-item");
     if (!item) return;
+    e.stopPropagation();
 
     const product = DB.products.find(p => p.id === item.dataset.id);
     if (product) {
-      input.value = product.name;
-      dropdown.classList.remove("visible");
-      clear.classList.add("visible");
+      const existingIndex = selectedSearchItems.findIndex(i => i.id === product.id);
+      
+      if (existingIndex >= 0) {
+        // Remove if already selected
+        selectedSearchItems.splice(existingIndex, 1);
+        item.classList.remove('selected');
+      } else {
+        // Add to selection
+        selectedSearchItems.push({ id: product.id, name: product.name, emoji: product.emoji });
+        item.classList.add('selected');
+      }
+      
+      renderTags();
       applyFilters();
+      
+      // Keep dropdown open and refocus input
+      input.focus();
     }
+  });
+
+  // Handle tag removal
+  tagsContainer.addEventListener("click", (e) => {
+    const removeBtn = e.target.closest(".search-tag-remove");
+    if (!removeBtn) return;
+    
+    const tag = removeBtn.closest(".search-tag");
+    const id = tag.dataset.id;
+    
+    selectedSearchItems = selectedSearchItems.filter(item => item.id !== id);
+    renderTags();
+    applyFilters();
+    
+    clear.classList.toggle("visible", selectedSearchItems.length > 0 || input.value.trim().length > 0);
   });
 
   // Close dropdown when clicking outside
   document.addEventListener("click", (e) => {
-    if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+    const searchBox = input.closest(".search-box");
+    if (!searchBox.contains(e.target) && !dropdown.contains(e.target)) {
       dropdown?.classList.remove("visible");
     }
   });
 
   // Re-open on focus if text exists
   input.addEventListener("focus", () => {
-    if (input.value.trim().length > 0 && dropdown.innerHTML.trim() !== "") {
-      dropdown.classList.add("visible");
+    const val = input.value.trim().toLowerCase();
+    if (val.length > 0) {
+      renderDropdown(val);
     }
   });
 
   clear.addEventListener("click", () => {
     input.value = "";
+    selectedSearchItems = [];
+    renderTags();
     clear.classList.remove("visible");
     dropdown.classList.remove("visible");
     applyFilters();
@@ -282,21 +425,21 @@ function bindSearch() {
 }
 
 function bindFilters() {
-  ["sortSelect", "categoryFilter", "platformFilter"].forEach((id) => {
-    document.getElementById(id).addEventListener("change", applyFilters);
-  });
+  document.getElementById("sortSelect").addEventListener("change", applyFilters);
 }
 
 function applyFilters() {
   const query = document.getElementById("searchInput").value.trim().toLowerCase();
   const sortVal = document.getElementById("sortSelect").value;
-  const category = document.getElementById("categoryFilter").value;
-  const platform = document.getElementById("platformFilter").value;
 
   let filtered = [...DB.products];
 
-  // Search
-  if (query) {
+  // Filter by selected search items (multi-select)
+  if (selectedSearchItems.length > 0) {
+    const selectedIds = selectedSearchItems.map(item => item.id);
+    filtered = filtered.filter(p => selectedIds.includes(p.id));
+  } else if (query) {
+    // Free text search only when no items selected
     filtered = filtered.filter(
       (p) =>
         p.name.toLowerCase().includes(query) ||
@@ -306,14 +449,14 @@ function applyFilters() {
     );
   }
 
-  // Category filter
-  if (category !== "all") {
-    filtered = filtered.filter((p) => p.category === category);
+  // Category filter (multi-select)
+  if (selectedCategories.length > 0) {
+    filtered = filtered.filter((p) => selectedCategories.includes(p.category));
   }
 
-  // Platform filter
-  if (platform !== "all") {
-    filtered = filtered.filter((p) => p.platform === platform);
+  // Platform filter (multi-select)
+  if (selectedPlatforms.length > 0) {
+    filtered = filtered.filter((p) => selectedPlatforms.includes(p.platform));
   }
 
   // Sort
@@ -325,6 +468,7 @@ function applyFilters() {
 
   currentProducts = filtered;
   renderProducts(filtered);
+  updateOverviewStats(filtered);
   // Re-render chart with new filtered data (max 5 lines for readability)
   initOverviewChart(activeChartType);
   initTAMChart();
