@@ -6264,36 +6264,36 @@ function generateRealisticData() {
   ];
 
   DB.products.forEach((product, index) => {
-    // Assign pattern based on product characteristics
-    const patternIndex = index % patterns.length;
-    const pattern = patterns[patternIndex];
+    // Create a simple hash from product ID for consistent randomness
+    const hash = hashCode(product.id);
+    const seededRandom = createSeededRandom(hash);
     
-    // Base values from product data
+    // Base values from product data - add variation based on product
     const baseRevenue = product.monthlyRevenue || 100000;
     const baseSearch = product.searchVolume || 200000;
     const baseTAM = (product.tam || 1000000000) / 1e9; // In billions
     
-    // Use different pattern offsets for each metric to create variety
-    const revenuePattern = patterns[(index) % patterns.length];
-    const searchPattern = patterns[(index + 3) % patterns.length];
-    const tamPattern = patterns[(index + 5) % patterns.length];
+    // Use hash to select different patterns for each metric
+    const revenuePattern = patterns[Math.abs(hash) % patterns.length];
+    const searchPattern = patterns[Math.abs(hash + 37) % patterns.length];
+    const tamPattern = patterns[Math.abs(hash + 73) % patterns.length];
     
     // Generate historical data (6 months: Sep-Feb)
-    const historical = generatePattern(revenuePattern, baseRevenue, 6, 'historical');
-    const historicalSearch = generatePattern(searchPattern, baseSearch, 6, 'historical');
-    const historicalTAM = generatePattern(tamPattern, baseTAM, 6, 'historical');
+    const historical = generatePattern(revenuePattern, baseRevenue, 6, 'historical', seededRandom);
+    const historicalSearch = generatePattern(searchPattern, baseSearch, 6, 'historical', createSeededRandom(hash + 100));
+    const historicalTAM = generatePattern(tamPattern, baseTAM, 6, 'historical', createSeededRandom(hash + 200));
     
-    // Generate projections (6 months: Mar-Aug) - generally optimistic
-    const projections = generatePattern(revenuePattern, historical[5], 6, 'projection');
-    const projectionsSearch = generatePattern(searchPattern, historicalSearch[5], 6, 'projection');
-    const projectionsTAM = generatePattern(tamPattern, historicalTAM[5], 6, 'projection');
+    // Generate projections (6 months: Mar-Aug)
+    const projections = generatePattern(revenuePattern, historical[5], 6, 'projection', createSeededRandom(hash + 300));
+    const projectionsSearch = generatePattern(searchPattern, historicalSearch[5], 6, 'projection', createSeededRandom(hash + 400));
+    const projectionsTAM = generatePattern(tamPattern, historicalTAM[5], 6, 'projection', createSeededRandom(hash + 500));
     
     // Update product data
     product.historicalData = {
       labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
       revenue: historical.map(v => Math.round(v)),
       searchVolume: historicalSearch.map(v => Math.round(v)),
-      tam: historicalTAM.map(v => Math.round(v * 100) / 100) // Keep 2 decimal places for billions
+      tam: historicalTAM.map(v => Math.round(v * 100) / 100)
     };
     
     product.projections = {
@@ -6305,9 +6305,29 @@ function generateRealisticData() {
   });
 }
 
-function generatePattern(pattern, baseValue, length, type) {
+// Simple string hash function
+function hashCode(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return hash;
+}
+
+// Create a seeded random number generator
+function createSeededRandom(seed) {
+  let s = seed;
+  return function() {
+    s = Math.sin(s * 9999) * 10000;
+    return s - Math.floor(s);
+  };
+}
+
+function generatePattern(pattern, baseValue, length, type, random) {
   const data = [];
-  const variance = 0.08; // 8% random variance
+  const variance = 0.12; // 12% random variance for more distinction
   
   for (let i = 0; i < length; i++) {
     let multiplier = 1;
@@ -6370,8 +6390,8 @@ function generatePattern(pattern, baseValue, length, type) {
         break;
     }
     
-    // Add random variance
-    const randomFactor = 1 + (Math.random() - 0.5) * variance;
+    // Add seeded random variance for consistent but different data
+    const randomFactor = 1 + (random() - 0.5) * variance;
     data.push(baseValue * multiplier * randomFactor);
   }
   
