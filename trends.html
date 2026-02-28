@@ -1,846 +1,871 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Market Trends – Marketing Mavericks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="landing.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
+
 <body class="landing-body">
 
-<nav class="navbar">
-  <div class="navbar-inner">
-    <a href="landing.html" class="navbar-brand">
-      <div class="brand-logo">MM</div>
-      <span class="brand-name">Marketing <span>Mavericks</span></span>
-    </a>
-    <nav class="navbar-nav">
-      <a href="landing.html" class="nav-link">Home</a>
-      <a href="trends.html" class="nav-link nav-protected active">Market Trends</a>
-      <a href="index.html" class="nav-link nav-protected">Dashboard</a>
-      <a href="pricing.html" class="nav-link">Pricing</a>
-    </nav>
-    <div class="navbar-actions">
-      <div class="live-badge"><div class="live-dot"></div>Live Data</div>
-      <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
-      <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name">Marketing <span>Mavericks</span></span>
+      </a>
+      <nav class="navbar-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="trends.html" class="nav-link nav-protected active">Market Trends</a>
+        <a href="dashboard.html" class="nav-link nav-protected">Dashboard</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+      </nav>
+      <div class="navbar-actions">
+        <div class="live-badge">
+          <div class="live-dot"></div>Live Data
+        </div>
+        <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
+        <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
+      </div>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- HERO -->
-<section class="trends-hero">
-  <div class="section-container">
-    <div class="section-label" style="color:var(--yellow-400);">Live Market Intelligence</div>
-    <h1 style="font-size:2.5rem;font-weight:900;color:var(--white);margin-bottom:12px;">Market Trends & Category Analytics</h1>
-    <p style="font-size:1rem;color:var(--blue-200);max-width:600px;margin-bottom:32px;">Browse trending products by category. Each category shows dedicated analytics — TAM, undersold scores, trending ranks, and 6-month projections.</p>
+  <!-- HERO -->
+  <section class="trends-hero">
+    <div class="section-container">
+      <div class="section-label" style="color:var(--yellow-400);">Live Market Intelligence</div>
+      <h1 style="font-size:2.5rem;font-weight:900;color:var(--white);margin-bottom:12px;">Market Trends & Category
+        Analytics</h1>
+      <p style="font-size:1rem;color:var(--blue-200);max-width:600px;margin-bottom:32px;">Browse trending products by
+        category. Each category shows dedicated analytics — TAM, undersold scores, trending ranks, and 6-month
+        projections.</p>
 
-    <!-- Search Bar -->
-    <div style="max-width:600px;position:relative;">
-      <input type="text" id="trendSearch" placeholder="🔍  Search products, categories, or keywords..." 
-        style="width:100%;padding:16px 20px 16px 48px;border-radius:var(--radius-full);border:none;font-size:0.95rem;font-family:var(--font-sans);outline:none;box-shadow:0 8px 32px rgba(0,0,0,0.3);color:var(--gray-800);"
-        oninput="handleSearch(this.value)" />
-      <span style="position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;">🔍</span>
-      <div id="searchDropdown" style="display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--white);border-radius:var(--radius-xl);box-shadow:0 20px 60px rgba(0,0,0,0.2);z-index:200;overflow:hidden;border:1px solid var(--gray-200);"></div>
-    </div>
-  </div>
-</section>
-
-<!-- CATEGORY TABS -->
-<div class="category-tabs-section">
-  <div class="category-tabs" id="categoryTabs">
-    <div class="category-tab active" data-cat="all" onclick="switchCategory('all',this)">
-      <span class="category-tab-icon">🌐</span> All Categories
-    </div>
-    <div class="category-tab" data-cat="confectionery" onclick="switchCategory('confectionery',this)">
-      <span class="category-tab-icon">🍬</span> Confectionery
-    </div>
-    <div class="category-tab" data-cat="fashion" onclick="switchCategory('fashion',this)">
-      <span class="category-tab-icon">👗</span> Fashion
-    </div>
-    <div class="category-tab" data-cat="home-decor" onclick="switchCategory('home-decor',this)">
-      <span class="category-tab-icon">🏠</span> Home Décor
-    </div>
-    <div class="category-tab" data-cat="health" onclick="switchCategory('health',this)">
-      <span class="category-tab-icon">💪</span> Health & Wellness
-    </div>
-    <div class="category-tab" data-cat="kitchen" onclick="switchCategory('kitchen',this)">
-      <span class="category-tab-icon">🍳</span> Kitchen & Fitness
-    </div>
-    <div class="category-tab" data-cat="productivity" onclick="switchCategory('productivity',this)">
-      <span class="category-tab-icon">📓</span> Productivity
-    </div>
-    <div class="category-tab" data-cat="beauty" onclick="switchCategory('beauty',this)">
-      <span class="category-tab-icon">💄</span> Beauty & Skincare
-    </div>
-    <div class="category-tab" data-cat="tech" onclick="switchCategory('tech',this)">
-      <span class="category-tab-icon">📱</span> Tech Accessories
-    </div>
-  </div>
-</div>
-
-<!-- MAIN CONTENT -->
-<div style="background:var(--gray-50);min-height:60vh;padding:32px 0 60px;">
-  <div class="section-container">
-
-    <!-- Category Analytics Panel -->
-    <div id="categoryPanel"></div>
-
-    <!-- Products Grid -->
-    <div id="productsSection">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
-        <h2 id="productsHeading" style="font-size:1.2rem;font-weight:800;color:var(--gray-800);">All Trending Products</h2>
-        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
-          <select id="sortSelect" onchange="sortProducts(this.value)" style="padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);font-size:0.85rem;font-family:var(--font-sans);color:var(--gray-700);background:var(--white);outline:none;cursor:pointer;">
-            <option value="trending">Sort: Trending Rank</option>
-            <option value="undersold">Sort: Undersold Score</option>
-            <option value="tam">Sort: TAM Size</option>
-            <option value="margin">Sort: Margin</option>
-          </select>
-          <div id="resultCount" style="font-size:0.8rem;color:var(--gray-500);font-weight:600;"></div>
+      <!-- Search Bar -->
+      <div style="max-width:600px;position:relative;">
+        <input type="text" id="trendSearch" placeholder="🔍  Search products, categories, or keywords..."
+          style="width:100%;padding:16px 20px 16px 48px;border-radius:var(--radius-full);border:none;font-size:0.95rem;font-family:var(--font-sans);outline:none;box-shadow:0 8px 32px rgba(0,0,0,0.3);color:var(--gray-800);"
+          oninput="handleSearch(this.value)" />
+        <span
+          style="position:absolute;left:18px;top:50%;transform:translateY(-50%);font-size:1.1rem;pointer-events:none;">🔍</span>
+        <div id="searchDropdown"
+          style="display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;background:var(--white);border-radius:var(--radius-xl);box-shadow:0 20px 60px rgba(0,0,0,0.2);z-index:200;overflow:hidden;border:1px solid var(--gray-200);">
         </div>
       </div>
-      <div id="productsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
-      <div id="noResults" style="display:none;text-align:center;padding:60px 20px;">
-        <div style="font-size:3rem;margin-bottom:16px;">🔍</div>
-        <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-700);margin-bottom:8px;">No products found</h3>
-        <p style="font-size:0.875rem;color:var(--gray-500);">Try a different search term or category</p>
+    </div>
+  </section>
+
+  <!-- CATEGORY TABS -->
+  <div class="category-tabs-section">
+    <div class="category-tabs" id="categoryTabs">
+      <div class="category-tab active" data-cat="all" onclick="switchCategory('all',this)">
+        <span class="category-tab-icon">🌐</span> All Categories
+      </div>
+      <div class="category-tab" data-cat="confectionery" onclick="switchCategory('confectionery',this)">
+        <span class="category-tab-icon">🍬</span> Confectionery
+      </div>
+      <div class="category-tab" data-cat="fashion" onclick="switchCategory('fashion',this)">
+        <span class="category-tab-icon">👗</span> Fashion
+      </div>
+      <div class="category-tab" data-cat="home-decor" onclick="switchCategory('home-decor',this)">
+        <span class="category-tab-icon">🏠</span> Home Décor
+      </div>
+      <div class="category-tab" data-cat="health" onclick="switchCategory('health',this)">
+        <span class="category-tab-icon">💪</span> Health & Wellness
+      </div>
+      <div class="category-tab" data-cat="kitchen" onclick="switchCategory('kitchen',this)">
+        <span class="category-tab-icon">🍳</span> Kitchen & Fitness
+      </div>
+      <div class="category-tab" data-cat="productivity" onclick="switchCategory('productivity',this)">
+        <span class="category-tab-icon">📓</span> Productivity
+      </div>
+      <div class="category-tab" data-cat="beauty" onclick="switchCategory('beauty',this)">
+        <span class="category-tab-icon">💄</span> Beauty & Skincare
+      </div>
+      <div class="category-tab" data-cat="tech" onclick="switchCategory('tech',this)">
+        <span class="category-tab-icon">📱</span> Tech Accessories
       </div>
     </div>
-
   </div>
-</div>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
-      <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
-    </div>
-    <span class="footer-text">© 2026 Marketing Mavericks · Cambridge MBA Hackathon</span>
-    <div class="footer-links">
-      <a href="landing.html" class="footer-link">Home</a>
-      <a href="pricing.html" class="footer-link">Pricing</a>
-      <a href="signin.html" class="footer-link">Sign In</a>
+  <!-- MAIN CONTENT -->
+  <div style="background:var(--gray-50);min-height:60vh;padding:32px 0 60px;">
+    <div class="section-container">
+
+      <!-- Category Analytics Panel -->
+      <div id="categoryPanel"></div>
+
+      <!-- Products Grid -->
+      <div id="productsSection">
+        <div
+          style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+          <h2 id="productsHeading" style="font-size:1.2rem;font-weight:800;color:var(--gray-800);">All Trending Products
+          </h2>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <select id="sortSelect" onchange="sortProducts(this.value)"
+              style="padding:8px 14px;border:1.5px solid var(--gray-200);border-radius:var(--radius-md);font-size:0.85rem;font-family:var(--font-sans);color:var(--gray-700);background:var(--white);outline:none;cursor:pointer;">
+              <option value="trending">Sort: Trending Rank</option>
+              <option value="undersold">Sort: Undersold Score</option>
+              <option value="tam">Sort: TAM Size</option>
+              <option value="margin">Sort: Margin</option>
+            </select>
+            <div id="resultCount" style="font-size:0.8rem;color:var(--gray-500);font-weight:600;"></div>
+          </div>
+        </div>
+        <div id="productsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;">
+        </div>
+        <div id="noResults" style="display:none;text-align:center;padding:60px 20px;">
+          <div style="font-size:3rem;margin-bottom:16px;">🔍</div>
+          <h3 style="font-size:1.1rem;font-weight:700;color:var(--gray-700);margin-bottom:8px;">No products found</h3>
+          <p style="font-size:0.875rem;color:var(--gray-500);">Try a different search term or category</p>
+        </div>
+      </div>
+
     </div>
   </div>
-</footer>
 
-<div id="toastContainer" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
+  <!-- ============================================================ FOOTER ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
+        <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+      </div>
+      <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR
+        Compliant</span>
+      <div class="footer-links">
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <button class="footer-link" onclick="openPrivacyModal()"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)','cookies'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+        <a href="signin.html" class="footer-link">Sign In</a>
+      </div>
+    </div>
+  </footer>
 
-<script src="database.js"></script>
-<script src="auth.js"></script>
-<script>
-// ============================================================
-// TRENDS PAGE
-// ============================================================
+  <div id="toastContainer"
+    style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
 
-// Extended category data
-const CATEGORIES = {
-  all: {
-    id: "all",
-    name: "All Categories",
-    emoji: "🌐",
-    desc: "All trending products across every category",
-    tam: 12500000000,
-    tamGrowth: 17.3,
-    avgUndersold: 87,
-    avgMargin: 81,
-    topProduct: "LED Sunset Lamp",
-    chartColor: "#2563b0"
-  },
-  confectionery: {
-    id: "confectionery",
-    name: "Confectionery",
-    emoji: "🍬",
-    desc: "Artisan sweets, novelty candy, and premium chocolate products",
-    tam: 3200000000,
-    tamGrowth: 12.4,
-    avgUndersold: 79,
-    avgMargin: 68,
-    topProduct: "Freeze-Dried Candy",
-    chartColor: "#ec4899",
-    products: [
-      {
-        id: "c001",
-        name: "Freeze-Dried Candy Assortment",
-        emoji: "🍭",
-        image: "https://images.unsplash.com/photo-1582058091597-bc3b2d4a3b3a?w=400&h=300&fit=crop&q=80",
-        category: "Confectionery",
-        trendingRank: 5,
-        trendingRankChange: +7,
-        undersoldScore: 82,
-        rating: 3.8,
-        expectedRating: 4.6,
-        tam: 890000000,
-        tamGrowthRate: 28.4,
-        margin: 74,
-        price: 24.99,
-        monthlyRevenue: 187000,
-        saturation: 22,
-        competition: "Low",
-        tags: ["TikTok Viral", "Trending"],
-        platforms: ["TikTok", "Amazon"]
+  <script src="database.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    // ============================================================
+    // TRENDS PAGE
+    // ============================================================
+
+    // Extended category data
+    const CATEGORIES = {
+      all: {
+        id: "all",
+        name: "All Categories",
+        emoji: "🌐",
+        desc: "All trending products across every category",
+        tam: 12500000000,
+        tamGrowth: 17.3,
+        avgUndersold: 87,
+        avgMargin: 81,
+        topProduct: "LED Sunset Lamp",
+        chartColor: "#2563b0"
       },
-      {
-        id: "c002",
-        name: "Artisan Hot Chocolate Kit",
-        emoji: "☕",
-        image: "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=400&h=300&fit=crop&q=80",
-        category: "Confectionery",
-        trendingRank: 14,
-        trendingRankChange: +3,
-        undersoldScore: 76,
-        rating: 3.9,
-        expectedRating: 4.5,
-        tam: 420000000,
-        tamGrowthRate: 9.2,
-        margin: 65,
-        price: 34.99,
-        monthlyRevenue: 94000,
-        saturation: 35,
-        competition: "Medium",
-        tags: ["Gift", "Seasonal"],
-        platforms: ["Amazon", "Instagram"]
+      confectionery: {
+        id: "confectionery",
+        name: "Confectionery",
+        emoji: "🍬",
+        desc: "Artisan sweets, novelty candy, and premium chocolate products",
+        tam: 3200000000,
+        tamGrowth: 12.4,
+        avgUndersold: 79,
+        avgMargin: 68,
+        topProduct: "Freeze-Dried Candy",
+        chartColor: "#ec4899",
+        products: [
+          {
+            id: "c001",
+            name: "Freeze-Dried Candy Assortment",
+            emoji: "🍭",
+            image: "https://images.unsplash.com/photo-1582058091597-bc3b2d4a3b3a?w=400&h=300&fit=crop&q=80",
+            category: "Confectionery",
+            trendingRank: 5,
+            trendingRankChange: +7,
+            undersoldScore: 82,
+            rating: 3.8,
+            expectedRating: 4.6,
+            tam: 890000000,
+            tamGrowthRate: 28.4,
+            margin: 74,
+            price: 24.99,
+            monthlyRevenue: 187000,
+            saturation: 22,
+            competition: "Low",
+            tags: ["TikTok Viral", "Trending"],
+            platforms: ["TikTok", "Amazon"]
+          },
+          {
+            id: "c002",
+            name: "Artisan Hot Chocolate Kit",
+            emoji: "☕",
+            image: "https://images.unsplash.com/photo-1542990253-0d0f5be5f0ed?w=400&h=300&fit=crop&q=80",
+            category: "Confectionery",
+            trendingRank: 14,
+            trendingRankChange: +3,
+            undersoldScore: 76,
+            rating: 3.9,
+            expectedRating: 4.5,
+            tam: 420000000,
+            tamGrowthRate: 9.2,
+            margin: 65,
+            price: 34.99,
+            monthlyRevenue: 94000,
+            saturation: 35,
+            competition: "Medium",
+            tags: ["Gift", "Seasonal"],
+            platforms: ["Amazon", "Instagram"]
+          },
+          {
+            id: "c003",
+            name: "Gummy Bear Bouquet Kit",
+            emoji: "🐻",
+            image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&h=300&fit=crop&q=80",
+            category: "Confectionery",
+            trendingRank: 21,
+            trendingRankChange: +11,
+            undersoldScore: 88,
+            rating: 3.5,
+            expectedRating: 4.7,
+            tam: 310000000,
+            tamGrowthRate: 19.8,
+            margin: 71,
+            price: 19.99,
+            monthlyRevenue: 143000,
+            saturation: 18,
+            competition: "Low",
+            tags: ["Gift", "TikTok Viral"],
+            platforms: ["TikTok", "Amazon"]
+          }
+        ]
       },
-      {
-        id: "c003",
-        name: "Gummy Bear Bouquet Kit",
-        emoji: "🐻",
-        image: "https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&h=300&fit=crop&q=80",
-        category: "Confectionery",
-        trendingRank: 21,
-        trendingRankChange: +11,
-        undersoldScore: 88,
-        rating: 3.5,
-        expectedRating: 4.7,
-        tam: 310000000,
-        tamGrowthRate: 19.8,
-        margin: 71,
-        price: 19.99,
-        monthlyRevenue: 143000,
-        saturation: 18,
-        competition: "Low",
-        tags: ["Gift", "TikTok Viral"],
-        platforms: ["TikTok", "Amazon"]
-      }
-    ]
-  },
-  fashion: {
-    id: "fashion",
-    name: "Fashion",
-    emoji: "👗",
-    desc: "Trending apparel, accessories, and wearable tech",
-    tam: 4800000000,
-    tamGrowth: 14.7,
-    avgUndersold: 83,
-    avgMargin: 76,
-    topProduct: "Oversized Linen Blazer",
-    chartColor: "#8b5cf6",
-    products: [
-      {
-        id: "f001",
-        name: "Oversized Linen Blazer",
-        emoji: "🧥",
-        image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=300&fit=crop&q=80",
-        category: "Fashion",
-        trendingRank: 8,
-        trendingRankChange: +5,
-        undersoldScore: 85,
-        rating: 3.7,
-        expectedRating: 4.5,
-        tam: 1200000000,
-        tamGrowthRate: 16.2,
-        margin: 78,
-        price: 59.99,
-        monthlyRevenue: 312000,
-        saturation: 28,
-        competition: "Medium",
-        tags: ["Trending", "Summer 2026"],
-        platforms: ["TikTok", "Instagram", "Amazon"]
+      fashion: {
+        id: "fashion",
+        name: "Fashion",
+        emoji: "👗",
+        desc: "Trending apparel, accessories, and wearable tech",
+        tam: 4800000000,
+        tamGrowth: 14.7,
+        avgUndersold: 83,
+        avgMargin: 76,
+        topProduct: "Oversized Linen Blazer",
+        chartColor: "#8b5cf6",
+        products: [
+          {
+            id: "f001",
+            name: "Oversized Linen Blazer",
+            emoji: "🧥",
+            image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400&h=300&fit=crop&q=80",
+            category: "Fashion",
+            trendingRank: 8,
+            trendingRankChange: +5,
+            undersoldScore: 85,
+            rating: 3.7,
+            expectedRating: 4.5,
+            tam: 1200000000,
+            tamGrowthRate: 16.2,
+            margin: 78,
+            price: 59.99,
+            monthlyRevenue: 312000,
+            saturation: 28,
+            competition: "Medium",
+            tags: ["Trending", "Summer 2026"],
+            platforms: ["TikTok", "Instagram", "Amazon"]
+          },
+          {
+            id: "f002",
+            name: "Magnetic Closure Handbag",
+            emoji: "👜",
+            image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=300&fit=crop&q=80",
+            category: "Fashion",
+            trendingRank: 12,
+            trendingRankChange: +4,
+            undersoldScore: 79,
+            rating: 3.9,
+            expectedRating: 4.6,
+            tam: 890000000,
+            tamGrowthRate: 11.8,
+            margin: 72,
+            price: 44.99,
+            monthlyRevenue: 198000,
+            saturation: 32,
+            competition: "Medium",
+            tags: ["Bestseller", "Gift"],
+            platforms: ["Amazon", "Instagram"]
+          },
+          {
+            id: "f003",
+            name: "UV-Protective Sun Hat",
+            emoji: "👒",
+            image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&h=300&fit=crop&q=80",
+            category: "Fashion",
+            trendingRank: 19,
+            trendingRankChange: +9,
+            undersoldScore: 91,
+            rating: 3.4,
+            expectedRating: 4.7,
+            tam: 560000000,
+            tamGrowthRate: 22.1,
+            margin: 82,
+            price: 29.99,
+            monthlyRevenue: 167000,
+            saturation: 15,
+            competition: "Low",
+            tags: ["Summer 2026", "TikTok Viral"],
+            platforms: ["TikTok", "Amazon"]
+          }
+        ]
       },
-      {
-        id: "f002",
-        name: "Magnetic Closure Handbag",
-        emoji: "👜",
-        image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400&h=300&fit=crop&q=80",
-        category: "Fashion",
-        trendingRank: 12,
-        trendingRankChange: +4,
-        undersoldScore: 79,
-        rating: 3.9,
-        expectedRating: 4.6,
-        tam: 890000000,
-        tamGrowthRate: 11.8,
-        margin: 72,
-        price: 44.99,
-        monthlyRevenue: 198000,
-        saturation: 32,
-        competition: "Medium",
-        tags: ["Bestseller", "Gift"],
-        platforms: ["Amazon", "Instagram"]
-      },
-      {
-        id: "f003",
-        name: "UV-Protective Sun Hat",
-        emoji: "👒",
-        image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400&h=300&fit=crop&q=80",
-        category: "Fashion",
-        trendingRank: 19,
-        trendingRankChange: +9,
-        undersoldScore: 91,
-        rating: 3.4,
-        expectedRating: 4.7,
-        tam: 560000000,
-        tamGrowthRate: 22.1,
-        margin: 82,
-        price: 29.99,
-        monthlyRevenue: 167000,
-        saturation: 15,
-        competition: "Low",
-        tags: ["Summer 2026", "TikTok Viral"],
-        platforms: ["TikTok", "Amazon"]
-      }
-    ]
-  },
-  "home-decor": {
-    id: "home-decor",
-    name: "Home Décor",
-    emoji: "🏠",
-    desc: "Aesthetic home accessories, lighting, and interior design products",
-    tam: 1800000000,
-    tamGrowth: 22.1,
-    avgUndersold: 91,
-    avgMargin: 84,
-    topProduct: "LED Sunset Lamp",
-    chartColor: "#f59e0b",
-    products: [
-      {
-        id: "p001",
-        name: "LED Sunset Lamp",
-        emoji: "🌅",
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
-        category: "Home Décor",
-        trendingRank: 1,
-        trendingRankChange: +12,
-        undersoldScore: 94,
-        rating: 3.6,
-        expectedRating: 4.8,
+      "home-decor": {
+        id: "home-decor",
+        name: "Home Décor",
+        emoji: "🏠",
+        desc: "Aesthetic home accessories, lighting, and interior design products",
         tam: 1800000000,
-        tamGrowthRate: 22.1,
-        margin: 84,
-        price: 39.99,
-        monthlyRevenue: 487000,
-        saturation: 18,
-        competition: "Low",
-        tags: ["#1 Trending", "TikTok Viral", "High Margin"],
-        platforms: ["TikTok", "Amazon", "Instagram"]
+        tamGrowth: 22.1,
+        avgUndersold: 91,
+        avgMargin: 84,
+        topProduct: "LED Sunset Lamp",
+        chartColor: "#f59e0b",
+        products: [
+          {
+            id: "p001",
+            name: "LED Sunset Lamp",
+            emoji: "🌅",
+            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
+            category: "Home Décor",
+            trendingRank: 1,
+            trendingRankChange: +12,
+            undersoldScore: 94,
+            rating: 3.6,
+            expectedRating: 4.8,
+            tam: 1800000000,
+            tamGrowthRate: 22.1,
+            margin: 84,
+            price: 39.99,
+            monthlyRevenue: 487000,
+            saturation: 18,
+            competition: "Low",
+            tags: ["#1 Trending", "TikTok Viral", "High Margin"],
+            platforms: ["TikTok", "Amazon", "Instagram"]
+          },
+          {
+            id: "hd002",
+            name: "Boho Macramé Wall Hanging",
+            emoji: "🪢",
+            image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&q=80",
+            category: "Home Décor",
+            trendingRank: 9,
+            trendingRankChange: +2,
+            undersoldScore: 77,
+            rating: 4.0,
+            expectedRating: 4.6,
+            tam: 420000000,
+            tamGrowthRate: 14.3,
+            margin: 79,
+            price: 34.99,
+            monthlyRevenue: 124000,
+            saturation: 38,
+            competition: "Medium",
+            tags: ["Aesthetic", "Bestseller"],
+            platforms: ["Instagram", "Amazon"]
+          },
+          {
+            id: "hd003",
+            name: "Minimalist Floating Shelf Set",
+            emoji: "🪵",
+            image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&q=80",
+            category: "Home Décor",
+            trendingRank: 16,
+            trendingRankChange: +6,
+            undersoldScore: 83,
+            rating: 3.8,
+            expectedRating: 4.6,
+            tam: 680000000,
+            tamGrowthRate: 18.7,
+            margin: 76,
+            price: 49.99,
+            monthlyRevenue: 198000,
+            saturation: 24,
+            competition: "Low",
+            tags: ["Trending", "High Margin"],
+            platforms: ["Amazon", "Instagram", "YouTube"]
+          }
+        ]
       },
-      {
-        id: "hd002",
-        name: "Boho Macramé Wall Hanging",
-        emoji: "🪢",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&q=80",
-        category: "Home Décor",
-        trendingRank: 9,
-        trendingRankChange: +2,
-        undersoldScore: 77,
-        rating: 4.0,
-        expectedRating: 4.6,
-        tam: 420000000,
-        tamGrowthRate: 14.3,
-        margin: 79,
-        price: 34.99,
-        monthlyRevenue: 124000,
-        saturation: 38,
-        competition: "Medium",
-        tags: ["Aesthetic", "Bestseller"],
-        platforms: ["Instagram", "Amazon"]
-      },
-      {
-        id: "hd003",
-        name: "Minimalist Floating Shelf Set",
-        emoji: "🪵",
-        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&q=80",
-        category: "Home Décor",
-        trendingRank: 16,
-        trendingRankChange: +6,
-        undersoldScore: 83,
-        rating: 3.8,
-        expectedRating: 4.6,
-        tam: 680000000,
-        tamGrowthRate: 18.7,
-        margin: 76,
-        price: 49.99,
-        monthlyRevenue: 198000,
-        saturation: 24,
-        competition: "Low",
-        tags: ["Trending", "High Margin"],
-        platforms: ["Amazon", "Instagram", "YouTube"]
-      }
-    ]
-  },
-  health: {
-    id: "health",
-    name: "Health & Wellness",
-    emoji: "💪",
-    desc: "Posture, recovery, fitness, and wellness products",
-    tam: 4200000000,
-    tamGrowth: 18.9,
-    avgUndersold: 85,
-    avgMargin: 79,
-    topProduct: "Posture Corrector Pro",
-    chartColor: "#10b981",
-    products: [
-      {
-        id: "p002",
-        name: "Posture Corrector Pro",
-        emoji: "🦴",
-        image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&q=80",
-        category: "Health & Wellness",
-        trendingRank: 3,
-        trendingRankChange: +5,
-        undersoldScore: 88,
-        rating: 3.7,
-        expectedRating: 4.6,
+      health: {
+        id: "health",
+        name: "Health & Wellness",
+        emoji: "💪",
+        desc: "Posture, recovery, fitness, and wellness products",
         tam: 4200000000,
-        tamGrowthRate: 18.9,
-        margin: 79,
-        price: 34.99,
-        monthlyRevenue: 312000,
-        saturation: 32,
-        competition: "Medium",
-        tags: ["High TAM", "Trending", "Amazon Choice"],
-        platforms: ["Amazon", "TikTok", "YouTube"]
+        tamGrowth: 18.9,
+        avgUndersold: 85,
+        avgMargin: 79,
+        topProduct: "Posture Corrector Pro",
+        chartColor: "#10b981",
+        products: [
+          {
+            id: "p002",
+            name: "Posture Corrector Pro",
+            emoji: "🦴",
+            image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop&q=80",
+            category: "Health & Wellness",
+            trendingRank: 3,
+            trendingRankChange: +5,
+            undersoldScore: 88,
+            rating: 3.7,
+            expectedRating: 4.6,
+            tam: 4200000000,
+            tamGrowthRate: 18.9,
+            margin: 79,
+            price: 34.99,
+            monthlyRevenue: 312000,
+            saturation: 32,
+            competition: "Medium",
+            tags: ["High TAM", "Trending", "Amazon Choice"],
+            platforms: ["Amazon", "TikTok", "YouTube"]
+          },
+          {
+            id: "h002",
+            name: "Acupressure Mat & Pillow Set",
+            emoji: "🧘",
+            image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&q=80",
+            category: "Health & Wellness",
+            trendingRank: 7,
+            trendingRankChange: +8,
+            undersoldScore: 86,
+            rating: 3.8,
+            expectedRating: 4.7,
+            tam: 780000000,
+            tamGrowthRate: 24.6,
+            margin: 82,
+            price: 44.99,
+            monthlyRevenue: 234000,
+            saturation: 21,
+            competition: "Low",
+            tags: ["TikTok Viral", "High Margin"],
+            platforms: ["TikTok", "Amazon", "YouTube"]
+          },
+          {
+            id: "h003",
+            name: "Red Light Therapy Wand",
+            emoji: "🔴",
+            image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80",
+            category: "Health & Wellness",
+            trendingRank: 11,
+            trendingRankChange: +14,
+            undersoldScore: 92,
+            rating: 3.5,
+            expectedRating: 4.8,
+            tam: 1100000000,
+            tamGrowthRate: 31.2,
+            margin: 86,
+            price: 79.99,
+            monthlyRevenue: 389000,
+            saturation: 14,
+            competition: "Low",
+            tags: ["Emerging", "High Margin", "TikTok Viral"],
+            platforms: ["TikTok", "Amazon", "Instagram"]
+          }
+        ]
       },
-      {
-        id: "h002",
-        name: "Acupressure Mat & Pillow Set",
-        emoji: "🧘",
-        image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=300&fit=crop&q=80",
-        category: "Health & Wellness",
-        trendingRank: 7,
-        trendingRankChange: +8,
-        undersoldScore: 86,
-        rating: 3.8,
-        expectedRating: 4.7,
-        tam: 780000000,
-        tamGrowthRate: 24.6,
-        margin: 82,
-        price: 44.99,
-        monthlyRevenue: 234000,
-        saturation: 21,
-        competition: "Low",
-        tags: ["TikTok Viral", "High Margin"],
-        platforms: ["TikTok", "Amazon", "YouTube"]
-      },
-      {
-        id: "h003",
-        name: "Red Light Therapy Wand",
-        emoji: "🔴",
-        image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=300&fit=crop&q=80",
-        category: "Health & Wellness",
-        trendingRank: 11,
-        trendingRankChange: +14,
-        undersoldScore: 92,
-        rating: 3.5,
-        expectedRating: 4.8,
-        tam: 1100000000,
-        tamGrowthRate: 31.2,
-        margin: 86,
-        price: 79.99,
-        monthlyRevenue: 389000,
-        saturation: 14,
-        competition: "Low",
-        tags: ["Emerging", "High Margin", "TikTok Viral"],
-        platforms: ["TikTok", "Amazon", "Instagram"]
-      }
-    ]
-  },
-  kitchen: {
-    id: "kitchen",
-    name: "Kitchen & Fitness",
-    emoji: "🍳",
-    desc: "Smart kitchen gadgets and portable fitness equipment",
-    tam: 2900000000,
-    tamGrowth: 15.6,
-    avgUndersold: 88,
-    avgMargin: 82,
-    topProduct: "Portable Blender Bottle",
-    chartColor: "#3b82f6",
-    products: [
-      {
-        id: "p003",
-        name: "Portable Blender Bottle",
-        emoji: "🥤",
-        image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop&q=80",
-        category: "Kitchen & Fitness",
-        trendingRank: 2,
-        trendingRankChange: +8,
-        undersoldScore: 91,
-        rating: 3.5,
-        expectedRating: 4.7,
+      kitchen: {
+        id: "kitchen",
+        name: "Kitchen & Fitness",
+        emoji: "🍳",
+        desc: "Smart kitchen gadgets and portable fitness equipment",
         tam: 2900000000,
-        tamGrowthRate: 15.6,
-        margin: 82,
-        price: 29.99,
-        monthlyRevenue: 423000,
-        saturation: 24,
-        competition: "Low",
-        tags: ["#2 Trending", "High Margin", "TikTok Viral"],
-        platforms: ["TikTok", "Amazon", "YouTube"]
+        tamGrowth: 15.6,
+        avgUndersold: 88,
+        avgMargin: 82,
+        topProduct: "Portable Blender Bottle",
+        chartColor: "#3b82f6",
+        products: [
+          {
+            id: "p003",
+            name: "Portable Blender Bottle",
+            emoji: "🥤",
+            image: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop&q=80",
+            category: "Kitchen & Fitness",
+            trendingRank: 2,
+            trendingRankChange: +8,
+            undersoldScore: 91,
+            rating: 3.5,
+            expectedRating: 4.7,
+            tam: 2900000000,
+            tamGrowthRate: 15.6,
+            margin: 82,
+            price: 29.99,
+            monthlyRevenue: 423000,
+            saturation: 24,
+            competition: "Low",
+            tags: ["#2 Trending", "High Margin", "TikTok Viral"],
+            platforms: ["TikTok", "Amazon", "YouTube"]
+          },
+          {
+            id: "k002",
+            name: "Collapsible Silicone Food Containers",
+            emoji: "🥡",
+            image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&q=80",
+            category: "Kitchen & Fitness",
+            trendingRank: 13,
+            trendingRankChange: +3,
+            undersoldScore: 74,
+            rating: 4.0,
+            expectedRating: 4.5,
+            tam: 560000000,
+            tamGrowthRate: 11.4,
+            margin: 71,
+            price: 22.99,
+            monthlyRevenue: 112000,
+            saturation: 41,
+            competition: "Medium",
+            tags: ["Eco-Friendly", "Bestseller"],
+            platforms: ["Amazon", "Instagram"]
+          },
+          {
+            id: "k003",
+            name: "Resistance Band Set (11-piece)",
+            emoji: "🏋️",
+            image: "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=400&h=300&fit=crop&q=80",
+            category: "Kitchen & Fitness",
+            trendingRank: 6,
+            trendingRankChange: +4,
+            undersoldScore: 80,
+            rating: 3.9,
+            expectedRating: 4.6,
+            tam: 890000000,
+            tamGrowthRate: 19.3,
+            margin: 85,
+            price: 27.99,
+            monthlyRevenue: 267000,
+            saturation: 29,
+            competition: "Medium",
+            tags: ["High Margin", "Trending"],
+            platforms: ["Amazon", "TikTok", "YouTube"]
+          }
+        ]
       },
-      {
-        id: "k002",
-        name: "Collapsible Silicone Food Containers",
-        emoji: "🥡",
-        image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop&q=80",
-        category: "Kitchen & Fitness",
-        trendingRank: 13,
-        trendingRankChange: +3,
-        undersoldScore: 74,
-        rating: 4.0,
-        expectedRating: 4.5,
-        tam: 560000000,
-        tamGrowthRate: 11.4,
-        margin: 71,
-        price: 22.99,
-        monthlyRevenue: 112000,
-        saturation: 41,
-        competition: "Medium",
-        tags: ["Eco-Friendly", "Bestseller"],
-        platforms: ["Amazon", "Instagram"]
-      },
-      {
-        id: "k003",
-        name: "Resistance Band Set (11-piece)",
-        emoji: "🏋️",
-        image: "https://images.unsplash.com/photo-1598289431512-b97b0917affc?w=400&h=300&fit=crop&q=80",
-        category: "Kitchen & Fitness",
-        trendingRank: 6,
-        trendingRankChange: +4,
-        undersoldScore: 80,
-        rating: 3.9,
-        expectedRating: 4.6,
-        tam: 890000000,
-        tamGrowthRate: 19.3,
-        margin: 85,
-        price: 27.99,
-        monthlyRevenue: 267000,
-        saturation: 29,
-        competition: "Medium",
-        tags: ["High Margin", "Trending"],
-        platforms: ["Amazon", "TikTok", "YouTube"]
-      }
-    ]
-  },
-  productivity: {
-    id: "productivity",
-    name: "Productivity",
-    emoji: "📓",
-    desc: "Smart notebooks, planners, and productivity tools",
-    tam: 3600000000,
-    tamGrowth: 11.2,
-    avgUndersold: 76,
-    avgMargin: 77,
-    topProduct: "Smart Reusable Notebook",
-    chartColor: "#6366f1",
-    products: [
-      {
-        id: "p004",
-        name: "Smart Reusable Notebook",
+      productivity: {
+        id: "productivity",
+        name: "Productivity",
         emoji: "📓",
-        image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=300&fit=crop&q=80",
-        category: "Productivity",
-        trendingRank: 4,
-        trendingRankChange: +3,
-        undersoldScore: 76,
-        rating: 4.0,
-        expectedRating: 4.6,
+        desc: "Smart notebooks, planners, and productivity tools",
         tam: 3600000000,
-        tamGrowthRate: 11.2,
-        margin: 77,
-        price: 24.99,
-        monthlyRevenue: 198000,
-        saturation: 41,
-        competition: "Medium",
-        tags: ["Eco-Friendly", "Amazon Choice"],
-        platforms: ["Amazon", "YouTube", "Reddit"]
+        tamGrowth: 11.2,
+        avgUndersold: 76,
+        avgMargin: 77,
+        topProduct: "Smart Reusable Notebook",
+        chartColor: "#6366f1",
+        products: [
+          {
+            id: "p004",
+            name: "Smart Reusable Notebook",
+            emoji: "📓",
+            image: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=400&h=300&fit=crop&q=80",
+            category: "Productivity",
+            trendingRank: 4,
+            trendingRankChange: +3,
+            undersoldScore: 76,
+            rating: 4.0,
+            expectedRating: 4.6,
+            tam: 3600000000,
+            tamGrowthRate: 11.2,
+            margin: 77,
+            price: 24.99,
+            monthlyRevenue: 198000,
+            saturation: 41,
+            competition: "Medium",
+            tags: ["Eco-Friendly", "Amazon Choice"],
+            platforms: ["Amazon", "YouTube", "Reddit"]
+          },
+          {
+            id: "pr002",
+            name: "Pomodoro Timer Cube",
+            emoji: "⏱️",
+            image: "https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=400&h=300&fit=crop&q=80",
+            category: "Productivity",
+            trendingRank: 18,
+            trendingRankChange: +6,
+            undersoldScore: 81,
+            rating: 3.7,
+            expectedRating: 4.5,
+            tam: 280000000,
+            tamGrowthRate: 14.8,
+            margin: 74,
+            price: 19.99,
+            monthlyRevenue: 87000,
+            saturation: 26,
+            competition: "Low",
+            tags: ["Trending", "Gift"],
+            platforms: ["Amazon", "Reddit"]
+          },
+          {
+            id: "pr003",
+            name: "Ergonomic Laptop Stand",
+            emoji: "💻",
+            image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop&q=80",
+            category: "Productivity",
+            trendingRank: 10,
+            trendingRankChange: +2,
+            undersoldScore: 72,
+            rating: 4.1,
+            expectedRating: 4.6,
+            tam: 720000000,
+            tamGrowthRate: 9.7,
+            margin: 69,
+            price: 39.99,
+            monthlyRevenue: 156000,
+            saturation: 44,
+            competition: "Medium",
+            tags: ["Bestseller", "WFH"],
+            platforms: ["Amazon", "YouTube"]
+          }
+        ]
       },
-      {
-        id: "pr002",
-        name: "Pomodoro Timer Cube",
-        emoji: "⏱️",
-        image: "https://images.unsplash.com/photo-1495364141860-b0d03eccd065?w=400&h=300&fit=crop&q=80",
-        category: "Productivity",
-        trendingRank: 18,
-        trendingRankChange: +6,
-        undersoldScore: 81,
-        rating: 3.7,
-        expectedRating: 4.5,
-        tam: 280000000,
-        tamGrowthRate: 14.8,
-        margin: 74,
-        price: 19.99,
-        monthlyRevenue: 87000,
-        saturation: 26,
-        competition: "Low",
-        tags: ["Trending", "Gift"],
-        platforms: ["Amazon", "Reddit"]
+      beauty: {
+        id: "beauty",
+        name: "Beauty & Skincare",
+        emoji: "💄",
+        desc: "Skincare tools, beauty gadgets, and cosmetic accessories",
+        tam: 5600000000,
+        tamGrowth: 19.4,
+        avgUndersold: 89,
+        avgMargin: 83,
+        topProduct: "Gua Sha Facial Tool",
+        chartColor: "#ec4899",
+        products: [
+          {
+            id: "b001",
+            name: "Gua Sha Facial Tool Set",
+            emoji: "💎",
+            image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400&h=300&fit=crop&q=80",
+            category: "Beauty & Skincare",
+            trendingRank: 4,
+            trendingRankChange: +9,
+            undersoldScore: 93,
+            rating: 3.6,
+            expectedRating: 4.8,
+            tam: 1400000000,
+            tamGrowthRate: 26.3,
+            margin: 88,
+            price: 24.99,
+            monthlyRevenue: 356000,
+            saturation: 16,
+            competition: "Low",
+            tags: ["TikTok Viral", "High Margin", "Trending"],
+            platforms: ["TikTok", "Instagram", "Amazon"]
+          },
+          {
+            id: "b002",
+            name: "LED Face Mask (7-colour)",
+            emoji: "🎭",
+            image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=400&h=300&fit=crop&q=80",
+            category: "Beauty & Skincare",
+            trendingRank: 6,
+            trendingRankChange: +7,
+            undersoldScore: 87,
+            rating: 3.8,
+            expectedRating: 4.7,
+            tam: 980000000,
+            tamGrowthRate: 22.8,
+            margin: 84,
+            price: 89.99,
+            monthlyRevenue: 478000,
+            saturation: 19,
+            competition: "Low",
+            tags: ["High Margin", "TikTok Viral"],
+            platforms: ["TikTok", "Amazon", "Instagram"]
+          },
+          {
+            id: "b003",
+            name: "Vitamin C Serum Dropper",
+            emoji: "🧴",
+            image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=300&fit=crop&q=80",
+            category: "Beauty & Skincare",
+            trendingRank: 15,
+            trendingRankChange: +1,
+            undersoldScore: 78,
+            rating: 4.0,
+            expectedRating: 4.6,
+            tam: 2100000000,
+            tamGrowthRate: 13.6,
+            margin: 79,
+            price: 19.99,
+            monthlyRevenue: 234000,
+            saturation: 38,
+            competition: "Medium",
+            tags: ["Bestseller", "Amazon Choice"],
+            platforms: ["Amazon", "Instagram"]
+          }
+        ]
       },
-      {
-        id: "pr003",
-        name: "Ergonomic Laptop Stand",
-        emoji: "💻",
-        image: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=400&h=300&fit=crop&q=80",
-        category: "Productivity",
-        trendingRank: 10,
-        trendingRankChange: +2,
-        undersoldScore: 72,
-        rating: 4.1,
-        expectedRating: 4.6,
-        tam: 720000000,
-        tamGrowthRate: 9.7,
-        margin: 69,
-        price: 39.99,
-        monthlyRevenue: 156000,
-        saturation: 44,
-        competition: "Medium",
-        tags: ["Bestseller", "WFH"],
-        platforms: ["Amazon", "YouTube"]
+      tech: {
+        id: "tech",
+        name: "Tech Accessories",
+        emoji: "📱",
+        desc: "Phone accessories, smart gadgets, and portable tech",
+        tam: 7200000000,
+        tamGrowth: 16.8,
+        avgUndersold: 82,
+        avgMargin: 75,
+        topProduct: "MagSafe Wallet Stand",
+        chartColor: "#0ea5e9",
+        products: [
+          {
+            id: "t001",
+            name: "MagSafe Wallet & Stand",
+            emoji: "🔋",
+            image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=300&fit=crop&q=80",
+            category: "Tech Accessories",
+            trendingRank: 3,
+            trendingRankChange: +6,
+            undersoldScore: 86,
+            rating: 3.8,
+            expectedRating: 4.7,
+            tam: 1800000000,
+            tamGrowthRate: 21.4,
+            margin: 78,
+            price: 34.99,
+            monthlyRevenue: 312000,
+            saturation: 27,
+            competition: "Medium",
+            tags: ["Trending", "High Margin"],
+            platforms: ["Amazon", "TikTok", "YouTube"]
+          },
+          {
+            id: "t002",
+            name: "Portable Neck Fan",
+            emoji: "🌀",
+            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
+            category: "Tech Accessories",
+            trendingRank: 8,
+            trendingRankChange: +11,
+            undersoldScore: 89,
+            rating: 3.5,
+            expectedRating: 4.6,
+            tam: 640000000,
+            tamGrowthRate: 28.7,
+            margin: 81,
+            price: 29.99,
+            monthlyRevenue: 198000,
+            saturation: 17,
+            competition: "Low",
+            tags: ["Summer 2026", "TikTok Viral"],
+            platforms: ["TikTok", "Amazon"]
+          },
+          {
+            id: "t003",
+            name: "Cable Management Kit",
+            emoji: "🔌",
+            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
+            category: "Tech Accessories",
+            trendingRank: 22,
+            trendingRankChange: +2,
+            undersoldScore: 71,
+            rating: 4.1,
+            expectedRating: 4.5,
+            tam: 380000000,
+            tamGrowthRate: 8.4,
+            margin: 68,
+            price: 14.99,
+            monthlyRevenue: 89000,
+            saturation: 48,
+            competition: "High",
+            tags: ["Bestseller"],
+            platforms: ["Amazon"]
+          }
+        ]
       }
-    ]
-  },
-  beauty: {
-    id: "beauty",
-    name: "Beauty & Skincare",
-    emoji: "💄",
-    desc: "Skincare tools, beauty gadgets, and cosmetic accessories",
-    tam: 5600000000,
-    tamGrowth: 19.4,
-    avgUndersold: 89,
-    avgMargin: 83,
-    topProduct: "Gua Sha Facial Tool",
-    chartColor: "#ec4899",
-    products: [
-      {
-        id: "b001",
-        name: "Gua Sha Facial Tool Set",
-        emoji: "💎",
-        image: "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=400&h=300&fit=crop&q=80",
-        category: "Beauty & Skincare",
-        trendingRank: 4,
-        trendingRankChange: +9,
-        undersoldScore: 93,
-        rating: 3.6,
-        expectedRating: 4.8,
-        tam: 1400000000,
-        tamGrowthRate: 26.3,
-        margin: 88,
-        price: 24.99,
-        monthlyRevenue: 356000,
-        saturation: 16,
-        competition: "Low",
-        tags: ["TikTok Viral", "High Margin", "Trending"],
-        platforms: ["TikTok", "Instagram", "Amazon"]
-      },
-      {
-        id: "b002",
-        name: "LED Face Mask (7-colour)",
-        emoji: "🎭",
-        image: "https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=400&h=300&fit=crop&q=80",
-        category: "Beauty & Skincare",
-        trendingRank: 6,
-        trendingRankChange: +7,
-        undersoldScore: 87,
-        rating: 3.8,
-        expectedRating: 4.7,
-        tam: 980000000,
-        tamGrowthRate: 22.8,
-        margin: 84,
-        price: 89.99,
-        monthlyRevenue: 478000,
-        saturation: 19,
-        competition: "Low",
-        tags: ["High Margin", "TikTok Viral"],
-        platforms: ["TikTok", "Amazon", "Instagram"]
-      },
-      {
-        id: "b003",
-        name: "Vitamin C Serum Dropper",
-        emoji: "🧴",
-        image: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400&h=300&fit=crop&q=80",
-        category: "Beauty & Skincare",
-        trendingRank: 15,
-        trendingRankChange: +1,
-        undersoldScore: 78,
-        rating: 4.0,
-        expectedRating: 4.6,
-        tam: 2100000000,
-        tamGrowthRate: 13.6,
-        margin: 79,
-        price: 19.99,
-        monthlyRevenue: 234000,
-        saturation: 38,
-        competition: "Medium",
-        tags: ["Bestseller", "Amazon Choice"],
-        platforms: ["Amazon", "Instagram"]
-      }
-    ]
-  },
-  tech: {
-    id: "tech",
-    name: "Tech Accessories",
-    emoji: "📱",
-    desc: "Phone accessories, smart gadgets, and portable tech",
-    tam: 7200000000,
-    tamGrowth: 16.8,
-    avgUndersold: 82,
-    avgMargin: 75,
-    topProduct: "MagSafe Wallet Stand",
-    chartColor: "#0ea5e9",
-    products: [
-      {
-        id: "t001",
-        name: "MagSafe Wallet & Stand",
-        emoji: "🔋",
-        image: "https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=300&fit=crop&q=80",
-        category: "Tech Accessories",
-        trendingRank: 3,
-        trendingRankChange: +6,
-        undersoldScore: 86,
-        rating: 3.8,
-        expectedRating: 4.7,
-        tam: 1800000000,
-        tamGrowthRate: 21.4,
-        margin: 78,
-        price: 34.99,
-        monthlyRevenue: 312000,
-        saturation: 27,
-        competition: "Medium",
-        tags: ["Trending", "High Margin"],
-        platforms: ["Amazon", "TikTok", "YouTube"]
-      },
-      {
-        id: "t002",
-        name: "Portable Neck Fan",
-        emoji: "🌀",
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
-        category: "Tech Accessories",
-        trendingRank: 8,
-        trendingRankChange: +11,
-        undersoldScore: 89,
-        rating: 3.5,
-        expectedRating: 4.6,
-        tam: 640000000,
-        tamGrowthRate: 28.7,
-        margin: 81,
-        price: 29.99,
-        monthlyRevenue: 198000,
-        saturation: 17,
-        competition: "Low",
-        tags: ["Summer 2026", "TikTok Viral"],
-        platforms: ["TikTok", "Amazon"]
-      },
-      {
-        id: "t003",
-        name: "Cable Management Kit",
-        emoji: "🔌",
-        image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop&q=80",
-        category: "Tech Accessories",
-        trendingRank: 22,
-        trendingRankChange: +2,
-        undersoldScore: 71,
-        rating: 4.1,
-        expectedRating: 4.5,
-        tam: 380000000,
-        tamGrowthRate: 8.4,
-        margin: 68,
-        price: 14.99,
-        monthlyRevenue: 89000,
-        saturation: 48,
-        competition: "High",
-        tags: ["Bestseller"],
-        platforms: ["Amazon"]
-      }
-    ]
-  }
-};
+    };
 
-// Merge DB products into categories
-function getAllProducts() {
-  const all = [];
-  // Add DB products
-  if (typeof DB !== "undefined") {
-    DB.products.forEach(p => {
-      all.push({
-        id: p.id,
-        name: p.name,
-        emoji: p.emoji,
-        image: p.image || null,
-        category: p.category,
-        trendingRank: p.trendingRank,
-        trendingRankChange: p.trendingRankChange,
-        undersoldScore: p.undersoldScore,
-        rating: p.rating,
-        expectedRating: p.expectedRating,
-        tam: p.tam,
-        tamGrowthRate: p.tamGrowthRate,
-        margin: p.margin,
-        price: p.price,
-        monthlyRevenue: p.monthlyRevenue,
-        saturation: p.saturation,
-        competition: p.competition,
-        tags: p.tags || [],
-        platforms: p.sourcePlatforms || []
+    // Merge DB products into categories
+    function getAllProducts() {
+      const all = [];
+      // Add DB products
+      if (typeof DB !== "undefined") {
+        DB.products.forEach(p => {
+          all.push({
+            id: p.id,
+            name: p.name,
+            emoji: p.emoji,
+            image: p.image || null,
+            category: p.category,
+            trendingRank: p.trendingRank,
+            trendingRankChange: p.trendingRankChange,
+            undersoldScore: p.undersoldScore,
+            rating: p.rating,
+            expectedRating: p.expectedRating,
+            tam: p.tam,
+            tamGrowthRate: p.tamGrowthRate,
+            margin: p.margin,
+            price: p.price,
+            monthlyRevenue: p.monthlyRevenue,
+            saturation: p.saturation,
+            competition: p.competition,
+            tags: p.tags || [],
+            platforms: p.sourcePlatforms || []
+          });
+        });
+      }
+      // Add category products
+      Object.values(CATEGORIES).forEach(cat => {
+        if (cat.products) {
+          cat.products.forEach(p => {
+            if (!all.find(x => x.id === p.id)) all.push(p);
+          });
+        }
       });
-    });
-  }
-  // Add category products
-  Object.values(CATEGORIES).forEach(cat => {
-    if (cat.products) {
-      cat.products.forEach(p => {
-        if (!all.find(x => x.id === p.id)) all.push(p);
-      });
+      return all;
     }
-  });
-  return all;
-}
 
-let currentCategory = "all";
-let currentSort = "trending";
-let searchQuery = "";
-let catChartInstance = null;
+    let currentCategory = "all";
+    let currentSort = "trending";
+    let searchQuery = "";
+    let catChartInstance = null;
 
-// ---- Init ----
-document.addEventListener("DOMContentLoaded", () => {
-  switchCategory("all", document.querySelector('.category-tab[data-cat="all"]'));
-});
+    // ---- Init ----
+    document.addEventListener("DOMContentLoaded", () => {
+      switchCategory("all", document.querySelector('.category-tab[data-cat="all"]'));
+    });
 
-// ---- Switch Category ----
-function switchCategory(catId, el) {
-  currentCategory = catId;
-  document.querySelectorAll(".category-tab").forEach(t => t.classList.remove("active"));
-  if (el) el.classList.add("active");
-  renderCategoryPanel(catId);
-  renderProducts();
-}
+    // ---- Switch Category ----
+    function switchCategory(catId, el) {
+      currentCategory = catId;
+      document.querySelectorAll(".category-tab").forEach(t => t.classList.remove("active"));
+      if (el) el.classList.add("active");
+      renderCategoryPanel(catId);
+      renderProducts();
+    }
 
-// ---- Category Panel ----
-function renderCategoryPanel(catId) {
-  const panel = document.getElementById("categoryPanel");
-  if (catId === "all") {
-    panel.innerHTML = "";
-    return;
-  }
-  const cat = CATEGORIES[catId];
-  if (!cat) { panel.innerHTML = ""; return; }
+    // ---- Category Panel ----
+    function renderCategoryPanel(catId) {
+      const panel = document.getElementById("categoryPanel");
+      if (catId === "all") {
+        panel.innerHTML = "";
+        return;
+      }
+      const cat = CATEGORIES[catId];
+      if (!cat) { panel.innerHTML = ""; return; }
 
-  panel.innerHTML = `
+      panel.innerHTML = `
     <div class="category-analytics">
       <div class="category-analytics-header">
         <div class="cat-header-left">
@@ -919,107 +944,107 @@ function renderCategoryPanel(catId) {
     </div>
   `;
 
-  // Render mini chart
-  setTimeout(() => {
-    const ctx = document.getElementById("catChart");
-    if (!ctx) return;
-    if (catChartInstance) catChartInstance.destroy();
-    const months = ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"];
-    const base = cat.tam / 1e6 * 0.008;
-    const data = months.map((_, i) => +(base * (1 + i * 0.06 + Math.random() * 0.04)).toFixed(1));
-    catChartInstance = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: months,
-        datasets: [{
-          data,
-          borderColor: cat.chartColor,
-          backgroundColor: cat.chartColor + "18",
-          borderWidth: 2.5,
-          pointRadius: 4,
-          pointBackgroundColor: cat.chartColor,
-          tension: 0.4,
-          fill: true
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toFixed(1)}M` } } },
-        scales: {
-          x: { grid: { display: false }, ticks: { font: { size: 10 }, color: "#94a3b8" } },
-          y: { grid: { color: "#f1f5f9" }, ticks: { font: { size: 10 }, color: "#94a3b8", callback: v => `$${v}M` } }
+      // Render mini chart
+      setTimeout(() => {
+        const ctx = document.getElementById("catChart");
+        if (!ctx) return;
+        if (catChartInstance) catChartInstance.destroy();
+        const months = ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"];
+        const base = cat.tam / 1e6 * 0.008;
+        const data = months.map((_, i) => +(base * (1 + i * 0.06 + Math.random() * 0.04)).toFixed(1));
+        catChartInstance = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: months,
+            datasets: [{
+              data,
+              borderColor: cat.chartColor,
+              backgroundColor: cat.chartColor + "18",
+              borderWidth: 2.5,
+              pointRadius: 4,
+              pointBackgroundColor: cat.chartColor,
+              tension: 0.4,
+              fill: true
+            }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` $${ctx.parsed.y.toFixed(1)}M` } } },
+            scales: {
+              x: { grid: { display: false }, ticks: { font: { size: 10 }, color: "#94a3b8" } },
+              y: { grid: { color: "#f1f5f9" }, ticks: { font: { size: 10 }, color: "#94a3b8", callback: v => `$${v}M` } }
+            }
+          }
+        });
+      }, 50);
+    }
+
+    // ---- Render Products ----
+    function renderProducts() {
+      let products = getAllProducts();
+
+      // Filter by category
+      if (currentCategory !== "all") {
+        const cat = CATEGORIES[currentCategory];
+        if (cat) {
+          const catName = cat.name.toLowerCase();
+          products = products.filter(p =>
+            p.category.toLowerCase().includes(catName.split(" ")[0]) ||
+            (cat.products && cat.products.find(cp => cp.id === p.id))
+          );
         }
       }
-    });
-  }, 50);
-}
 
-// ---- Render Products ----
-function renderProducts() {
-  let products = getAllProducts();
+      // Filter by search
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        products = products.filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          (p.tags && p.tags.some(t => t.toLowerCase().includes(q)))
+        );
+      }
 
-  // Filter by category
-  if (currentCategory !== "all") {
-    const cat = CATEGORIES[currentCategory];
-    if (cat) {
-      const catName = cat.name.toLowerCase();
-      products = products.filter(p =>
-        p.category.toLowerCase().includes(catName.split(" ")[0]) ||
-        (cat.products && cat.products.find(cp => cp.id === p.id))
-      );
+      // Sort
+      products = sortProductsArr(products, currentSort);
+
+      const grid = document.getElementById("productsGrid");
+      const noResults = document.getElementById("noResults");
+      const heading = document.getElementById("productsHeading");
+      const count = document.getElementById("resultCount");
+
+      const catLabel = currentCategory === "all" ? "All Categories" : CATEGORIES[currentCategory]?.name || "";
+      heading.textContent = searchQuery ? `Search: "${searchQuery}"` : `${catLabel} — Trending Products`;
+      count.textContent = `${products.length} product${products.length !== 1 ? "s" : ""}`;
+
+      if (products.length === 0) {
+        grid.innerHTML = "";
+        noResults.style.display = "block";
+        return;
+      }
+      noResults.style.display = "none";
+
+      grid.innerHTML = products.map(p => buildProductCard(p)).join("");
     }
-  }
 
-  // Filter by search
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-    products = products.filter(p =>
-      p.name.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q) ||
-      (p.tags && p.tags.some(t => t.toLowerCase().includes(q)))
-    );
-  }
+    function buildProductCard(p) {
+      const rankChange = p.trendingRankChange > 0
+        ? `<span style="color:var(--green-500);font-size:0.7rem;font-weight:700;">▲${p.trendingRankChange}</span>`
+        : p.trendingRankChange < 0
+          ? `<span style="color:var(--red-500);font-size:0.7rem;font-weight:700;">▼${Math.abs(p.trendingRankChange)}</span>`
+          : "";
 
-  // Sort
-  products = sortProductsArr(products, currentSort);
+      const imageHtml = p.image
+        ? `<img src="${p.image}" alt="${p.name}" class="product-card-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="product-card-image-placeholder" style="display:none;">${p.emoji}</div>`
+        : `<div class="product-card-image-placeholder">${p.emoji}</div>`;
 
-  const grid = document.getElementById("productsGrid");
-  const noResults = document.getElementById("noResults");
-  const heading = document.getElementById("productsHeading");
-  const count = document.getElementById("resultCount");
+      const tagsHtml = (p.tags || []).slice(0, 2).map(t =>
+        `<span style="font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:var(--radius-full);background:var(--blue-50);color:var(--blue-500);border:1px solid var(--blue-100);">${t}</span>`
+      ).join("");
 
-  const catLabel = currentCategory === "all" ? "All Categories" : CATEGORIES[currentCategory]?.name || "";
-  heading.textContent = searchQuery ? `Search: "${searchQuery}"` : `${catLabel} — Trending Products`;
-  count.textContent = `${products.length} product${products.length !== 1 ? "s" : ""}`;
+      const undersoldColor = p.undersoldScore >= 85 ? "var(--blue-500)" : p.undersoldScore >= 70 ? "var(--yellow-500)" : "var(--gray-400)";
 
-  if (products.length === 0) {
-    grid.innerHTML = "";
-    noResults.style.display = "block";
-    return;
-  }
-  noResults.style.display = "none";
-
-  grid.innerHTML = products.map(p => buildProductCard(p)).join("");
-}
-
-function buildProductCard(p) {
-  const rankChange = p.trendingRankChange > 0
-    ? `<span style="color:var(--green-500);font-size:0.7rem;font-weight:700;">▲${p.trendingRankChange}</span>`
-    : p.trendingRankChange < 0
-    ? `<span style="color:var(--red-500);font-size:0.7rem;font-weight:700;">▼${Math.abs(p.trendingRankChange)}</span>`
-    : "";
-
-  const imageHtml = p.image
-    ? `<img src="${p.image}" alt="${p.name}" class="product-card-image" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" /><div class="product-card-image-placeholder" style="display:none;">${p.emoji}</div>`
-    : `<div class="product-card-image-placeholder">${p.emoji}</div>`;
-
-  const tagsHtml = (p.tags || []).slice(0, 2).map(t =>
-    `<span style="font-size:0.65rem;font-weight:700;padding:2px 8px;border-radius:var(--radius-full);background:var(--blue-50);color:var(--blue-500);border:1px solid var(--blue-100);">${t}</span>`
-  ).join("");
-
-  const undersoldColor = p.undersoldScore >= 85 ? "var(--blue-500)" : p.undersoldScore >= 70 ? "var(--yellow-500)" : "var(--gray-400)";
-
-  return `
+      return `
     <div class="product-image-card" onclick="goToProduct('${p.id}')">
       <div style="position:relative;">
         ${imageHtml}
@@ -1055,40 +1080,40 @@ function buildProductCard(p) {
       </div>
     </div>
   `;
-}
+    }
 
-function sortProductsArr(arr, sort) {
-  return [...arr].sort((a, b) => {
-    if (sort === "trending") return a.trendingRank - b.trendingRank;
-    if (sort === "undersold") return b.undersoldScore - a.undersoldScore;
-    if (sort === "tam") return b.tam - a.tam;
-    if (sort === "margin") return b.margin - a.margin;
-    return 0;
-  });
-}
+    function sortProductsArr(arr, sort) {
+      return [...arr].sort((a, b) => {
+        if (sort === "trending") return a.trendingRank - b.trendingRank;
+        if (sort === "undersold") return b.undersoldScore - a.undersoldScore;
+        if (sort === "tam") return b.tam - a.tam;
+        if (sort === "margin") return b.margin - a.margin;
+        return 0;
+      });
+    }
 
-function sortProducts(val) {
-  currentSort = val;
-  renderProducts();
-}
+    function sortProducts(val) {
+      currentSort = val;
+      renderProducts();
+    }
 
-// ---- Search ----
-function handleSearch(val) {
-  searchQuery = val.trim();
-  renderProducts();
+    // ---- Search ----
+    function handleSearch(val) {
+      searchQuery = val.trim();
+      renderProducts();
 
-  const dropdown = document.getElementById("searchDropdown");
-  if (!val.trim()) { dropdown.style.display = "none"; return; }
+      const dropdown = document.getElementById("searchDropdown");
+      if (!val.trim()) { dropdown.style.display = "none"; return; }
 
-  const q = val.toLowerCase();
-  const suggestions = getAllProducts()
-    .filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))
-    .slice(0, 5);
+      const q = val.toLowerCase();
+      const suggestions = getAllProducts()
+        .filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q))
+        .slice(0, 5);
 
-  if (suggestions.length === 0) { dropdown.style.display = "none"; return; }
+      if (suggestions.length === 0) { dropdown.style.display = "none"; return; }
 
-  dropdown.innerHTML = suggestions.map(p => `
-    <div onclick="selectSuggestion('${p.id}','${p.name.replace(/'/g,"\\'")}','${p.category}')"
+      dropdown.innerHTML = suggestions.map(p => `
+    <div onclick="selectSuggestion('${p.id}','${p.name.replace(/'/g, "\\'")}','${p.category}')"
       style="display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:1px solid var(--gray-100);transition:background 0.15s;"
       onmouseover="this.style.background='var(--blue-50)'" onmouseout="this.style.background='var(--white)'">
       <span style="font-size:1.4rem;">${p.emoji}</span>
@@ -1099,52 +1124,53 @@ function handleSearch(val) {
       <div style="margin-left:auto;font-size:0.75rem;font-weight:700;color:var(--blue-400);">View →</div>
     </div>
   `).join("");
-  dropdown.style.display = "block";
-}
+      dropdown.style.display = "block";
+    }
 
-function selectSuggestion(id, name, category) {
-  document.getElementById("trendSearch").value = name;
-  document.getElementById("searchDropdown").style.display = "none";
-  goToProduct(id);
-}
+    function selectSuggestion(id, name, category) {
+      document.getElementById("trendSearch").value = name;
+      document.getElementById("searchDropdown").style.display = "none";
+      goToProduct(id);
+    }
 
-document.addEventListener("click", (e) => {
-  if (!e.target.closest("#trendSearch") && !e.target.closest("#searchDropdown")) {
-    document.getElementById("searchDropdown").style.display = "none";
-  }
-});
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest("#trendSearch") && !e.target.closest("#searchDropdown")) {
+        document.getElementById("searchDropdown").style.display = "none";
+      }
+    });
 
-// ---- Navigation ----
-function goToProduct(id) {
-  // Check if it's a DB product
-  if (typeof DB !== "undefined" && DB.getProduct(id)) {
-    window.location.href = `product.html?id=${id}`;
-  } else {
-    // Show toast for category-only products
-    showToast(`📊 Opening ${id} — Full analysis available on Growth plan`, "info");
-    setTimeout(() => { window.location.href = `signup.html?plan=growth`; }, 1500);
-  }
-}
+    // ---- Navigation ----
+    function goToProduct(id) {
+      // Check if it's a DB product
+      if (typeof DB !== "undefined" && DB.getProduct(id)) {
+        window.location.href = `product.html?id=${id}`;
+      } else {
+        // Show toast for category-only products
+        showToast(`📊 Opening ${id} — Full analysis available on Growth plan`, "info");
+        setTimeout(() => { window.location.href = `signup.html?plan=growth`; }, 1500);
+      }
+    }
 
-function formatCurrency(val) {
-  if (val >= 1e9) return "$" + (val / 1e9).toFixed(1) + "B";
-  if (val >= 1e6) return "$" + (val / 1e6).toFixed(0) + "M";
-  return "$" + val.toLocaleString();
-}
+    function formatCurrency(val) {
+      if (val >= 1e9) return "$" + (val / 1e9).toFixed(1) + "B";
+      if (val >= 1e6) return "$" + (val / 1e6).toFixed(0) + "M";
+      return "$" + val.toLocaleString();
+    }
 
-function showToast(message, type = "info") {
-  const container = document.getElementById("toastContainer");
-  const toast = document.createElement("div");
-  toast.className = `toast ${type}`;
-  toast.textContent = message;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    toast.style.transform = "translateX(20px)";
-    toast.style.transition = "all 0.3s ease";
-    setTimeout(() => toast.remove(), 300);
-  }, 3500);
-}
-</script>
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(20px)";
+        toast.style.transition = "all 0.3s ease";
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
 </body>
+
 </html>

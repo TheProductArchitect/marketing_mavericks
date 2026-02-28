@@ -1,272 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Product Detail – Marketing Mavericks</title>
-  <meta name="description" content="Deep-dive market intelligence for dropshippers. Undersold ratings, TAM, trending rank, and future projections." />
+  <meta name="description"
+    content="Deep-dive market intelligence for dropshippers. Undersold ratings, TAM, trending rank, and future projections." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
+
 <body>
 
-<!-- ============================================================
+  <!-- ============================================================
      NAVIGATION
      ============================================================ -->
-<nav class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-brand">
-      <div class="brand-logo">MM</div>
-      <span class="brand-name">Marketing <span>Mavericks</span></span>
-    </a>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-brand">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name">Marketing <span>Mavericks</span></span>
+      </a>
 
-    <nav class="navbar-nav">
-      <a href="landing.html" class="nav-link">Home</a>
-      <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
-      <a href="index.html" class="nav-link nav-protected">Dashboard</a>
-      <a href="pricing.html" class="nav-link">Pricing</a>
-    </nav>
+      <nav class="navbar-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
+        <a href="dashboard.html" class="nav-link nav-protected">Dashboard</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+      </nav>
 
-    <div class="navbar-actions">
-      <div class="live-badge">
-        <div class="live-dot"></div>
-        Live Data
+      <div class="navbar-actions">
+        <div class="live-badge">
+          <div class="live-dot"></div>
+          Live Data
+        </div>
+        <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
+        <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
       </div>
-      <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
-      <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
     </div>
-  </div>
-</nav>
+  </nav>
 
-<!-- ============================================================
+  <!-- ============================================================
      PRODUCT HERO (populated by JS)
      ============================================================ -->
-<section class="product-detail-hero" id="productHero">
-  <div style="max-width:1280px;margin:0 auto;padding:0 32px;position:relative;z-index:1;">
-    <a href="index.html" class="back-btn">← Back to Dashboard</a>
-    <div class="product-detail-header" id="productHeader">
-      <!-- Populated by JS -->
+  <section class="product-detail-hero" id="productHero">
+    <div style="max-width:1280px;margin:0 auto;padding:0 32px;position:relative;z-index:1;">
+      <a href="dashboard.html" class="back-btn">← Back to Dashboard</a>
+      <div class="product-detail-header" id="productHeader">
+        <!-- Populated by JS -->
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ============================================================
+  <!-- ============================================================
      DETAIL CONTENT
      ============================================================ -->
-<div class="detail-content" id="detailContent">
+  <div class="detail-content" id="detailContent">
 
-  <!-- MAIN COLUMN -->
-  <div class="detail-main" id="detailMain">
+    <!-- MAIN COLUMN -->
+    <div class="detail-main" id="detailMain">
 
-    <!-- Key Metrics -->
-    <div class="card" id="keyMetricsCard">
-      <div class="card-header">
-        <span class="card-title">📊 Key Performance Metrics</span>
-        <span class="trend-badge up" id="trendBadge"></span>
-      </div>
-      <div class="card-body">
-        <div class="key-metrics-grid" id="keyMetricsGrid">
-          <!-- Populated by JS -->
+      <!-- Key Metrics -->
+      <div class="card" id="keyMetricsCard">
+        <div class="card-header">
+          <span class="card-title">📊 Key Performance Metrics</span>
+          <span class="trend-badge up" id="trendBadge"></span>
         </div>
-      </div>
-    </div>
-
-    <!-- Undersold Rating Analysis -->
-    <div class="card" id="undersoldCard">
-      <div class="card-header">
-        <span class="card-title">⭐ Undersold Rating Analysis</span>
-        <span class="rating-gap-badge" id="ratingGapBadge"></span>
-      </div>
-      <div class="card-body">
-        <div class="undersold-detail">
-          <div class="undersold-gauge">
-            <svg class="gauge-svg" viewBox="0 0 140 140">
-              <circle class="gauge-bg" cx="70" cy="70" r="54" />
-              <circle class="gauge-fill" id="gaugeFill" cx="70" cy="70" r="54"
-                stroke-dasharray="339.3"
-                stroke-dashoffset="339.3" />
-            </svg>
-            <div class="gauge-center">
-              <div class="gauge-value" id="gaugeValue">0</div>
-              <div class="gauge-label">Score</div>
-            </div>
-          </div>
-
-          <div class="undersold-info">
-            <div class="rating-comparison" id="ratingComparison">
-              <!-- Populated by JS -->
-            </div>
-            <div class="undersold-insight" id="undersoldInsight"></div>
+        <div class="card-body">
+          <div class="key-metrics-grid" id="keyMetricsGrid">
+            <!-- Populated by JS -->
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Revenue & Projections Chart -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">📈 Revenue Trend &amp; Projections</span>
-        <div class="chart-tabs" id="productChartTabs">
-          <button class="chart-tab active" data-chart="revenue">Revenue</button>
-          <button class="chart-tab" data-chart="search">Search Volume</button>
-          <button class="chart-tab" data-chart="tam">TAM Growth</button>
+      <!-- Undersold Rating Analysis -->
+      <div class="card" id="undersoldCard">
+        <div class="card-header">
+          <span class="card-title">⭐ Undersold Rating Analysis</span>
+          <span class="rating-gap-badge" id="ratingGapBadge"></span>
+        </div>
+        <div class="card-body">
+          <div class="undersold-detail">
+            <div class="undersold-gauge">
+              <svg class="gauge-svg" viewBox="0 0 140 140">
+                <circle class="gauge-bg" cx="70" cy="70" r="54" />
+                <circle class="gauge-fill" id="gaugeFill" cx="70" cy="70" r="54" stroke-dasharray="339.3"
+                  stroke-dashoffset="339.3" />
+              </svg>
+              <div class="gauge-center">
+                <div class="gauge-value" id="gaugeValue">0</div>
+                <div class="gauge-label">Score</div>
+              </div>
+            </div>
+
+            <div class="undersold-info">
+              <div class="rating-comparison" id="ratingComparison">
+                <!-- Populated by JS -->
+              </div>
+              <div class="undersold-insight" id="undersoldInsight"></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="card-body">
-        <div class="chart-container">
-          <canvas id="productChart"></canvas>
+
+      <!-- Revenue & Projections Chart -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📈 Revenue Trend &amp; Projections</span>
+          <div class="chart-tabs" id="productChartTabs">
+            <button class="chart-tab active" data-chart="revenue">Revenue</button>
+            <button class="chart-tab" data-chart="search">Search Volume</button>
+            <button class="chart-tab" data-chart="tam">TAM Growth</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="productChart"></canvas>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- TAM Analysis -->
-    <div class="card" id="tamCard">
-      <div class="card-header">
-        <span class="card-title">🌍 Total Addressable Market</span>
-      </div>
-      <div class="card-body">
-        <div class="tam-display" id="tamDisplay">
-          <!-- Populated by JS -->
+      <!-- TAM Analysis -->
+      <div class="card" id="tamCard">
+        <div class="card-header">
+          <span class="card-title">🌍 Total Addressable Market</span>
         </div>
-        <div class="tam-breakdown" id="tamBreakdown">
-          <!-- Populated by JS -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Future Projections Table -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">🔮 6-Month Revenue Projections</span>
-        <span style="font-size:0.75rem;color:var(--gray-500);">AI-modelled forecast</span>
-      </div>
-      <div class="card-body" style="padding:0;">
-        <table class="projection-table" id="projectionTable">
-          <!-- Populated by JS -->
-        </table>
-      </div>
-    </div>
-
-    <!-- AI Insights -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">💡 AI Market Insights</span>
-      </div>
-      <div class="card-body">
-        <div class="insights-list" id="insightsList">
-          <!-- Populated by JS -->
+        <div class="card-body">
+          <div class="tam-display" id="tamDisplay">
+            <!-- Populated by JS -->
+          </div>
+          <div class="tam-breakdown" id="tamBreakdown">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Customer Reviews -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">💬 Customer Sentiment</span>
-        <span style="font-size:0.75rem;color:var(--gray-500);">Scraped from live platforms</span>
-      </div>
-      <div class="card-body">
-        <div class="reviews-list" id="reviewsList">
-          <!-- Populated by JS -->
+      <!-- Future Projections Table -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🔮 6-Month Revenue Projections</span>
+          <span style="font-size:0.75rem;color:var(--gray-500);">AI-modelled forecast</span>
+        </div>
+        <div class="card-body" style="padding:0;">
+          <table class="projection-table" id="projectionTable">
+            <!-- Populated by JS -->
+          </table>
         </div>
       </div>
-    </div>
 
-  </div><!-- /detail-main -->
-
-  <!-- SIDEBAR -->
-  <div class="detail-sidebar" id="detailSidebar">
-
-    <!-- Opportunity Score -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">🎯 Opportunity Score</span>
-      </div>
-      <div class="card-body" style="padding:16px;">
-        <div class="opportunity-score-ring" id="opportunityRing">
-          <!-- Populated by JS -->
+      <!-- AI Insights -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">💡 AI Market Insights</span>
+        </div>
+        <div class="card-body">
+          <div class="insights-list" id="insightsList">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Quick Stats -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">⚡ Quick Stats</span>
-      </div>
-      <div class="card-body" style="padding:16px 20px;">
-        <div id="quickStats">
-          <!-- Populated by JS -->
+      <!-- Customer Reviews -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">💬 Customer Sentiment</span>
+          <span style="font-size:0.75rem;color:var(--gray-500);">Scraped from live platforms</span>
         </div>
-        <div class="competition-meter" id="competitionMeter">
-          <!-- Populated by JS -->
-        </div>
-        <div class="virality-score" id="viralityScore">
-          <!-- Populated by JS -->
+        <div class="card-body">
+          <div class="reviews-list" id="reviewsList">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Social Proof -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">📱 Social Proof</span>
-      </div>
-      <div class="card-body" style="padding:16px;">
-        <div class="social-stats" id="socialStats">
-          <!-- Populated by JS -->
+    </div><!-- /detail-main -->
+
+    <!-- SIDEBAR -->
+    <div class="detail-sidebar" id="detailSidebar">
+
+      <!-- Opportunity Score -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎯 Opportunity Score</span>
+        </div>
+        <div class="card-body" style="padding:16px;">
+          <div class="opportunity-score-ring" id="opportunityRing">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Pricing & Margin -->
-    <div class="highlight-box" id="pricingBox">
-      <!-- Populated by JS -->
-    </div>
-
-    <!-- Data Sources -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">🔗 Data Sources</span>
-      </div>
-      <div class="card-body" style="padding:16px 20px;">
-        <div id="dataSources">
-          <!-- Populated by JS -->
+      <!-- Quick Stats -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">⚡ Quick Stats</span>
+        </div>
+        <div class="card-body" style="padding:16px 20px;">
+          <div id="quickStats">
+            <!-- Populated by JS -->
+          </div>
+          <div class="competition-meter" id="competitionMeter">
+            <!-- Populated by JS -->
+          </div>
+          <div class="virality-score" id="viralityScore">
+            <!-- Populated by JS -->
+          </div>
         </div>
       </div>
-    </div>
 
-  </div><!-- /detail-sidebar -->
+      <!-- Social Proof -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📱 Social Proof</span>
+        </div>
+        <div class="card-body" style="padding:16px;">
+          <div class="social-stats" id="socialStats">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
 
-</div><!-- /detail-content -->
+      <!-- Pricing & Margin -->
+      <div class="highlight-box" id="pricingBox">
+        <!-- Populated by JS -->
+      </div>
 
-<!-- ============================================================
+      <!-- Data Sources -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🔗 Data Sources</span>
+        </div>
+        <div class="card-body" style="padding:16px 20px;">
+          <div id="dataSources">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /detail-sidebar -->
+
+  </div><!-- /detail-content -->
+
+  <!-- ============================================================
      FOOTER
      ============================================================ -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
-      <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
+        <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+      </div>
+      <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR
+        Compliant</span>
+      <div class="footer-links">
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <button class="footer-link" onclick="openPrivacyModal()"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)','cookies'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+        <a href="signin.html" class="footer-link">Sign In</a>
+      </div>
     </div>
-    <span class="footer-text">© 2026 Marketing Mavericks · Cambridge MBA Hackathon · AI-Powered Dropship Intelligence</span>
-    <div class="footer-links">
-      <button class="footer-link" onclick="openPrivacyModal()" style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
-      <button class="footer-link" onclick="openPrivacyModal()" style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
-      <button class="footer-link" onclick="openPrivacyModal()" style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- Toast Container -->
-<div class="toast-container" id="toastContainer"></div>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
 
-<!-- Scripts -->
-<script src="database.js"></script>
-<script src="auth.js"></script>
-<script src="product.js"></script>
+  <!-- Scripts -->
+  <script src="database.js"></script>
+  <script src="auth.js"></script>
+  <script src="product.js"></script>
 </body>
+
 </html>

@@ -13,12 +13,12 @@
 
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="landing.html" class="navbar-brand">
+    <a href="index.html" class="navbar-brand">
       <div class="brand-logo">MM</div>
       <span class="brand-name">Marketing <span>Mavericks</span></span>
     </a>
     <nav class="navbar-nav">
-      <a href="landing.html" class="nav-link">Home</a>
+      <a href="index.html" class="nav-link">Home</a>
       <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
       <a href="pricing.html" class="nav-link">Pricing</a>
     </nav>
@@ -122,7 +122,7 @@
       document.getElementById("authSuccess").textContent = `🎉 Account created! Welcome, ${firstName}! Redirecting to dashboard...`;
       document.getElementById("authSuccess").classList.add("visible");
       document.getElementById("authError").classList.remove("visible");
-      setTimeout(() => { window.location.href = "index.html"; }, 1500);
+      setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
     } else {
       document.getElementById("authError").textContent = "❌ " + result.error;
       document.getElementById("authError").classList.add("visible");
@@ -136,7 +136,7 @@
     if (result.ok) {
       document.getElementById("authSuccess").textContent = `🎉 Signed up with ${provider}! Redirecting...`;
       document.getElementById("authSuccess").classList.add("visible");
-      setTimeout(() => { window.location.href = "index.html"; }, 1500);
+      setTimeout(() => { window.location.href = "dashboard.html"; }, 1500);
     }
   }
 </script>

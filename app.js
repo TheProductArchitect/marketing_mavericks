@@ -73,8 +73,8 @@ function buildProductCard(p, index) {
     p.trendingRankChange > 0
       ? `<span class="rank-change up">▲ ${p.trendingRankChange}</span>`
       : p.trendingRankChange < 0
-      ? `<span class="rank-change down">▼ ${Math.abs(p.trendingRankChange)}</span>`
-      : "";
+        ? `<span class="rank-change down">▼ ${Math.abs(p.trendingRankChange)}</span>`
+        : "";
 
   const undersoldClass =
     p.undersoldScore >= 85 ? "high" : p.undersoldScore >= 60 ? "medium" : "low";
@@ -347,11 +347,12 @@ function initOverviewChart(type) {
       },
       scales: {
         x: {
-          grid: { color: "#f1f5f9" },
-          ticks: { font: { family: "Inter", size: 11 }, color: "#94a3b8" },
+          display: false,
+          grid: { display: false },
         },
         y: {
-          grid: { color: "#f1f5f9" },
+          display: false,
+          grid: { display: false },
           ticks: {
             font: { family: "Inter", size: 11 },
             color: "#94a3b8",
@@ -360,7 +361,7 @@ function initOverviewChart(type) {
               if (type === "search") return DB.formatNumber(val);
               return DB.formatCurrency(val);
             },
-          },
+          }
         },
       },
     },
@@ -453,12 +454,12 @@ function initTAMChart() {
       },
       scales: {
         x: {
+          display: false,
           grid: { display: false },
-          ticks: { font: { family: "Inter", size: 11 }, color: "#94a3b8" },
         },
         y: {
-          position: "left",
-          grid: { color: "#f1f5f9" },
+          display: false,
+          grid: { display: false },
           ticks: {
             font: { family: "Inter", size: 11 },
             color: "#94a3b8",
@@ -472,19 +473,8 @@ function initTAMChart() {
           },
         },
         y2: {
-          position: "right",
+          display: false,
           grid: { display: false },
-          ticks: {
-            font: { family: "Inter", size: 11 },
-            color: "#94a3b8",
-            callback: (v) => v + "%",
-          },
-          title: {
-            display: true,
-            text: "YoY Growth (%)",
-            font: { family: "Inter", size: 11 },
-            color: "#94a3b8",
-          },
         },
       },
     },
@@ -576,14 +566,12 @@ function initUndersoldChart() {
       },
       scales: {
         x: {
+          display: false,
           grid: { display: false },
-          ticks: { font: { family: "Inter", size: 11 }, color: "#94a3b8" },
         },
         y: {
-          position: "left",
-          min: 3,
-          max: 5.5,
-          grid: { color: "#f1f5f9" },
+          display: false,
+          grid: { display: false },
           ticks: {
             font: { family: "Inter", size: 11 },
             color: "#94a3b8",
@@ -597,21 +585,8 @@ function initUndersoldChart() {
           },
         },
         y2: {
-          position: "right",
-          min: 0,
-          max: 100,
+          display: false,
           grid: { display: false },
-          ticks: {
-            font: { family: "Inter", size: 11 },
-            color: "#94a3b8",
-            callback: (v) => v + "/100",
-          },
-          title: {
-            display: true,
-            text: "Undersold Score",
-            font: { family: "Inter", size: 11 },
-            color: "#94a3b8",
-          },
         },
       },
     },

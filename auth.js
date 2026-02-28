@@ -44,7 +44,7 @@ const AUTH = {
   // ---- Logout ----
   logout() {
     localStorage.removeItem(AUTH_KEY);
-    window.location.href = "landing.html";
+    window.location.href = "index.html";
   },
 
   // ---- Get current user ----
@@ -106,45 +106,25 @@ function buildNavHTML(activePage) {
 
   // Nav links: public vs protected
   const publicLinks = `
-    <a href="landing.html" class="nav-link${activePage === 'home' ? ' active' : ''}">Home</a>
+    <a href="index.html" class="nav-link${activePage === 'home' ? ' active' : ''}">Home</a>
     <a href="pricing.html" class="nav-link${activePage === 'pricing' ? ' active' : ''}">Pricing</a>
   `;
 
   const protectedLinks = isLoggedIn ? `
     <a href="trends.html" class="nav-link${activePage === 'trends' ? ' active' : ''}">Market Trends</a>
-    <a href="index.html" class="nav-link${activePage === 'dashboard' ? ' active' : ''}">Dashboard</a>
+    <a href="dashboard.html" class="nav-link${activePage === 'dashboard' ? ' active' : ''}">Dashboard</a>
   ` : '';
 
   // Actions
   let actionsHTML;
   if (isLoggedIn) {
     const initials = (user.firstName[0] + user.lastName[0]).toUpperCase();
-    const planLabel = { starter: 'Starter', pro: 'Pro', enterprise: 'Enterprise' }[user.plan] || 'Starter';
     actionsHTML = `
       <div class="live-badge"><div class="live-dot"></div>Live Data</div>
-      <div class="nav-user-menu" id="navUserMenu">
-        <button class="nav-user-btn" id="navUserBtn" onclick="toggleUserDropdown(event)">
-          <div class="nav-user-avatar">${initials}</div>
-          <span class="nav-user-name">${user.firstName}</span>
-          <span class="nav-user-plan-badge">${planLabel}</span>
-          <span class="nav-user-chevron">▾</span>
-        </button>
-        <div class="nav-user-dropdown" id="navUserDropdown">
-          <div class="nav-dropdown-header">
-            <div class="nav-dropdown-avatar">${initials}</div>
-            <div>
-              <div class="nav-dropdown-name">${user.firstName} ${user.lastName}</div>
-              <div class="nav-dropdown-email">${user.email}</div>
-            </div>
-          </div>
-          <div class="nav-dropdown-divider"></div>
-          <a href="profile.html" class="nav-dropdown-item">👤 My Profile</a>
-          <a href="profile.html#subscription" class="nav-dropdown-item">💳 Subscription</a>
-          <a href="profile.html#history" class="nav-dropdown-item">🕐 Search History</a>
-          <div class="nav-dropdown-divider"></div>
-          <button class="nav-dropdown-item nav-dropdown-logout" onclick="AUTH.logout()">🚪 Sign Out</button>
-        </div>
-      </div>
+      <a href="profile.html" class="nav-user-btn" style="text-decoration: none;">
+        <div class="nav-user-avatar">${initials}</div>
+        <span class="nav-user-name">Profile</span>
+      </a>
     `;
   } else {
     actionsHTML = `
@@ -173,8 +153,8 @@ document.addEventListener('click', () => {
 // GUARD: Redirect protected pages if not logged in
 // ============================================================
 function guardPage() {
-  const protectedPages = ['index.html', 'trends.html', 'product.html'];
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  const protectedPages = ['dashboard.html', 'trends.html', 'product.html'];
+  const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
   if (protectedPages.includes(currentPage) && !AUTH.isLoggedIn()) {
     window.location.href = 'signin.html?redirect=' + encodeURIComponent(currentPage);
   }
@@ -257,26 +237,27 @@ function openPrivacyModal() {
             <p class="privacy-date">Last updated: 28 February 2026</p>
             <h4>1. Who We Are</h4>
             <p>Marketing Mavericks ("we", "us", "our") is an AI-powered market intelligence platform developed by a team of Cambridge MBA students. For the purposes of this policy, our contact address is: <strong>marketing.mavericks@cambridge.ac.uk</strong></p>
+            <h4>1. Who We Are</h4>
+            <p>We are Marketing Mavericks. For questions about this policy, please contact us at: <strong>privacy@marketingmavericks.io</strong></p>
             <h4>2. Data We Collect</h4>
             <p>We collect the following categories of personal data:</p>
             <ul>
-              <li><strong>Account data:</strong> Name, email address, and password (hashed) when you register.</li>
-              <li><strong>Usage data:</strong> Pages visited, search queries, products viewed, and session duration.</li>
-              <li><strong>Technical data:</strong> IP address, browser type, device type, and operating system.</li>
-              <li><strong>Communication data:</strong> Any messages you send us via support channels.</li>
+              <li><strong>Account data:</strong> Name, email address, and hashed passwords.</li>
+              <li><strong>Usage data:</strong> Pages visited, search queries, products viewed, and session metrics.</li>
+              <li><strong>Technical data:</strong> IP address, device type, browser information.</li>
             </ul>
             <h4>3. How We Use Your Data</h4>
-            <p>We use your data to: provide and improve our services; personalise your experience; send service-related communications; analyse usage patterns to improve the platform; and comply with legal obligations.</p>
-            <h4>4. Legal Basis (GDPR)</h4>
-            <p>We process your data under the following legal bases: <strong>Contract</strong> (to provide the service you signed up for); <strong>Legitimate interests</strong> (to improve our platform); <strong>Consent</strong> (for marketing communications and non-essential cookies).</p>
+            <p>We process your data to provide our services, personalize your experience, and comply with legal obligations.</p>
+            <h4>4. Legal Basis (GDPR / CCPA)</h4>
+            <p>We process your data under the following legal bases: <strong>Contract</strong> (to provide requested services); <strong>Legitimate interests</strong> (to secure and improve our platform); <strong>Consent</strong> (for tracking and non-essential cookies).</p>
             <h4>5. Data Retention</h4>
-            <p>We retain your account data for as long as your account is active. Search history is retained for 12 months. You may request deletion at any time.</p>
-            <h4>6. Your Rights</h4>
-            <p>Under GDPR, you have the right to: access your data; rectify inaccurate data; erase your data ("right to be forgotten"); restrict processing; data portability; and object to processing. To exercise these rights, contact us at the address above.</p>
+            <p>Account data is retained while active. Search history and logs are anonymized or deleted after 12 months. You may request deletion at any time.</p>
+            <h4>6. Your Privacy Rights</h4>
+            <p>Under GDPR and CCPA, you have the right to access, rectify, or erase your data ("right to be forgotten"), restrict processing, request data portability, and object to processing. To exercise these rights, contact us at the address above.</p>
             <h4>7. Third-Party Services</h4>
-            <p>We use the following third-party services: Google Fonts (typography); Chart.js (data visualisation); Unsplash (product imagery). These services may set their own cookies.</p>
+            <p>We may share anonymous technical data with sub-processors like Google Analytics. We never sell your personal data.</p>
             <h4>8. International Transfers</h4>
-            <p>Your data is stored within the European Economic Area (EEA). Where transfers outside the EEA occur, we ensure adequate safeguards are in place.</p>
+            <p>Data stored within the EEA and US. Where transfers occur, we utilize Standard Contractual Clauses to ensure adequate safeguards.</p>
           </div>
 
           <div class="privacy-tab-content" id="tab-cookies">
@@ -304,19 +285,15 @@ function openPrivacyModal() {
 
           <div class="privacy-tab-content" id="tab-imprint">
             <h3>Imprint / Legal Notice</h3>
-            <p class="privacy-date">In accordance with § 5 TMG (Germany) and equivalent EU regulations</p>
+            <p class="privacy-date">In accordance with GDPR, CCPA, and § 5 TMG</p>
             <h4>Service Provider</h4>
-            <p><strong>Marketing Mavericks</strong><br/>Cambridge Judge Business School<br/>Trumpington Street<br/>Cambridge, CB2 1AG<br/>United Kingdom</p>
+            <p><strong>Marketing Mavericks Inc.</strong><br/>123 Market Street<br/>San Francisco, CA 94103<br/>United States</p>
             <h4>Contact</h4>
-            <p>Email: <strong>marketing.mavericks@cambridge.ac.uk</strong><br/>This platform was created as part of the AI Vibe Coding Hackathon 2026.</p>
-            <h4>Academic Context</h4>
-            <p>This product is a prototype developed by Cambridge MBA students for educational and demonstration purposes. It does not constitute financial or investment advice. All market data shown is simulated for demonstration purposes.</p>
-            <h4>Intellectual Property</h4>
-            <p>All content, design, and code on this platform is the intellectual property of the Marketing Mavericks team. Unauthorised reproduction is prohibited.</p>
+            <p>Email: <strong>legal@marketingmavericks.io</strong></p>
             <h4>Disclaimer</h4>
-            <p>The information provided on this platform is for informational purposes only. We make no representations as to the accuracy or completeness of any information. Market projections are AI-generated estimates and should not be relied upon as financial advice.</p>
+            <p>The information provided on this platform is for market research purposes only. Market projections are AI-generated estimates and should not be relied upon as financial advice.</p>
             <h4>Dispute Resolution</h4>
-            <p>The European Commission provides an online dispute resolution platform: <strong>https://ec.europa.eu/consumers/odr</strong>. We are not obliged to participate in dispute resolution proceedings before a consumer arbitration board.</p>
+            <p>The European Commission provides an online dispute resolution platform: <strong>https://ec.europa.eu/consumers/odr</strong>. U.S. residents may pursue arbitration subject to our Terms of Service.</p>
           </div>
 
           <div class="privacy-tab-content" id="tab-preferences">
@@ -430,32 +407,12 @@ function updateNavAuth() {
   document.querySelectorAll('.navbar-actions').forEach((actions) => {
     if (isLoggedIn) {
       const initials = (user.firstName[0] + user.lastName[0]).toUpperCase();
-      const planLabel = { starter: 'Starter', pro: 'Pro', enterprise: 'Enterprise' }[user.plan] || 'Starter';
       actions.innerHTML = `
         <div class="live-badge"><div class="live-dot"></div>Live Data</div>
-        <div class="nav-user-menu" id="navUserMenu">
-          <button class="nav-user-btn" id="navUserBtn" onclick="toggleUserDropdown(event)">
-            <div class="nav-user-avatar">${initials}</div>
-            <span class="nav-user-name">${user.firstName}</span>
-            <span class="nav-user-plan-badge">${planLabel}</span>
-            <span class="nav-user-chevron">▾</span>
-          </button>
-          <div class="nav-user-dropdown" id="navUserDropdown">
-            <div class="nav-dropdown-header">
-              <div class="nav-dropdown-avatar">${initials}</div>
-              <div>
-                <div class="nav-dropdown-name">${user.firstName} ${user.lastName}</div>
-                <div class="nav-dropdown-email">${user.email}</div>
-              </div>
-            </div>
-            <div class="nav-dropdown-divider"></div>
-            <a href="profile.html" class="nav-dropdown-item">👤 My Profile</a>
-            <a href="profile.html#subscription" class="nav-dropdown-item">💳 Subscription</a>
-            <a href="profile.html#history" class="nav-dropdown-item">🕐 Search History</a>
-            <div class="nav-dropdown-divider"></div>
-            <button class="nav-dropdown-item nav-dropdown-logout" onclick="AUTH.logout()">🚪 Sign Out</button>
-          </div>
-        </div>
+        <a href="profile.html" class="nav-user-btn" style="text-decoration: none;">
+          <div class="nav-user-avatar">${initials}</div>
+          <span class="nav-user-name">Profile</span>
+        </a>
       `;
     }
     // If not logged in, keep existing Sign In / Get Started buttons

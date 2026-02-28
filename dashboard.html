@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Marketing Mavericks – Dropship Intelligence Platform</title>
+  <meta name="description"
+    content="Real-time market intelligence for e-commerce dropshippers. Discover trending products, undersold ratings, and TAM analysis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+
+  <!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name">Marketing <span>Mavericks</span></span>
+      </a>
+
+      <nav class="navbar-nav">
+        <a href="landing.html" class="nav-link">Home</a>
+        <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
+        <a href="index.html" class="nav-link nav-protected active">Dashboard</a>
+        <a href="pricing.html" class="nav-link">Pricing</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <div class="live-badge">
+          <div class="live-dot"></div>
+          Live Data
+        </div>
+        <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
+        <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+     HERO
+     ============================================================ -->
+  <section class="page-hero">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        🚀 AI-Powered Market Intelligence
+      </div>
+      <h1 class="hero-title">
+        Find Your Next<br /><span class="highlight">Winning Product</span>
+      </h1>
+      <p class="hero-subtitle">
+        Real-time intelligence scraped from Amazon, TikTok &amp; beyond. Discover undersold ratings, trending ranks, and
+        total addressable markets — before your competition does.
+      </p>
+      <div class="hero-stats" id="heroStats">
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="statTracked">12,847</span>
+          <span class="hero-stat-label">Products Tracked</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="statTrends">234</span>
+          <span class="hero-stat-label">New Trends Today</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="statGrowth">+17.3%</span>
+          <span class="hero-stat-label">Avg Market Growth</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value">Live</span>
+          <span class="hero-stat-label" id="statFreshness">Updated 4 min ago</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     SEARCH & FILTERS
+     ============================================================ -->
+  <section class="search-section">
+    <div class="search-inner">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Search products, categories, tags…"
+          autocomplete="off" />
+        <span class="search-clear" id="searchClear">✕</span>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Sort by</span>
+        <select class="filter-select" id="sortSelect">
+          <option value="trendingRank-asc">Trending Rank</option>
+          <option value="undersoldScore-desc">Undersold Score</option>
+          <option value="tam-desc">TAM (Largest)</option>
+          <option value="margin-desc">Margin %</option>
+          <option value="viralityScore-desc">Virality</option>
+          <option value="monthlyRevenue-desc">Monthly Revenue</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Category</span>
+        <select class="filter-select" id="categoryFilter">
+          <option value="all">All Categories</option>
+          <option value="Health & Wellness">Health &amp; Wellness</option>
+          <option value="Home Décor">Home Décor</option>
+          <option value="Kitchen & Fitness">Kitchen &amp; Fitness</option>
+          <option value="Productivity">Productivity</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <span class="filter-label">Platform</span>
+        <select class="filter-select" id="platformFilter">
+          <option value="all">All Platforms</option>
+          <option value="Amazon">Amazon</option>
+          <option value="TikTok">TikTok</option>
+        </select>
+      </div>
+
+      <span class="results-count" id="resultsCount">
+        Showing <strong>4</strong> products
+      </span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+  <main class="main-content">
+
+    <!-- Overview Stats -->
+    <div class="stats-grid stagger-children" id="overviewStats">
+      <div class="stat-card animate-fade-in-up">
+        <div class="stat-icon blue">📦</div>
+        <div class="stat-info">
+          <div class="stat-value">4</div>
+          <div class="stat-label">Products Analysed</div>
+        </div>
+        <span class="stat-change up">↑ Live</span>
+      </div>
+      <div class="stat-card animate-fade-in-up">
+        <div class="stat-icon yellow">⭐</div>
+        <div class="stat-info">
+          <div class="stat-value" id="avgUndersold">87</div>
+          <div class="stat-label">Avg Undersold Score</div>
+        </div>
+        <span class="stat-change up">↑ High</span>
+      </div>
+      <div class="stat-card animate-fade-in-up">
+        <div class="stat-icon green">💰</div>
+        <div class="stat-info">
+          <div class="stat-value" id="totalTAM">$12.5B</div>
+          <div class="stat-label">Combined TAM</div>
+        </div>
+        <span class="stat-change up">↑ 17.3%</span>
+      </div>
+      <div class="stat-card animate-fade-in-up">
+        <div class="stat-icon orange">🔥</div>
+        <div class="stat-info">
+          <div class="stat-value" id="avgMargin">81%</div>
+          <div class="stat-label">Avg Gross Margin</div>
+        </div>
+        <span class="stat-change up">↑ Strong</span>
+      </div>
+    </div>
+
+    <!-- Market Overview Chart -->
+    <div class="section-header">
+      <div>
+        <div class="section-title"><span class="icon">📈</span> Market Overview</div>
+        <div class="section-subtitle">Combined revenue trend across all tracked products</div>
+      </div>
+      <div class="chart-tabs" id="overviewChartTabs">
+        <button class="chart-tab active" data-chart="revenue">Revenue</button>
+        <button class="chart-tab" data-chart="search">Search Volume</button>
+        <button class="chart-tab" data-chart="tam">TAM Growth</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 32px;">
+      <div class="card-body">
+        <div class="chart-container">
+          <canvas id="overviewChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Section -->
+    <div class="section-header" id="trending">
+      <div>
+        <div class="section-title"><span class="icon">🔥</span> Trending Products</div>
+        <div class="section-subtitle">Ranked by real-time trend momentum</div>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="products-grid stagger-children" id="productsGrid">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="empty-state-icon">🔍</div>
+      <h3>No products found</h3>
+      <p>Try adjusting your search or filters to find what you're looking for.</p>
+    </div>
+
+    <!-- TAM Comparison Section -->
+    <div class="section-header" id="tam" style="margin-top: 16px;">
+      <div>
+        <div class="section-title"><span class="icon">🌍</span> TAM Comparison</div>
+        <div class="section-subtitle">Total Addressable Market by product category</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 32px;">
+      <div class="card-body">
+        <div class="chart-container" style="height: 280px;">
+          <canvas id="tamChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Undersold Ratings Section -->
+    <div class="section-header" id="undersold">
+      <div>
+        <div class="section-title"><span class="icon">⭐</span> Undersold Ratings Analysis</div>
+        <div class="section-subtitle">Products where actual ratings fall below market expectations</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 32px;">
+      <div class="card-body">
+        <div class="chart-container" style="height: 280px;">
+          <canvas id="undersoldChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================
+     FOOTER
+     ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
+        <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+      </div>
+      <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR
+        Compliant</span>
+      <div class="footer-links">
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <button class="footer-link" onclick="openPrivacyModal()"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)','cookies'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+        <a href="signin.html" class="footer-link">Sign In</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="database.js"></script>
+  <script src="auth.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

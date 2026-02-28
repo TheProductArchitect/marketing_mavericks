@@ -12,14 +12,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const id = params.get("id");
 
   if (!id) {
-    window.location.href = "index.html";
+    window.location.href = "dashboard.html";
     return;
   }
 
   product = DB.getProduct(id);
 
   if (!product) {
-    window.location.href = "index.html";
+    window.location.href = "dashboard.html";
     return;
   }
 

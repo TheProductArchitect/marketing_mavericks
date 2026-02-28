@@ -13,14 +13,14 @@
 
 <nav class="navbar">
   <div class="navbar-inner">
-    <a href="landing.html" class="navbar-brand">
+    <a href="index.html" class="navbar-brand">
       <div class="brand-logo">MM</div>
       <span class="brand-name">Marketing <span>Mavericks</span></span>
     </a>
     <nav class="navbar-nav">
-      <a href="landing.html" class="nav-link">Home</a>
+      <a href="index.html" class="nav-link">Home</a>
       <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
-      <a href="index.html" class="nav-link nav-protected" style="display:none;">Dashboard</a>
+      <a href="dashboard.html" class="nav-link nav-protected" style="display:none;">Dashboard</a>
       <a href="pricing.html" class="nav-link">Pricing</a>
     </nav>
     <div class="navbar-actions">
@@ -112,7 +112,7 @@
       <div class="profile-card">
         <div class="profile-card-title">⚡ Quick Links</div>
         <div class="quick-links-list">
-          <a href="index.html" class="quick-link-item">
+          <a href="dashboard.html" class="quick-link-item">
             <span class="quick-link-icon">📊</span>
             <div>
               <div class="quick-link-name">Dashboard</div>
@@ -283,16 +283,20 @@
   </div>
 </div>
 
+<!-- ============================================================ FOOTER ============================================================ -->
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
       <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
     </div>
-    <span class="footer-text">© 2026 Marketing Mavericks · Cambridge MBA Hackathon</span>
+    <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR Compliant</span>
     <div class="footer-links">
+      <a href="pricing.html" class="footer-link">Pricing</a>
       <button class="footer-link" onclick="openPrivacyModal()" style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
-      <button class="footer-link" onclick="openPrivacyModal()" style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+      <button class="footer-link" onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)" style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
+      <button class="footer-link" onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)',|ookies'))},100)" style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+      <a href="signin.html" class="footer-link">Sign In</a>
     </div>
   </div>
 </footer>
@@ -459,7 +463,7 @@ function renderFullHistory() {
   const history = AUTH.getSearchHistory();
   const container = document.getElementById("fullHistoryList");
   if (history.length === 0) {
-    container.innerHTML = '<div class="empty-history" style="padding:40px 0;text-align:center;">No search history yet. Start exploring products on the <a href="index.html" style="color:var(--blue-400);">Dashboard</a>!</div>';
+    container.innerHTML = '<div class="empty-history" style="padding:40px 0;text-align:center;">No search history yet. Start exploring products on the <a href="dashboard.html" style="color:var(--blue-400);">Dashboard</a>!</div>';
     return;
   }
   // Group by date

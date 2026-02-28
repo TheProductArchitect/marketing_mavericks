@@ -1,308 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pricing – Marketing Mavericks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="landing.css" />
 </head>
+
 <body class="landing-body">
 
-<nav class="navbar">
-  <div class="navbar-inner">
-    <a href="landing.html" class="navbar-brand">
-      <div class="brand-logo">MM</div>
-      <span class="brand-name">Marketing <span>Mavericks</span></span>
-    </a>
-    <nav class="navbar-nav">
-      <a href="landing.html" class="nav-link">Home</a>
-      <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
-      <a href="index.html" class="nav-link nav-protected" style="display:none;">Dashboard</a>
-      <a href="pricing.html" class="nav-link active">Pricing</a>
-    </nav>
-    <div class="navbar-actions">
-      <div class="live-badge"><div class="live-dot"></div>Live Data</div>
-      <a href="signin.html" class="nav-btn-outline">Sign In</a>
-      <a href="signup.html" class="nav-btn-primary">Get Started</a>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="pricing-hero">
-  <div class="section-container">
-    <div class="section-label" style="color:var(--yellow-400);text-align:center;">Transparent Pricing</div>
-    <h1>Simple pricing for every dropshipper</h1>
-    <p>Start free. Scale as you grow. No hidden fees, no long-term contracts.</p>
-
-    <div class="pricing-toggle" id="billingToggle">
-      <div class="pricing-toggle-btn active" data-billing="monthly" onclick="setBilling('monthly',this)">Monthly</div>
-      <div class="pricing-toggle-btn" data-billing="annual" onclick="setBilling('annual',this)">
-        Annual <span style="background:var(--yellow-500);color:var(--blue-900);font-size:0.65rem;font-weight:800;padding:2px 8px;border-radius:var(--radius-full);margin-left:6px;">Save 20%</span>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name">Marketing <span>Mavericks</span></span>
+      </a>
+      <nav class="navbar-nav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
+        <a href="dashboard.html" class="nav-link nav-protected" style="display:none;">Dashboard</a>
+        <a href="pricing.html" class="nav-link active">Pricing</a>
+      </nav>
+      <div class="navbar-actions">
+        <div class="live-badge">
+          <div class="live-dot"></div>Live Data
+        </div>
+        <a href="signin.html" class="nav-btn-outline">Sign In</a>
+        <a href="signup.html" class="nav-btn-primary">Get Started</a>
       </div>
     </div>
-  </div>
-</section>
+  </nav>
 
-<!-- PRICING CARDS -->
-<section class="pricing-section">
-  <div class="section-container">
-    <div class="pricing-grid">
+  <!-- HERO -->
+  <section class="pricing-hero">
+    <div class="section-container">
+      <div class="section-label" style="color:var(--yellow-400);text-align:center;">Transparent Pricing</div>
+      <h1>Simple pricing for every dropshipper</h1>
+      <p>Start free. Scale as you grow. No hidden fees, no long-term contracts.</p>
 
-      <!-- STARTER -->
-      <div class="pricing-card">
-        <div class="pricing-plan-name">Starter</div>
-        <div class="pricing-price">
-          <span class="price-currency">$</span>
-          <span class="price-amount" id="price-starter">0</span>
-        </div>
-        <div class="price-period" id="period-starter">Free forever</div>
-        <p class="pricing-desc">Perfect for beginners exploring dropshipping opportunities and testing the platform.</p>
-        <ul class="pricing-features">
-          <li>5 product analyses per month</li>
-          <li>Basic trending rank (top 50)</li>
-          <li>Undersold score (basic)</li>
-          <li>1 category access</li>
-          <li>7-day data history</li>
-          <li class="disabled">TAM / SAM / SOM sizing</li>
-          <li class="disabled">6-month projections</li>
-          <li class="disabled">Custom data upload</li>
-          <li class="disabled">API access</li>
-          <li class="disabled">Priority support</li>
-        </ul>
-        <a href="signup.html?plan=starter" class="pricing-cta outline">Get Started Free</a>
-      </div>
-
-      <!-- GROWTH (POPULAR) -->
-      <div class="pricing-card popular">
-        <div class="popular-badge">⭐ Most Popular</div>
-        <div class="pricing-plan-name">Growth</div>
-        <div class="pricing-price">
-          <span class="price-currency">$</span>
-          <span class="price-amount" id="price-growth">49</span>
-        </div>
-        <div class="price-period" id="period-growth">per month · billed monthly</div>
-        <p class="pricing-desc">The complete toolkit for serious dropshippers ready to scale their product research.</p>
-        <ul class="pricing-features">
-          <li>50 product analyses per month</li>
-          <li>Full trending rank (all products)</li>
-          <li>Advanced undersold score + gap analysis</li>
-          <li>All 8 categories</li>
-          <li>90-day data history</li>
-          <li>TAM / SAM / SOM sizing</li>
-          <li>6-month revenue projections</li>
-          <li>Custom data upload (CSV/Excel)</li>
-          <li class="disabled">API access</li>
-          <li>Email support (24h response)</li>
-        </ul>
-        <a href="signup.html?plan=growth" class="pricing-cta filled">Start 14-Day Free Trial</a>
-      </div>
-
-      <!-- PRO -->
-      <div class="pricing-card">
-        <div class="pricing-plan-name">Pro</div>
-        <div class="pricing-price">
-          <span class="price-currency">$</span>
-          <span class="price-amount" id="price-pro">99</span>
-        </div>
-        <div class="price-period" id="period-pro">per month · billed monthly</div>
-        <p class="pricing-desc">For power users and agencies managing multiple stores who need full platform access.</p>
-        <ul class="pricing-features">
-          <li>Unlimited product analyses</li>
-          <li>Real-time trending rank (4-min refresh)</li>
-          <li>Full undersold + sentiment analysis</li>
-          <li>All categories + custom categories</li>
-          <li>Full data history (2 years)</li>
-          <li>TAM / SAM / SOM + competitor sizing</li>
-          <li>12-month projections + confidence bands</li>
-          <li>Custom data upload + auto-insights</li>
-          <li>Full REST API access</li>
-          <li>Priority support (2h response) + Slack</li>
-        </ul>
-        <a href="signup.html?plan=pro" class="pricing-cta outline">Start 14-Day Free Trial</a>
-      </div>
-
-    </div>
-
-    <!-- Enterprise -->
-    <div style="margin-top:32px;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;box-shadow:var(--shadow-sm);">
-      <div>
-        <div style="font-size:0.75rem;font-weight:700;color:var(--blue-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Enterprise</div>
-        <div style="font-size:1.3rem;font-weight:800;color:var(--gray-800);margin-bottom:6px;">Custom pricing for large teams</div>
-        <div style="font-size:0.875rem;color:var(--gray-500);">White-label options, dedicated infrastructure, custom ML models, SLA guarantees, and onboarding support.</div>
-      </div>
-      <a href="mailto:enterprise@mavericks.io" class="pricing-cta outline" style="white-space:nowrap;padding:13px 28px;">Contact Sales →</a>
-    </div>
-
-    <!-- FAQ -->
-    <div style="margin-top:60px;">
-      <h2 class="section-heading" style="text-align:center;margin-bottom:32px;">Frequently Asked Questions</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
-          <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">Can I cancel anytime?</h4>
-          <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Yes. Cancel anytime with no penalties. Your access continues until the end of your billing period.</p>
-        </div>
-        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
-          <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">What counts as a "product analysis"?</h4>
-          <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Each time you open a product detail page and generate a full report (undersold score, TAM, projections) counts as one analysis.</p>
-        </div>
-        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
-          <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">How accurate are the projections?</h4>
-          <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Our Bayesian ensemble model achieves 98.7% directional accuracy on 30-day forecasts, validated against 18 months of historical data.</p>
-        </div>
-        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
-          <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">Is there a free trial?</h4>
-          <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Growth and Pro plans include a 14-day free trial. No credit card required. The Starter plan is free forever.</p>
+      <div class="pricing-toggle" id="billingToggle">
+        <div class="pricing-toggle-btn active" data-billing="monthly" onclick="setBilling('monthly',this)">Monthly</div>
+        <div class="pricing-toggle-btn" data-billing="annual" onclick="setBilling('annual',this)">
+          Annual <span
+            style="background:var(--yellow-500);color:var(--blue-900);font-size:0.65rem;font-weight:800;padding:2px 8px;border-radius:var(--radius-full);margin-left:6px;">Save
+            20%</span>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TESTIMONIALS -->
-<section class="testimonials-section">
-  <div class="section-container">
-    <div class="section-label">What Our Users Say</div>
-    <h2 class="section-heading">Trusted by dropshippers worldwide</h2>
-    <div class="testimonials-grid">
+  <!-- PRICING CARDS -->
+  <section class="pricing-section">
+    <div class="section-container">
+      <div class="pricing-grid">
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"I found the LED Sunset Lamp opportunity through Marketing Mavericks before it went viral on TikTok. The undersold score was 94 — I launched my store and made $28k in the first month. This tool pays for itself 100x over."</p>
-        <div class="testimonial-author">
-          <img src="https://i.pravatar.cc/44?img=5" alt="user" class="testimonial-avatar" />
-          <div>
-            <div class="testimonial-name">Marcus T.</div>
-            <div class="testimonial-role">Shopify Dropshipper · UK</div>
+        <!-- STARTER -->
+        <div class="pricing-card">
+          <div class="pricing-plan-name">Starter</div>
+          <div class="pricing-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount" id="price-starter">0</span>
           </div>
-          <div class="testimonial-revenue">+$28k/mo</div>
+          <div class="price-period" id="period-starter">Free forever</div>
+          <p class="pricing-desc">Perfect for beginners exploring dropshipping opportunities and testing the platform.
+          </p>
+          <ul class="pricing-features">
+            <li>5 product analyses per month</li>
+            <li>Basic trending rank (top 50)</li>
+            <li>Undersold score (basic)</li>
+            <li>1 category access</li>
+            <li>7-day data history</li>
+            <li class="disabled">TAM / SAM / SOM sizing</li>
+            <li class="disabled">6-month projections</li>
+            <li class="disabled">Custom data upload</li>
+            <li class="disabled">API access</li>
+            <li class="disabled">Priority support</li>
+          </ul>
+          <a href="signup.html?plan=starter" class="pricing-cta outline">Get Started Free</a>
         </div>
-      </div>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"The TAM sizing feature is a game-changer. I used to guess whether a niche was worth entering. Now I have a $2.9B market size with SAM/SOM breakdown before I spend a single dollar on ads. Absolutely essential."</p>
-        <div class="testimonial-author">
-          <img src="https://i.pravatar.cc/44?img=9" alt="user" class="testimonial-avatar" />
-          <div>
-            <div class="testimonial-name">Priya K.</div>
-            <div class="testimonial-role">E-commerce Entrepreneur · India</div>
+        <!-- GROWTH (POPULAR) -->
+        <div class="pricing-card popular">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <div class="pricing-plan-name">Growth</div>
+          <div class="pricing-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount" id="price-growth">49</span>
           </div>
-          <div class="testimonial-revenue">+$15k/mo</div>
+          <div class="price-period" id="period-growth">per month · billed monthly</div>
+          <p class="pricing-desc">The complete toolkit for serious dropshippers ready to scale their product research.
+          </p>
+          <ul class="pricing-features">
+            <li>50 product analyses per month</li>
+            <li>Full trending rank (all products)</li>
+            <li>Advanced undersold score + gap analysis</li>
+            <li>All 8 categories</li>
+            <li>90-day data history</li>
+            <li>TAM / SAM / SOM sizing</li>
+            <li>6-month revenue projections</li>
+            <li>Custom data upload (CSV/Excel)</li>
+            <li class="disabled">API access</li>
+            <li>Email support (24h response)</li>
+          </ul>
+          <a href="signup.html?plan=growth" class="pricing-cta filled">Start 14-Day Free Trial</a>
         </div>
-      </div>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"I manage 6 Shopify stores and the Pro plan's unlimited analyses + API access lets me automate my entire product research pipeline. The 6-month projections have been scarily accurate — within 8% of actual revenue."</p>
-        <div class="testimonial-author">
-          <img src="https://i.pravatar.cc/44?img=15" alt="user" class="testimonial-avatar" />
-          <div>
-            <div class="testimonial-name">Jake R.</div>
-            <div class="testimonial-role">Multi-store Operator · USA</div>
+        <!-- PRO -->
+        <div class="pricing-card">
+          <div class="pricing-plan-name">Pro</div>
+          <div class="pricing-price">
+            <span class="price-currency">$</span>
+            <span class="price-amount" id="price-pro">99</span>
           </div>
-          <div class="testimonial-revenue">+$94k/mo</div>
+          <div class="price-period" id="period-pro">per month · billed monthly</div>
+          <p class="pricing-desc">For power users and agencies managing multiple stores who need full platform access.
+          </p>
+          <ul class="pricing-features">
+            <li>Unlimited product analyses</li>
+            <li>Real-time trending rank (4-min refresh)</li>
+            <li>Full undersold + sentiment analysis</li>
+            <li>All categories + custom categories</li>
+            <li>Full data history (2 years)</li>
+            <li>TAM / SAM / SOM + competitor sizing</li>
+            <li>12-month projections + confidence bands</li>
+            <li>Custom data upload + auto-insights</li>
+            <li>Full REST API access</li>
+            <li>Priority support (2h response) + Slack</li>
+          </ul>
+          <a href="signup.html?plan=pro" class="pricing-cta outline">Start 14-Day Free Trial</a>
         </div>
+
       </div>
 
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"The custom data upload feature is brilliant. I uploaded my last 6 months of sales data and got instant insights on which products to double down on and which to drop. Saved me from a $12k mistake."</p>
-        <div class="testimonial-author">
-          <img src="https://i.pravatar.cc/44?img=22" alt="user" class="testimonial-avatar" />
-          <div>
-            <div class="testimonial-name">Sophie L.</div>
-            <div class="testimonial-role">Fashion Dropshipper · France</div>
+      <!-- Enterprise -->
+      <div
+        style="margin-top:32px;background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;box-shadow:var(--shadow-sm);">
+        <div>
+          <div
+            style="font-size:0.75rem;font-weight:700;color:var(--blue-400);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">
+            Enterprise</div>
+          <div style="font-size:1.3rem;font-weight:800;color:var(--gray-800);margin-bottom:6px;">Custom pricing for
+            large teams</div>
+          <div style="font-size:0.875rem;color:var(--gray-500);">White-label options, dedicated infrastructure, custom
+            ML models, SLA guarantees, and onboarding support.</div>
+        </div>
+        <a href="mailto:enterprise@mavericks.io" class="pricing-cta outline"
+          style="white-space:nowrap;padding:13px 28px;">Contact Sales →</a>
+      </div>
+
+      <!-- FAQ -->
+      <div style="margin-top:60px;">
+        <h2 class="section-heading" style="text-align:center;margin-bottom:32px;">Frequently Asked Questions</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div
+            style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
+            <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">Can I cancel anytime?
+            </h4>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Yes. Cancel anytime with no penalties.
+              Your access continues until the end of your billing period.</p>
           </div>
-          <div class="testimonial-revenue">+$22k/mo</div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"As a Cambridge MBA student myself, I appreciate the rigour behind the algorithm. The Bayesian trend modelling and Granger causality tests are not marketing fluff — they genuinely work. Best $49 I spend each month."</p>
-        <div class="testimonial-author">
-          <img src="https://i.pravatar.cc/44?img=31" alt="user" class="testimonial-avatar" />
-          <div>
-            <div class="testimonial-name">Dr. Amir H.</div>
-            <div class="testimonial-role">Academic + Dropshipper · Germany</div>
+          <div
+            style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
+            <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">What counts as a
+              "product analysis"?</h4>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Each time you open a product detail
+              page and generate a full report (undersold score, TAM, projections) counts as one analysis.</p>
           </div>
-          <div class="testimonial-revenue">+$8k/mo</div>
-        </div>
-      </div>
-
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Switched from a competitor tool and the difference is night and day. The real-time trending ranks and category-specific analytics helped me pivot from saturated niches to high-opportunity ones in under a week."</p>
-        <div class="testimonial-author">
-          <img src="https://i.pravatar.cc/44?img=44" alt="user" class="testimonial-avatar" />
-          <div>
-            <div class="testimonial-name">Yuki M.</div>
-            <div class="testimonial-role">Dropship Agency Owner · Japan</div>
+          <div
+            style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
+            <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">How accurate are the
+              projections?</h4>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Our Bayesian ensemble model achieves
+              98.7% directional accuracy on 30-day forecasts, validated against 18 months of historical data.</p>
           </div>
-          <div class="testimonial-revenue">+$67k/mo</div>
+          <div
+            style="background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-xl);padding:24px;">
+            <h4 style="font-size:0.95rem;font-weight:700;color:var(--gray-800);margin-bottom:8px;">Is there a free
+              trial?</h4>
+            <p style="font-size:0.875rem;color:var(--gray-600);line-height:1.6;">Growth and Pro plans include a 14-day
+              free trial. No credit card required. The Starter plan is free forever.</p>
+          </div>
         </div>
       </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA -->
-<section class="section-cta">
-  <div class="section-container">
-    <div class="cta-box">
-      <div class="cta-box-content">
-        <h2>Start finding winning products today</h2>
-        <p>14-day free trial on Growth & Pro. No credit card required.</p>
-        <div class="cta-box-actions">
-          <a href="signup.html" class="cta-btn-primary">Start Free Trial →</a>
-          <a href="trends.html" class="cta-btn-ghost">Explore Trends First</a>
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section">
+    <div class="section-container">
+      <div class="section-label">What Our Users Say</div>
+      <h2 class="section-heading">Trusted by dropshippers worldwide</h2>
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I found the LED Sunset Lamp opportunity through Marketing Mavericks before it
+            went viral on TikTok. The undersold score was 94 — I launched my store and made $28k in the first month.
+            This tool pays for itself 100x over."</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/44?img=5" alt="user" class="testimonial-avatar" />
+            <div>
+              <div class="testimonial-name">Marcus T.</div>
+              <div class="testimonial-role">Shopify Dropshipper · UK</div>
+            </div>
+            <div class="testimonial-revenue">+$28k/mo</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The TAM sizing feature is a game-changer. I used to guess whether a niche was
+            worth entering. Now I have a $2.9B market size with SAM/SOM breakdown before I spend a single dollar on ads.
+            Absolutely essential."</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/44?img=9" alt="user" class="testimonial-avatar" />
+            <div>
+              <div class="testimonial-name">Priya K.</div>
+              <div class="testimonial-role">E-commerce Entrepreneur · India</div>
+            </div>
+            <div class="testimonial-revenue">+$15k/mo</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"I manage 6 Shopify stores and the Pro plan's unlimited analyses + API access lets
+            me automate my entire product research pipeline. The 6-month projections have been scarily accurate — within
+            8% of actual revenue."</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/44?img=15" alt="user" class="testimonial-avatar" />
+            <div>
+              <div class="testimonial-name">Jake R.</div>
+              <div class="testimonial-role">Multi-store Operator · USA</div>
+            </div>
+            <div class="testimonial-revenue">+$94k/mo</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The custom data upload feature is brilliant. I uploaded my last 6 months of sales
+            data and got instant insights on which products to double down on and which to drop. Saved me from a $12k
+            mistake."</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/44?img=22" alt="user" class="testimonial-avatar" />
+            <div>
+              <div class="testimonial-name">Sophie L.</div>
+              <div class="testimonial-role">Fashion Dropshipper · France</div>
+            </div>
+            <div class="testimonial-revenue">+$22k/mo</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"As a Cambridge MBA student myself, I appreciate the rigour behind the algorithm.
+            The Bayesian trend modelling and Granger causality tests are not marketing fluff — they genuinely work. Best
+            $49 I spend each month."</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/44?img=31" alt="user" class="testimonial-avatar" />
+            <div>
+              <div class="testimonial-name">Dr. Amir H.</div>
+              <div class="testimonial-role">Academic + Dropshipper · Germany</div>
+            </div>
+            <div class="testimonial-revenue">+$8k/mo</div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Switched from a competitor tool and the difference is night and day. The
+            real-time trending ranks and category-specific analytics helped me pivot from saturated niches to
+            high-opportunity ones in under a week."</p>
+          <div class="testimonial-author">
+            <img src="https://i.pravatar.cc/44?img=44" alt="user" class="testimonial-avatar" />
+            <div>
+              <div class="testimonial-name">Yuki M.</div>
+              <div class="testimonial-role">Dropship Agency Owner · Japan</div>
+            </div>
+            <div class="testimonial-revenue">+$67k/mo</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-cta">
+    <div class="section-container">
+      <div class="cta-box">
+        <div class="cta-box-content">
+          <h2>Start finding winning products today</h2>
+          <p>14-day free trial on Growth & Pro. No credit card required.</p>
+          <div class="cta-box-actions">
+            <a href="signup.html" class="cta-btn-primary">Start Free Trial →</a>
+            <a href="trends.html" class="cta-btn-ghost">Explore Trends First</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
-      <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+  <!-- ============================================================ FOOTER ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
+        <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+      </div>
+      <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR
+        Compliant</span>
+      <div class="footer-links">
+        <a href="pricing.html" class="footer-link">Pricing</a>
+        <button class="footer-link" onclick="openPrivacyModal()"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)','cookies'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+        <a href="signin.html" class="footer-link">Sign In</a>
+      </div>
     </div>
-    <span class="footer-text">© 2026 Marketing Mavericks · Cambridge MBA Hackathon</span>
-    <div class="footer-links">
-      <a href="landing.html" class="footer-link">Home</a>
-      <a href="trends.html" class="footer-link">Trends</a>
-      <a href="signin.html" class="footer-link">Sign In</a>
-    </div>
-  </div>
-</footer>
+  </footer>
 
-<script src="auth.js"></script>
-<script>
-  let billing = "monthly";
-  const prices = {
-    monthly: { starter: "0", growth: "49", pro: "99" },
-    annual:  { starter: "0", growth: "39", pro: "79" }
-  };
-  const periods = {
-    monthly: { starter: "Free forever", growth: "per month · billed monthly", pro: "per month · billed monthly" },
-    annual:  { starter: "Free forever", growth: "per month · billed annually ($468/yr)", pro: "per month · billed annually ($948/yr)" }
-  };
+  <script src="auth.js"></script>
+  <script>
+    let billing = "monthly";
+    const prices = {
+      monthly: { starter: "0", growth: "49", pro: "99" },
+      annual: { starter: "0", growth: "39", pro: "79" }
+    };
+    const periods = {
+      monthly: { starter: "Free forever", growth: "per month · billed monthly", pro: "per month · billed monthly" },
+      annual: { starter: "Free forever", growth: "per month · billed annually ($468/yr)", pro: "per month · billed annually ($948/yr)" }
+    };
 
-  function setBilling(type, el) {
-    billing = type;
-    document.querySelectorAll(".pricing-toggle-btn").forEach(b => b.classList.remove("active"));
-    el.classList.add("active");
-    ["starter","growth","pro"].forEach(plan => {
-      document.getElementById(`price-${plan}`).textContent = prices[type][plan];
-      document.getElementById(`period-${plan}`).textContent = periods[type][plan];
-    });
-  }
-</script>
+    function setBilling(type, el) {
+      billing = type;
+      document.querySelectorAll(".pricing-toggle-btn").forEach(b => b.classList.remove("active"));
+      el.classList.add("active");
+      ["starter", "growth", "pro"].forEach(plan => {
+        document.getElementById(`price-${plan}`).textContent = prices[type][plan];
+        document.getElementById(`period-${plan}`).textContent = periods[type][plan];
+      });
+    }
+  </script>
 </body>
+
 </html>
