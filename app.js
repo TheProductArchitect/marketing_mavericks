@@ -66,7 +66,7 @@ function renderProducts(products) {
   const empty = document.getElementById("emptyState");
   const count = document.getElementById("resultsCount");
 
-  count.innerHTML = `Showing < strong > ${products.length}</strong > product${products.length !== 1 ? "s" : ""}`;
+  count.innerHTML = `Showing <strong>${products.length}</strong> product${products.length !== 1 ? "s" : ""}`;
 
   if (products.length === 0) {
     grid.innerHTML = "";
@@ -88,29 +88,29 @@ function renderProducts(products) {
 function buildProductCard(p, index) {
   const rankChangeHtml =
     p.trendingRankChange > 0
-      ? `< span class= "rank-change up" >▲ ${p.trendingRankChange}</span > `
+      ? `<span class="rank-change up">▲ ${p.trendingRankChange}</span>`
       : p.trendingRankChange < 0
-        ? `< span class= "rank-change down" >▼ ${Math.abs(p.trendingRankChange)}</span > `
+        ? `<span class="rank-change down">▼ ${Math.abs(p.trendingRankChange)}</span>`
         : "";
 
   const undersoldClass =
     p.undersoldScore >= 85 ? "high" : p.undersoldScore >= 60 ? "medium" : "low";
 
   const tagsHtml = p.tags
-    .map((t) => `< span class= "tag ${t}" > ${formatTag(t)}</span > `)
+    .map((t) => `<span class="tag ${t}">${formatTag(t)}</span>`)
     .join("");
 
   const platformsHtml = p.sourcePlatforms
     .map(
       (pl) =>
-        `< span class= "platform-badge ${pl.toLowerCase().replace(" ", " - ")}" > ${pl}</span > `
+        `<span class="platform-badge ${pl.toLowerCase().replace(" ", "-")}">${pl}</span>`
     )
     .join("");
 
   const starsHtml = buildStars(p.rating);
 
   return `
-      < div class= "product-card animate-fade-in-up" style = "animation-delay:${index * 0.08}s" onclick = "goToProduct('${p.id}')" >
+    <div class="product-card animate-fade-in-up" style="animation-delay:${index * 0.08}s" onclick="goToProduct('${p.id}')">
       <div class="product-card-header">
         <span class="product-emoji">${p.emoji}</span>
         <div class="product-rank-badge">
