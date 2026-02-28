@@ -54,6 +54,7 @@ function updateOverviewStats() {
   );
 
   document.getElementById("avgUndersold").textContent = avgUndersold;
+  document.getElementById("totalProducts").textContent = DB.products.length; // Added
   document.getElementById("totalTAM").textContent = DB.formatCurrency(totalTAM);
   document.getElementById("avgMargin").textContent = avgMargin + "%";
 }
@@ -657,3 +658,85 @@ function showToast(message, type = "info") {
     setTimeout(() => toast.remove(), 300);
   }, 3500);
 }
+
+// ============================================================
+// PRODUCT COMPARISON SECTION
+// ============================================================
+function populateCompareOptions() {
+  const selects = ['compareSelect1', 'compareSelect2', 'compareSelect3'];
+
+  selects.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    // Keep first option
+    const firstOp = el.options[0];
+    el.innerHTML = '';
+    el.appendChild(firstOp);
+
+    // Sort alphabetically for ease of finding
+    const sorted = [...DB.products].sort((a, b) => a.name.localeCompare(b.name));
+
+    sorted.forEach(p => {
+      const op = document.createElement('option');
+      op.value = p.id;
+      op.textContent = `${p.emoji} ${p.name}`;
+      el.appendChild(op);
+    });
+  });
+}
+
+window.renderComparison = function () {
+  const container = document.getElementById('comparisonContainer');
+  if (!container) return;
+
+  const id1 = document.getElementById('compareSelect1').value;
+  const id2 = document.getElementById('compareSelect2').value;
+  const id3 = document.getElementById('compareSelect3').value;
+
+  const selectedIds = [id1, id2, id3].filter(id => id !== "");
+
+  if (selectedIds.length === 0) {
+    container.innerHTML = `<div style="text-align:center; padding: 40px; color: var(--gray-400); grid-column: 1 / -1;">Select at least one product above to begin comparison</div>`;
+    return;
+  }
+
+  const selectedProducts = selectedIds.map(id => DB.products.find(p => p.id === id));
+
+  container.innerHTML = selectedProducts.map(p => `
+    <div style="background: var(--white); border: 1px solid var(--gray-200); border-radius: var(--radius-md); padding: 20px;">
+      <div style="display:flex; align-items:center; gap: 12px; margin-bottom: 16px;">
+        <span style="font-size: 2rem;">${p.emoji}</span>
+        <div>
+          <h4 style="margin: 0; font-size: 1.1rem; color: var(--gray-800);">${p.name}</h4>
+          <span style="font-size: 0.8rem; color: var(--gray-500);">${p.category}</span>
+        </div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid var(--gray-100); padding-bottom: 8px;">
+          <span style="color: var(--gray-500); font-size: 0.85rem;">Sell Price</span>
+          <span style="font-weight: 600; color: var(--gray-800);">${DB.formatCurrency(p.price)}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid var(--gray-100); padding-bottom: 8px;">
+          <span style="color: var(--gray-500); font-size: 0.85rem;">Gross Margin</span>
+          <span style="font-weight: 600; color: var(--green-600);">${p.margin}%</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid var(--gray-100); padding-bottom: 8px;">
+          <span style="color: var(--gray-500); font-size: 0.85rem;">TAM</span>
+          <span style="font-weight: 600; color: var(--blue-600);">${DB.formatCurrency(p.tam)}</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; border-bottom: 1px solid var(--gray-100); padding-bottom: 8px;">
+          <span style="color: var(--gray-500); font-size: 0.85rem;">Opportunity Score</span>
+          <span style="font-weight: 600; color: var(--orange-600);">${p.undersoldScore}/100</span>
+        </div>
+        <div style="display:flex; justify-content:space-between; padding-bottom: 8px;">
+          <span style="color: var(--gray-500); font-size: 0.85rem;">Competition</span>
+          <span style="font-weight: 600; color: var(--gray-800);">${p.competition}</span>
+        </div>
+      </div>
+      
+      <button onclick="goToProduct('${p.id}')" class="cta-btn-secondary" style="width: 100%; margin-top: 20px; text-align: center;">View Full Details</button>
+    </div>
+  `).join('');
+};

@@ -278,6 +278,43 @@
       </div>
     </div>
 
+    <!-- Product Comparison Section -->
+    <div class="section-header" id="compare" style="margin-top: 16px;">
+      <div>
+        <div class="section-title"><span class="icon">⚖️</span> Compare Products</div>
+        <div class="section-subtitle">Select up to 3 products to compare key metrics side-by-side</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom: 32px;">
+      <div class="card-body">
+        <div class="filter-groups" style="margin-bottom: 24px;">
+          <div class="filter-group" style="flex:1;">
+            <select class="filter-select" id="compareSelect1" onchange="renderComparison()">
+              <option value="">Select Product 1...</option>
+            </select>
+          </div>
+          <div class="filter-group" style="flex:1;">
+            <select class="filter-select" id="compareSelect2" onchange="renderComparison()">
+              <option value="">Select Product 2...</option>
+            </select>
+          </div>
+          <div class="filter-group" style="flex:1;">
+            <select class="filter-select" id="compareSelect3" onchange="renderComparison()">
+              <option value="">Select Product 3...</option>
+            </select>
+          </div>
+        </div>
+        <div id="comparisonContainer"
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px;">
+          <!-- Populated by JS -->
+          <div style="text-align:center; padding: 40px; color: var(--gray-400); grid-column: 1 / -1;">
+            Select at least one product above to begin comparison
+          </div>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ============================================================
