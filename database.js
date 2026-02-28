@@ -6264,29 +6264,34 @@ function generateRealisticData() {
   ];
 
   DB.products.forEach((product, index) => {
-    // Create a simple hash from product ID for consistent randomness
-    const hash = hashCode(product.id);
+    // Create a unique hash from product ID + index for maximum uniqueness
+    const hash = hashCode(product.id + '_' + index);
     const seededRandom = createSeededRandom(hash);
     
-    // Base values from product data - add variation based on product
-    const baseRevenue = product.monthlyRevenue || 100000;
-    const baseSearch = product.searchVolume || 200000;
-    const baseTAM = (product.tam || 1000000000) / 1e9; // In billions
+    // Base values from product data with unique scaling per product
+    const baseMultiplier = 0.5 + (seededRandom() * 1.0); // 0.5x to 1.5x variation
+    const baseRevenue = (product.monthlyRevenue || 100000) * baseMultiplier;
+    const baseSearch = (product.searchVolume || 200000) * (0.6 + seededRandom() * 0.8);
+    const baseTAM = ((product.tam || 1000000000) / 1e9) * (0.7 + seededRandom() * 0.6); // In billions
     
-    // Use hash to select different patterns for each metric
-    const revenuePattern = patterns[Math.abs(hash) % patterns.length];
-    const searchPattern = patterns[Math.abs(hash + 37) % patterns.length];
-    const tamPattern = patterns[Math.abs(hash + 73) % patterns.length];
+    // Use different prime offsets for truly distinct pattern selection
+    const revenuePatternIndex = Math.abs(hash) % patterns.length;
+    const searchPatternIndex = Math.abs(hash + 47) % patterns.length;
+    const tamPatternIndex = Math.abs(hash + 89) % patterns.length;
     
-    // Generate historical data (6 months: Sep-Feb)
-    const historical = generatePattern(revenuePattern, baseRevenue, 6, 'historical', seededRandom);
-    const historicalSearch = generatePattern(searchPattern, baseSearch, 6, 'historical', createSeededRandom(hash + 100));
-    const historicalTAM = generatePattern(tamPattern, baseTAM, 6, 'historical', createSeededRandom(hash + 200));
+    const revenuePattern = patterns[revenuePatternIndex];
+    const searchPattern = patterns[searchPatternIndex];
+    const tamPattern = patterns[tamPatternIndex];
     
-    // Generate projections (6 months: Mar-Aug)
-    const projections = generatePattern(revenuePattern, historical[5], 6, 'projection', createSeededRandom(hash + 300));
-    const projectionsSearch = generatePattern(searchPattern, historicalSearch[5], 6, 'projection', createSeededRandom(hash + 400));
-    const projectionsTAM = generatePattern(tamPattern, historicalTAM[5], 6, 'projection', createSeededRandom(hash + 500));
+    // Generate historical data (6 months: Sep-Feb) with unique seeds
+    const historical = generatePattern(revenuePattern, baseRevenue, 6, 'historical', createSeededRandom(hash * 7));
+    const historicalSearch = generatePattern(searchPattern, baseSearch, 6, 'historical', createSeededRandom(hash * 13));
+    const historicalTAM = generatePattern(tamPattern, baseTAM, 6, 'historical', createSeededRandom(hash * 17));
+    
+    // Generate projections (6 months: Mar-Aug) with different unique seeds
+    const projections = generatePattern(revenuePattern, historical[5], 6, 'projection', createSeededRandom(hash * 23));
+    const projectionsSearch = generatePattern(searchPattern, historicalSearch[5], 6, 'projection', createSeededRandom(hash * 31));
+    const projectionsTAM = generatePattern(tamPattern, historicalTAM[5], 6, 'projection', createSeededRandom(hash * 41));
     
     // Update product data
     product.historicalData = {
@@ -6296,11 +6301,12 @@ function generateRealisticData() {
       tam: historicalTAM.map(v => Math.round(v * 100) / 100)
     };
     
+    // Use tamGrowth to match what product.js expects
     product.projections = {
       labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
       revenue: projections.map(v => Math.round(v)),
       searchVolume: projectionsSearch.map(v => Math.round(v)),
-      tam: projectionsTAM.map(v => Math.round(v * 100) / 100)
+      tamGrowth: projectionsTAM.map(v => Math.round(v * 100) / 100)
     };
   });
 }
@@ -6327,23 +6333,27 @@ function createSeededRandom(seed) {
 
 function generatePattern(pattern, baseValue, length, type, random) {
   const data = [];
-  const variance = 0.12; // 12% random variance for more distinction
+  const variance = 0.18; // 18% random variance for more distinction
+  
+  // Add per-pattern phase shift for more uniqueness
+  const phaseShift = random() * 0.3;
   
   for (let i = 0; i < length; i++) {
     let multiplier = 1;
-    const progress = i / (length - 1); // 0 to 1
+    const progress = (i / (length - 1)) + phaseShift; // 0 to 1 with shift
+    const normalizedProgress = Math.min(progress, 1);
     
     switch (pattern) {
       case 'steady_growth':
         multiplier = type === 'historical' 
-          ? 0.7 + (0.3 * progress)  // 70% to 100%
-          : 1.0 + (0.5 * progress); // 100% to 150%
+          ? 0.65 + (0.35 * normalizedProgress)  // 65% to 100%
+          : 1.0 + (0.55 * normalizedProgress); // 100% to 155%
         break;
         
       case 'explosive_growth':
         multiplier = type === 'historical'
-          ? 0.4 + (0.6 * Math.pow(progress, 2))  // Exponential ramp up
-          : 1.0 + (1.2 * Math.pow(progress, 1.5)); // Continue explosive
+          ? 0.35 + (0.65 * Math.pow(normalizedProgress, 2))  // Exponential ramp up
+          : 1.0 + (1.4 * Math.pow(normalizedProgress, 1.5)); // Continue explosive
         break;
         
       case 'seasonal_peak':
@@ -6351,42 +6361,42 @@ function generatePattern(pattern, baseValue, length, type, random) {
         const peakIndex = type === 'historical' ? 3 : 2;
         const distFromPeak = Math.abs(i - peakIndex) / length;
         multiplier = type === 'historical'
-          ? 0.7 + (0.5 * (1 - distFromPeak))
-          : 0.85 + (0.3 * progress); // Recovery after holiday
+          ? 0.65 + (0.55 * (1 - distFromPeak))
+          : 0.8 + (0.35 * normalizedProgress); // Recovery after holiday
         break;
         
       case 'gradual_decline':
         multiplier = type === 'historical'
-          ? 1.1 - (0.2 * progress)  // 110% to 90%
-          : 0.9 - (0.15 * progress); // 90% to 75%
+          ? 1.15 - (0.25 * normalizedProgress)  // 115% to 90%
+          : 0.9 - (0.2 * normalizedProgress); // 90% to 70%
         break;
         
       case 'recovery':
         // Dip in middle, then recover
         const dipPoint = type === 'historical' ? 0.5 : 0.3;
-        const dipDepth = 0.25;
-        const dipCurve = Math.abs(progress - dipPoint) / dipPoint;
+        const dipDepth = 0.3;
+        const dipCurve = Math.abs(normalizedProgress - dipPoint) / dipPoint;
         multiplier = type === 'historical'
-          ? 0.85 + (dipDepth * dipCurve)
-          : 0.9 + (0.4 * progress);
+          ? 0.8 + (dipDepth * Math.min(dipCurve, 1))
+          : 0.85 + (0.5 * normalizedProgress);
         break;
         
       case 'volatile':
-        const swings = [1.0, 0.85, 1.1, 0.9, 1.05, 0.95];
-        const projSwings = [1.0, 1.12, 0.95, 1.18, 1.05, 1.25];
+        const swings = [1.0, 0.78, 1.15, 0.85, 1.12, 0.92];
+        const projSwings = [1.0, 1.18, 0.88, 1.25, 0.98, 1.32];
         multiplier = type === 'historical' ? swings[i] : projSwings[i];
         break;
         
       case 'plateau':
         multiplier = type === 'historical'
-          ? 0.6 + (0.4 * Math.min(progress * 1.5, 1)) // Quick growth then flatten
-          : 1.0 + (0.1 * progress); // Slight growth
+          ? 0.55 + (0.45 * Math.min(normalizedProgress * 1.6, 1)) // Quick growth then flatten
+          : 1.0 + (0.12 * normalizedProgress); // Very slight growth
         break;
         
       case 'late_bloomer':
         multiplier = type === 'historical'
-          ? 0.6 + (0.4 * Math.pow(progress, 3))  // Slow start, late surge
-          : 1.0 + (0.8 * progress); // Strong continued growth
+          ? 0.55 + (0.45 * Math.pow(normalizedProgress, 3))  // Slow start, late surge
+          : 1.0 + (0.9 * normalizedProgress); // Strong continued growth
         break;
     }
     
