@@ -6301,12 +6301,14 @@ function generateRealisticData() {
       tam: historicalTAM.map(v => Math.round(v * 100) / 100)
     };
     
-    // Use tamGrowth to match what product.js expects
+    // Include both tam and tamGrowth for compatibility with dashboard and product pages
+    const projectedTAMValues = projectionsTAM.map(v => Math.round(v * 100) / 100);
     product.projections = {
       labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
       revenue: projections.map(v => Math.round(v)),
       searchVolume: projectionsSearch.map(v => Math.round(v)),
-      tamGrowth: projectionsTAM.map(v => Math.round(v * 100) / 100)
+      tam: projectedTAMValues,
+      tamGrowth: projectedTAMValues
     };
   });
 }
