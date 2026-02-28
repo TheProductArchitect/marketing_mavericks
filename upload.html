@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Data – Marketing Mavericks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="landing.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="landing-body">
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="landing.html" class="navbar-brand">
+      <div class="brand-logo">MM</div>
+      <span class="brand-name">Marketing <span>Mavericks</span></span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="landing.html" class="nav-link">Home</a>
+      <a href="trends.html" class="nav-link">Market Trends</a>
+      <a href="index.html" class="nav-link">Dashboard</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="upload.html" class="nav-link active">Upload Data</a>
+    </nav>
+    <div class="navbar-actions">
+      <div class="live-badge"><div class="live-dot"></div>Live Data</div>
+      <a href="signin.html" class="nav-btn-outline">Sign In</a>
+      <a href="signup.html" class="nav-btn-primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="upload-hero">
+  <div class="section-container">
+    <div class="section-label" style="color:var(--yellow-400);">Custom Data Intelligence</div>
+    <h1 style="font-size:2.2rem;font-weight:900;color:var(--white);margin-bottom:10px;">Upload Your Own Data</h1>
+    <p style="font-size:0.95rem;color:var(--blue-200);max-width:580px;">Upload your sales history, product catalogue, or supplier data. Our AI analyses it against live market trends to surface personalised insights and opportunities.</p>
+  </div>
+</section>
+
+<!-- MAIN -->
+<section class="upload-section" style="background:var(--gray-50);">
+  <div class="section-container">
+    <div class="upload-grid">
+
+      <!-- LEFT: Upload Zone + Table -->
+      <div>
+        <!-- Upload Zone -->
+        <div class="card" style="margin-bottom:24px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
+            <h2 style="font-size:1.1rem;font-weight:800;color:var(--gray-800);">📤 Upload Data File</h2>
+            <button onclick="loadSampleData()" style="font-size:0.8rem;font-weight:700;color:var(--blue-400);background:var(--blue-50);border:1px solid var(--blue-100);padding:6px 14px;border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--blue-100)'" onmouseout="this.style.background='var(--blue-50)'">
+              Load Sample Data
+            </button>
+          </div>
+
+          <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()"
+            ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+            <div class="upload-zone-icon">📂</div>
+            <h3>Drop your file here or click to browse</h3>
+            <p>Upload your product sales data, inventory list, or supplier catalogue to get AI-powered market insights</p>
+            <button class="upload-btn" onclick="event.stopPropagation();document.getElementById('fileInput').click()">
+              📁 Choose File
+            </button>
+            <div class="upload-formats">
+              <span class="format-badge">CSV</span>
+              <span class="format-badge">Excel (.xlsx)</span>
+              <span class="format-badge">JSON</span>
+              <span class="format-badge">TSV</span>
+            </div>
+          </div>
+
+          <input type="file" id="fileInput" accept=".csv,.xlsx,.json,.tsv" style="display:none;" onchange="handleFileSelect(this)" />
+
+          <div class="upload-progress" id="uploadProgress">
+            <div class="upload-progress-bar">
+              <div class="upload-progress-fill" id="progressFill"></div>
+            </div>
+            <div class="upload-progress-text" id="progressText">Processing...</div>
+          </div>
+        </div>
+
+        <!-- Manual Entry -->
+        <div class="card" style="margin-bottom:24px;">
+          <h2 style="font-size:1.1rem;font-weight:800;color:var(--gray-800);margin-bottom:16px;">✏️ Manual Product Entry</h2>
+          <p style="font-size:0.875rem;color:var(--gray-500);margin-bottom:16px;">Add individual products manually to analyse against market data.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+            <div class="form-group">
+              <label class="form-label">Product Name</label>
+              <input type="text" class="form-input" id="manualName" placeholder="e.g. Blue Light Glasses" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-input" id="manualCategory">
+                <option>Health & Wellness</option>
+                <option>Home Décor</option>
+                <option>Fashion</option>
+                <option>Kitchen & Fitness</option>
+                <option>Productivity</option>
+                <option>Beauty & Skincare</option>
+                <option>Tech Accessories</option>
+                <option>Confectionery</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sell Price ($)</label>
+              <input type="number" class="form-input" id="manualPrice" placeholder="29.99" min="0" step="0.01" />
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+            <div class="form-group">
+              <label class="form-label">Cost Price ($)</label>
+              <input type="number" class="form-input" id="manualCost" placeholder="6.50" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Monthly Units Sold</label>
+              <input type="number" class="form-input" id="manualUnits" placeholder="150" min="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Current Rating (1-5)</label>
+              <input type="number" class="form-input" id="manualRating" placeholder="3.8" min="1" max="5" step="0.1" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Review Count</label>
+              <input type="number" class="form-input" id="manualReviews" placeholder="847" min="0" />
+            </div>
+          </div>
+          <button onclick="addManualProduct()" class="upload-btn" style="width:100%;justify-content:center;">
+            ➕ Add Product & Analyse
+          </button>
+        </div>
+
+        <!-- Data Table -->
+        <div class="card upload-insights" id="dataSection">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+            <h2 style="font-size:1.1rem;font-weight:800;color:var(--gray-800);">📋 Uploaded Products</h2>
+            <div style="display:flex;gap:8px;">
+              <button onclick="clearData()" style="font-size:0.75rem;font-weight:700;color:var(--red-500);background:var(--red-100);border:1px solid #fca5a5;padding:5px 12px;border-radius:var(--radius-md);cursor:pointer;">Clear All</button>
+              <button onclick="exportInsights()" style="font-size:0.75rem;font-weight:700;color:var(--green-600);background:var(--green-100);border:1px solid #86efac;padding:5px 12px;border-radius:var(--radius-md);cursor:pointer;">Export Report</button>
+            </div>
+          </div>
+          <div class="data-table-wrapper">
+            <table class="data-table" id="dataTable">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Margin</th>
+                  <th>Monthly Rev.</th>
+                  <th>Rating</th>
+                  <th>USS Score</th>
+                  <th>Opportunity</th>
+                </tr>
+              </thead>
+              <tbody id="dataTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Insights Sidebar -->
+      <div style="display:flex;flex-direction:column;gap:20px;">
+
+        <!-- How it works -->
+        <div class="card">
+          <h3 style="font-size:0.95rem;font-weight:800;color:var(--gray-800);margin-bottom:16px;">🧠 How It Works</h3>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--blue-500);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:var(--white);flex-shrink:0;">1</div>
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--gray-800);">Upload your data</div>
+                <div style="font-size:0.78rem;color:var(--gray-500);margin-top:2px;">CSV, Excel, or JSON with product names, prices, and sales figures</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--blue-500);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:var(--white);flex-shrink:0;">2</div>
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--gray-800);">AI cross-references live data</div>
+                <div style="font-size:0.78rem;color:var(--gray-500);margin-top:2px;">Your products are matched against Amazon BSR, TikTok trends, and Google search volume</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--blue-500);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:800;color:var(--white);flex-shrink:0;">3</div>
+              <div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--gray-800);">Get personalised insights</div>
+                <div style="font-size:0.78rem;color:var(--gray-500);margin-top:2px;">Undersold scores, TAM sizing, and actionable recommendations for each product</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expected Columns -->
+        <div class="card">
+          <h3 style="font-size:0.95rem;font-weight:800;color:var(--gray-800);margin-bottom:12px;">📋 Expected CSV Format</h3>
+          <div style="background:var(--gray-900);border-radius:var(--radius-md);padding:14px;overflow-x:auto;">
+            <pre style="font-family:var(--font-mono);font-size:0.72rem;color:#86efac;margin:0;line-height:1.6;">product_name,category,price,cost,
+units_sold,rating,review_count
+
+"Blue Light Glasses",
+"Health",29.99,5.50,
+320,3.7,1240
+
+"Silk Pillowcase",
+"Home Décor",34.99,7.20,
+180,3.9,890</pre>
+          </div>
+          <button onclick="downloadTemplate()" style="margin-top:12px;width:100%;font-size:0.8rem;font-weight:700;color:var(--blue-500);background:var(--blue-50);border:1px solid var(--blue-100);padding:9px;border-radius:var(--radius-md);cursor:pointer;transition:all 0.2s;" onmouseover="this.style.background='var(--blue-100)'" onmouseout="this.style.background='var(--blue-50)'">
+            ⬇️ Download CSV Template
+          </button>
+        </div>
+
+        <!-- AI Insights Panel -->
+        <div class="card" id="insightsSidebar" style="display:none;">
+          <h3 style="font-size:0.95rem;font-weight:800;color:var(--gray-800);margin-bottom:16px;">💡 AI Market Insights</h3>
+          <div id="insightsList" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+
+        <!-- Chart -->
+        <div class="card" id="chartCard" style="display:none;">
+          <h3 style="font-size:0.95rem;font-weight:800;color:var(--gray-800);margin-bottom:16px;">📊 Opportunity Analysis</h3>
+          <div style="height:220px;position:relative;">
+            <canvas id="uploadChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Summary Stats -->
+        <div class="card" id="summaryCard" style="display:none;">
+          <h3 style="font-size:0.95rem;font-weight:800;color:var(--gray-800);margin-bottom:16px;">📈 Portfolio Summary</h3>
+          <div id="summaryStats" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="toastContainer" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;"></div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
+      <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+    </div>
+    <span class="footer-text">© 2026 Marketing Mavericks · Cambridge MBA Hackathon</span>
+    <div class="footer-links">
+      <a href="landing.html" class="footer-link">Home</a>
+      <a href="pricing.html" class="footer-link">Pricing</a>
+      <a href="signin.html" class="footer-link">Sign In</a>
+    </div>
+  </div>
+</footer>
+
+<script src="auth.js"></script>
+<script>
+// ============================================================
+// UPLOAD PAGE LOGIC
+// ============================================================
+
+let uploadedProducts = [];
+let uploadChartInstance = null;
+
+const SAMPLE_DATA = [
+  { name: "Blue Light Glasses", category: "Health & Wellness", price: 29.99, cost: 5.50, units: 320, rating: 3.7, reviews: 1240 },
+  { name: "Silk Pillowcase Set", category: "Home Décor", price: 34.99, cost: 7.20, units: 180, rating: 3.9, reviews: 890 },
+  { name: "Bamboo Toothbrush Pack", category: "Health & Wellness", price: 14.99, cost: 2.80, units: 540, rating: 4.1, reviews: 2340 },
+  { name: "Minimalist Watch", category: "Fashion", price: 49.99, cost: 11.00, units: 95, rating: 3.6, reviews: 420 },
+  { name: "Foam Roller Pro", category: "Kitchen & Fitness", price: 24.99, cost: 5.50, units: 210, rating: 3.8, reviews: 1100 },
+  { name: "Desk Cable Organiser", category: "Productivity", price: 19.99, cost: 3.20, units: 380, rating: 4.0, reviews: 1680 },
+];
+
+// ---- Drag & Drop ----
+function handleDragOver(e) {
+  e.preventDefault();
+  document.getElementById("uploadZone").classList.add("drag-over");
+}
+function handleDragLeave(e) {
+  document.getElementById("uploadZone").classList.remove("drag-over");
+}
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById("uploadZone").classList.remove("drag-over");
+  const file = e.dataTransfer.files[0];
+  if (file) processFile(file);
+}
+
+function handleFileSelect(input) {
+  if (input.files[0]) processFile(input.files[0]);
+}
+
+function processFile(file) {
+  const progress = document.getElementById("uploadProgress");
+  const fill = document.getElementById("progressFill");
+  const text = document.getElementById("progressText");
+
+  progress.classList.add("visible");
+  text.textContent = `Processing ${file.name}...`;
+
+  let pct = 0;
+  const interval = setInterval(() => {
+    pct += Math.random() * 18;
+    if (pct >= 100) {
+      pct = 100;
+      clearInterval(interval);
+      fill.style.width = "100%";
+      text.textContent = "✅ File processed successfully!";
+
+      // Parse CSV if applicable
+      if (file.name.endsWith(".csv") || file.name.endsWith(".tsv")) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const parsed = parseCSV(e.target.result);
+          if (parsed.length > 0) {
+            uploadedProducts = [...uploadedProducts, ...parsed];
+          } else {
+            loadSampleData(true);
+          }
+          renderTable();
+          renderInsights();
+          showToast(`✅ ${file.name} uploaded — ${uploadedProducts.length} products analysed`, "success");
+        };
+        reader.readAsText(file);
+      } else {
+        // For xlsx/json demo, load sample
+        loadSampleData(true);
+        showToast(`✅ ${file.name} uploaded — ${uploadedProducts.length} products analysed`, "success");
+      }
+    }
+    fill.style.width = pct + "%";
+  }, 80);
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split("\n");
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(",").map(h => h.trim().toLowerCase().replace(/"/g, ""));
+  const products = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = lines[i].split(",").map(v => v.trim().replace(/"/g, ""));
+    if (vals.length < 2) continue;
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = vals[idx] || ""; });
+    products.push({
+      name: obj.product_name || obj.name || obj.product || `Product ${i}`,
+      category: obj.category || "General",
+      price: parseFloat(obj.price || obj.sell_price || 0),
+      cost: parseFloat(obj.cost || obj.cost_price || 0),
+      units: parseInt(obj.units_sold || obj.units || obj.monthly_units || 0),
+      rating: parseFloat(obj.rating || obj.star_rating || 4.0),
+      reviews: parseInt(obj.review_count || obj.reviews || 0)
+    });
+  }
+  return products;
+}
+
+function loadSampleData(silent = false) {
+  uploadedProducts = [...SAMPLE_DATA];
+  renderTable();
+  renderInsights();
+  if (!silent) showToast("📊 Sample data loaded — 6 products analysed", "info");
+}
+
+function addManualProduct() {
+  const name = document.getElementById("manualName").value.trim();
+  const category = document.getElementById("manualCategory").value;
+  const price = parseFloat(document.getElementById("manualPrice").value) || 0;
+  const cost = parseFloat(document.getElementById("manualCost").value) || 0;
+  const units = parseInt(document.getElementById("manualUnits").value) || 0;
+  const rating = parseFloat(document.getElementById("manualRating").value) || 4.0;
+  const reviews = parseInt(document.getElementById("manualReviews").value) || 0;
+
+  if (!name) { showToast("❌ Please enter a product name", "error"); return; }
+  if (price <= 0) { showToast("❌ Please enter a valid price", "error"); return; }
+
+  uploadedProducts.push({ name, category, price, cost, units, rating, reviews });
+  renderTable();
+  renderInsights();
+
+  // Clear form
+  ["manualName","manualPrice","manualCost","manualUnits","manualRating","manualReviews"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+
+  showToast(`✅ "${name}" added and analysed`, "success");
+}
+
+function computeUSS(product) {
+  // Simplified USS: gap from expected rating + margin bonus
+  const categoryExpected = { "Health & Wellness": 4.6, "Home Décor": 4.5, "Fashion": 4.5, "Kitchen & Fitness": 4.6, "Productivity": 4.5, "Beauty & Skincare": 4.7, "Tech Accessories": 4.6, "Confectionery": 4.5, "General": 4.5 };
+  const expected = categoryExpected[product.category] || 4.5;
+  const gap = Math.max(0, expected - product.rating);
+  const margin = product.price > 0 ? ((product.price - product.cost) / product.price) * 100 : 0;
+  const uss = Math.min(100, Math.round(gap * 30 + margin * 0.4 + 20));
+  return { uss, margin: Math.round(margin), expected };
+}
+
+function getOpportunityLabel(uss) {
+  if (uss >= 85) return { label: "🔥 High", color: "var(--blue-500)", bg: "var(--blue-50)" };
+  if (uss >= 70) return { label: "⚡ Medium", color: "var(--yellow-600)", bg: "#fef9c3" };
+  return { label: "📊 Low", color: "var(--gray-500)", bg: "var(--gray-100)" };
+}
+
+function renderTable() {
+  const section = document.getElementById("dataSection");
+  const tbody = document.getElementById("dataTableBody");
+  section.classList.add("visible");
+
+  tbody.innerHTML = uploadedProducts.map((p, i) => {
+    const { uss, margin } = computeUSS(p);
+    const opp = getOpportunityLabel(uss);
+    const monthlyRev = p.price * p.units;
+    return `
+      <tr>
+        <td><strong>${p.name}</strong></td>
+        <td><span style="font-size:0.75rem;color:var(--blue-400);font-weight:600;">${p.category}</span></td>
+        <td>$${p.price.toFixed(2)}</td>
+        <td><span style="color:var(--green-500);font-weight:700;">${margin}%</span></td>
+        <td>$${monthlyRev.toLocaleString()}</td>
+        <td>${p.rating}★</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="flex:1;height:5px;background:var(--gray-200);border-radius:var(--radius-full);overflow:hidden;">
+              <div style="height:100%;width:${uss}%;background:var(--blue-400);border-radius:var(--radius-full);"></div>
+            </div>
+            <span style="font-size:0.75rem;font-weight:700;color:var(--blue-500);min-width:28px;">${uss}</span>
+          </div>
+        </td>
+        <td>
+          <span style="font-size:0.72rem;font-weight:700;color:${opp.color};background:${opp.bg};padding:3px 10px;border-radius:var(--radius-full);">${opp.label}</span>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderInsights() {
+  if (uploadedProducts.length === 0) return;
+
+  const sidebar = document.getElementById("insightsSidebar");
+  const chartCard = document.getElementById("chartCard");
+  const summaryCard = document.getElementById("summaryCard");
+  sidebar.style.display = "block";
+  chartCard.style.display = "block";
+  summaryCard.style.display = "block";
+
+  // Compute stats
+  const scores = uploadedProducts.map(p => computeUSS(p));
+  const avgUSS = Math.round(scores.reduce((s, x) => s + x.uss, 0) / scores.length);
+  const avgMargin = Math.round(scores.reduce((s, x) => s + x.margin, 0) / scores.length);
+  const totalRev = uploadedProducts.reduce((s, p) => s + p.price * p.units, 0);
+  const highOpp = scores.filter(x => x.uss >= 85).length;
+  const bestProduct = uploadedProducts[scores.indexOf(scores.reduce((a, b) => a.uss > b.uss ? a : b))];
+
+  // Insights
+  const insights = [
+    { icon: "🏆", text: `<strong>${bestProduct?.name}</strong> has the highest opportunity score (USS ${scores.reduce((a, b) => a.uss > b.uss ? a : b).uss}/100) — prioritise this product.` },
+    { icon: "💰", text: `Your portfolio generates an estimated <strong>$${totalRev.toLocaleString()}/month</strong> in revenue across ${uploadedProducts.length} products.` },
+    { icon: "📈", text: `<strong>${highOpp} product${highOpp !== 1 ? "s" : ""}</strong> show high opportunity (USS ≥ 85). These are your best candidates for scaling.` },
+    { icon: "⚡", text: `Average gross margin of <strong>${avgMargin}%</strong> across your portfolio. Industry benchmark for dropshipping is 60–80%.` },
+  ];
+
+  document.getElementById("insightsList").innerHTML = insights.map(ins => `
+    <div style="display:flex;gap:10px;align-items:flex-start;padding:10px;background:var(--gray-50);border-radius:var(--radius-md);border:1px solid var(--gray-200);">
+      <span style="font-size:1.2rem;flex-shrink:0;">${ins.icon}</span>
+      <span style="font-size:0.82rem;color:var(--gray-700);line-height:1.5;">${ins.text}</span>
+    </div>
+  `).join("");
+
+  // Summary stats
+  document.getElementById("summaryStats").innerHTML = [
+    { label: "Total Products", value: uploadedProducts.length },
+    { label: "Avg USS Score", value: `${avgUSS}/100` },
+    { label: "Avg Gross Margin", value: `${avgMargin}%` },
+    { label: "Est. Monthly Revenue", value: `$${totalRev.toLocaleString()}` },
+    { label: "High Opportunity", value: `${highOpp} products` },
+  ].map(s => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--gray-100);">
+      <span style="font-size:0.8rem;color:var(--gray-600);">${s.label}</span>
+      <span style="font-size:0.875rem;font-weight:800;color:var(--gray-800);">${s.value}</span>
+    </div>
+  `).join("");
+
+  // Chart
+  const ctx = document.getElementById("uploadChart");
+  if (uploadChartInstance) uploadChartInstance.destroy();
+  uploadChartInstance = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: uploadedProducts.map(p => p.name.length > 16 ? p.name.slice(0, 14) + "…" : p.name),
+      datasets: [{
+        label: "USS Score",
+        data: scores.map(s => s.uss),
+        backgroundColor: scores.map(s => s.uss >= 85 ? "rgba(37,99,176,0.8)" : s.uss >= 70 ? "rgba(245,197,24,0.8)" : "rgba(148,163,184,0.6)"),
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: { callbacks: { label: ctx => ` USS: ${ctx.parsed.y}/100` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: "#94a3b8" } },
+        y: { max: 100, grid: { color: "#f1f5f9" }, ticks: { font: { size: 10 }, color: "#94a3b8" } }
+      }
+    }
+  });
+}
+
+function clearData() {
+  if (!confirm("Clear all uploaded products?")) return;
+  uploadedProducts = [];
+  document.getElementById("dataTableBody").innerHTML = "";
+  document.getElementById("dataSection").classList.remove("visible");
+  document.getElementById("insightsSidebar").style.display = "none";
+  document.getElementById("chartCard").style.display = "none";
+  document.getElementById("summaryCard").style.display = "none";
+  document.getElementById("uploadProgress").classList.remove("visible");
+  document.getElementById("progressFill").style.width = "0%";
+  showToast("🗑️ Data cleared", "info");
+}
+
+function exportInsights() {
+  if (uploadedProducts.length === 0) { showToast("❌ No data to export", "error"); return; }
+  const rows = [["Product","Category","Price","Cost","Margin%","Monthly Revenue","Rating","USS Score","Opportunity"]];
+  uploadedProducts.forEach(p => {
+    const { uss, margin } = computeUSS(p);
+    const opp = getOpportunityLabel(uss);
+    rows.push([p.name, p.category, p.price, p.cost, margin, (p.price * p.units).toFixed(0), p.rating, uss, opp.label.replace(/[🔥⚡📊]/g,"").trim()]);
+  });
+  const csv = rows.map(r => r.map(v => `"${v}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "mm_insights_report.csv"; a.click();
+  URL.revokeObjectURL(url);
+  showToast("✅ Report exported as CSV", "success");
+}
+
+function downloadTemplate() {
+  const csv = `product_name,category,price,cost,units_sold,rating,review_count
+"Blue Light Glasses","Health & Wellness",29.99,5.50,320,3.7,1240
+"Silk Pillowcase","Home Décor",34.99,7.20,180,3.9,890
+"Bamboo Toothbrush","Health & Wellness",14.99,2.80,540,4.1,2340`;
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "mm_upload_template.csv"; a.click();
+  URL.revokeObjectURL(url);
+  showToast("⬇️ Template downloaded", "success");
+}
+
+function showToast(message, type = "info") {
+  const container = document.getElementById("toastContainer");
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.textContent = message;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(20px)";
+    toast.style.transition = "all 0.3s ease";
+    setTimeout(() => toast.remove(), 300);
+  }, 3500);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up – Marketing Mavericks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="landing.css" />
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="landing.html" class="navbar-brand">
+      <div class="brand-logo">MM</div>
+      <span class="brand-name">Marketing <span>Mavericks</span></span>
+    </a>
+    <nav class="navbar-nav">
+      <a href="landing.html" class="nav-link">Home</a>
+      <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+    </nav>
+    <div class="navbar-actions">
+      <a href="signin.html" class="nav-btn-outline">Sign In</a>
+      <a href="signup.html" class="nav-btn-primary">Get Started</a>
+    </div>
+  </div>
+</nav>
+
+<div class="auth-page">
+  <div class="auth-card" style="max-width:520px;">
+    <div class="auth-logo">
+      <div class="brand-logo">MM</div>
+      <span class="brand-name" style="color:var(--gray-800);">Marketing <span>Mavericks</span></span>
+    </div>
+
+    <h1 class="auth-title">Start for free</h1>
+    <p class="auth-subtitle">Join 2,400+ dropshippers finding winning products with AI</p>
+
+    <div class="auth-error" id="authError"></div>
+    <div class="auth-success" id="authSuccess"></div>
+
+    <form class="auth-form" id="signupForm" onsubmit="handleSignUp(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">First name</label>
+          <input type="text" class="form-input" id="firstName" placeholder="Alex" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last name</label>
+          <input type="text" class="form-input" id="lastName" placeholder="Chen" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <div class="form-input-icon">
+          <span class="input-icon">✉️</span>
+          <input type="email" class="form-input" id="email" placeholder="you@example.com" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="form-input-icon">
+          <span class="input-icon">🔒</span>
+          <input type="password" class="form-input" id="password" placeholder="Min. 8 characters" minlength="6" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Plan</label>
+        <select class="form-input" id="plan">
+          <option value="starter">Starter – Free (5 products/month)</option>
+          <option value="growth" selected>Growth – $49/mo (50 products + TAM)</option>
+          <option value="pro">Pro – $99/mo (Unlimited + API)</option>
+        </select>
+      </div>
+
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-top:4px;">
+        <input type="checkbox" id="terms" required style="margin-top:3px;flex-shrink:0;" />
+        <label for="terms" style="font-size:0.8rem;color:var(--gray-600);line-height:1.5;">
+          I agree to the <a href="#" style="color:var(--blue-400);font-weight:600;">Terms of Service</a> and <a href="#" style="color:var(--blue-400);font-weight:600;">Privacy Policy</a>
+        </label>
+      </div>
+
+      <button type="submit" class="auth-submit">Create Free Account →</button>
+    </form>
+
+    <div class="auth-divider"><span>or sign up with</span></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <button class="auth-social-btn" onclick="socialSignup('Google')">
+        <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="Google" />
+        Google
+      </button>
+      <button class="auth-social-btn" onclick="socialSignup('Apple')">
+        🍎 Apple
+      </button>
+    </div>
+
+    <div class="auth-footer">
+      Already have an account? <a href="signin.html">Sign in →</a>
+    </div>
+  </div>
+</div>
+
+<script src="auth.js"></script>
+<script>
+  function handleSignUp(e) {
+    e.preventDefault();
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const plan = document.getElementById("plan").value;
+
+    const result = AUTH.register(firstName, lastName, email, password, plan);
+    if (result.ok) {
+      document.getElementById("authSuccess").textContent = `🎉 Account created! Welcome, ${firstName}! Redirecting to dashboard...`;
+      document.getElementById("authSuccess").classList.add("visible");
+      document.getElementById("authError").classList.remove("visible");
+      setTimeout(() => { window.location.href = "index.html"; }, 1500);
+    } else {
+      document.getElementById("authError").textContent = "❌ " + result.error;
+      document.getElementById("authError").classList.add("visible");
+      document.getElementById("authSuccess").classList.remove("visible");
+    }
+  }
+
+  function socialSignup(provider) {
+    const ts = Date.now();
+    const result = AUTH.register("New", "User", `user_${ts}@${provider.toLowerCase()}.com`, "social123", "growth");
+    if (result.ok) {
+      document.getElementById("authSuccess").textContent = `🎉 Signed up with ${provider}! Redirecting...`;
+      document.getElementById("authSuccess").classList.add("visible");
+      setTimeout(() => { window.location.href = "index.html"; }, 1500);
+    }
+  }
+</script>
+</body>
+</html>
