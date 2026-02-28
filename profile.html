@@ -1,375 +1,404 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Profile – Marketing Mavericks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="landing.css" />
 </head>
+
 <body>
 
-<nav class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-brand">
-      <div class="brand-logo">MM</div>
-      <span class="brand-name">Marketing <span>Mavericks</span></span>
-    </a>
-    <nav class="navbar-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
-      <a href="dashboard.html" class="nav-link nav-protected" style="display:none;">Dashboard</a>
-      <a href="index.html#pricing" class="nav-link">Pricing</a>
-    </nav>
-    <div class="navbar-actions">
-      <div class="live-badge"><div class="live-dot"></div>Live Data</div>
-      <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
-      <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
-    </div>
-  </div>
-</nav>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name">Marketing <span>Mavericks</span></span>
+      </a>
 
-<!-- PROFILE HERO -->
-<section class="profile-hero">
-  <div class="profile-hero-inner">
-    <div class="profile-avatar-large" id="profileAvatarLarge">JD</div>
-    <div class="profile-hero-info">
-      <h1 class="profile-hero-name" id="profileHeroName">Loading…</h1>
-      <div class="profile-hero-email" id="profileHeroEmail"></div>
-      <div class="profile-hero-meta">
-        <span class="profile-plan-badge" id="profilePlanBadge">Starter</span>
-        <span class="profile-joined" id="profileJoined">Joined Feb 2026</span>
+      <nav class="navbar-nav">
+        <a href="landing.html" class="nav-link nav-public-only">Home</a>
+        <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
+        <a href="index.html" class="nav-link nav-protected">Dashboard</a>
+        <a href="index.html#pricing" class="nav-link nav-public-only">Pricing</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <div class="live-badge">
+          <div class="live-dot"></div>Live Data
+        </div>
+        <a href="signin.html" class="nav-btn-outline nav-public-only">Sign In</a>
+        <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
       </div>
     </div>
-    <div class="profile-hero-actions">
-      <button class="profile-edit-btn" onclick="openEditModal()">✏️ Edit Profile</button>
-      <button class="profile-signout-btn" onclick="AUTH.logout()">🚪 Sign Out</button>
-    </div>
-  </div>
-</section>
+  </nav>
 
-<!-- PROFILE TABS -->
-<div class="profile-tabs-bar">
-  <div class="profile-tabs">
-    <button class="profile-tab active" onclick="switchTab('overview', this)">📊 Overview</button>
-    <button class="profile-tab" id="tab-subscription-btn" onclick="switchTab('subscription', this)">💳 Subscription</button>
-    <button class="profile-tab" id="tab-history-btn" onclick="switchTab('history', this)">🕐 Search History</button>
-    <button class="profile-tab" onclick="switchTab('settings', this)">⚙️ Settings</button>
-  </div>
-</div>
-
-<!-- PROFILE CONTENT -->
-<div class="profile-content">
-
-  <!-- OVERVIEW TAB -->
-  <div class="profile-tab-panel active" id="panel-overview">
-    <div class="profile-grid">
-
-      <!-- Stats -->
-      <div class="profile-card">
-        <div class="profile-card-title">📈 Your Activity</div>
-        <div class="profile-stats-grid">
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statSearches">0</div>
-            <div class="profile-stat-lbl">Searches Made</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statProducts">4</div>
-            <div class="profile-stat-lbl">Products Viewed</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statDaysActive">1</div>
-            <div class="profile-stat-lbl">Days Active</div>
-          </div>
-          <div class="profile-stat">
-            <div class="profile-stat-val" id="statPlan">Growth</div>
-            <div class="profile-stat-lbl">Current Plan</div>
-          </div>
+  <!-- PROFILE HERO -->
+  <section class="profile-hero">
+    <div class="profile-hero-inner">
+      <div class="profile-avatar-large" id="profileAvatarLarge">JD</div>
+      <div class="profile-hero-info">
+        <h1 class="profile-hero-name" id="profileHeroName">Loading…</h1>
+        <div class="profile-hero-email" id="profileHeroEmail"></div>
+        <div class="profile-hero-meta">
+          <span class="profile-plan-badge" id="profilePlanBadge">Starter</span>
+          <span class="profile-joined" id="profileJoined">Joined Feb 2026</span>
         </div>
       </div>
+      <div class="profile-hero-actions">
+        <button class="profile-edit-btn" onclick="openEditModal()">✏️ Edit Profile</button>
+        <button class="profile-signout-btn" onclick="AUTH.logout()">🚪 Sign Out</button>
+      </div>
+    </div>
+  </section>
 
-      <!-- Recent Searches -->
-      <div class="profile-card">
+  <!-- PROFILE TABS -->
+  <div class="profile-tabs-bar">
+    <div class="profile-tabs">
+      <button class="profile-tab active" onclick="switchTab('overview', this)">📊 Overview</button>
+      <button class="profile-tab" id="tab-subscription-btn" onclick="switchTab('subscription', this)">💳
+        Subscription</button>
+      <button class="profile-tab" id="tab-history-btn" onclick="switchTab('history', this)">🕐 Search History</button>
+      <button class="profile-tab" onclick="switchTab('settings', this)">⚙️ Settings</button>
+    </div>
+  </div>
+
+  <!-- PROFILE CONTENT -->
+  <div class="profile-content">
+
+    <!-- OVERVIEW TAB -->
+    <div class="profile-tab-panel active" id="panel-overview">
+      <div class="profile-grid">
+
+        <!-- Stats -->
+        <div class="profile-card">
+          <div class="profile-card-title">📈 Your Activity</div>
+          <div class="profile-stats-grid">
+            <div class="profile-stat">
+              <div class="profile-stat-val" id="statSearches">0</div>
+              <div class="profile-stat-lbl">Searches Made</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-val" id="statProducts">4</div>
+              <div class="profile-stat-lbl">Products Viewed</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-val" id="statDaysActive">1</div>
+              <div class="profile-stat-lbl">Days Active</div>
+            </div>
+            <div class="profile-stat">
+              <div class="profile-stat-val" id="statPlan">Growth</div>
+              <div class="profile-stat-lbl">Current Plan</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Searches -->
+        <div class="profile-card">
+          <div class="profile-card-title" style="display:flex;align-items:center;justify-content:space-between;">
+            🔍 Recent Searches
+            <button onclick="clearHistory()"
+              style="font-size:0.75rem;color:var(--gray-400);background:none;border:none;cursor:pointer;font-weight:600;">Clear
+              All</button>
+          </div>
+          <div id="recentSearchesList" class="recent-searches-list">
+            <div class="empty-history">No searches yet. Start exploring products!</div>
+          </div>
+        </div>
+
+        <!-- Plan Summary -->
+        <div class="profile-card plan-summary-card">
+          <div class="profile-card-title">💳 Plan Summary</div>
+          <div id="planSummaryContent"></div>
+          <a href="#" onclick="switchTab('subscription', document.getElementById('tab-subscription-btn'))"
+            class="profile-upgrade-link">Manage Subscription →</a>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="profile-card">
+          <div class="profile-card-title">⚡ Quick Links</div>
+          <div class="quick-links-list">
+            <a href="dashboard.html" class="quick-link-item">
+              <span class="quick-link-icon">📊</span>
+              <div>
+                <div class="quick-link-name">Dashboard</div>
+                <div class="quick-link-desc">View all trending products</div>
+              </div>
+              <span class="quick-link-arrow">→</span>
+            </a>
+            <a href="trends.html" class="quick-link-item">
+              <span class="quick-link-icon">🔥</span>
+              <div>
+                <div class="quick-link-name">Market Trends</div>
+                <div class="quick-link-desc">Browse by category</div>
+              </div>
+              <span class="quick-link-arrow">→</span>
+            </a>
+            <a href="index.html#pricing" class="quick-link-item">
+              <span class="quick-link-icon">💎</span>
+              <div>
+                <div class="quick-link-name">Upgrade Plan</div>
+                <div class="quick-link-desc">Unlock more features</div>
+              </div>
+              <span class="quick-link-arrow">→</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SUBSCRIPTION TAB -->
+    <div class="profile-tab-panel" id="panel-subscription">
+      <div class="subscription-layout">
+
+        <div class="profile-card subscription-current">
+          <div class="profile-card-title">Your Current Plan</div>
+          <div id="currentPlanDisplay"></div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-card-title">Available Plans</div>
+          <div class="plan-options" id="planOptions"></div>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-card-title">Billing History</div>
+          <div class="billing-history" id="billingHistory"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SEARCH HISTORY TAB -->
+    <div class="profile-tab-panel" id="panel-history">
+      <div class="profile-card" style="max-width:800px;margin:0 auto;">
         <div class="profile-card-title" style="display:flex;align-items:center;justify-content:space-between;">
-          🔍 Recent Searches
-          <button onclick="clearHistory()" style="font-size:0.75rem;color:var(--gray-400);background:none;border:none;cursor:pointer;font-weight:600;">Clear All</button>
+          🕐 Full Search History
+          <button onclick="clearHistory()"
+            style="font-size:0.8rem;color:var(--red-500);background:none;border:1px solid var(--red-200);border-radius:var(--radius-md);padding:6px 14px;cursor:pointer;font-weight:600;">🗑️
+            Clear All History</button>
         </div>
-        <div id="recentSearchesList" class="recent-searches-list">
-          <div class="empty-history">No searches yet. Start exploring products!</div>
-        </div>
+        <div id="fullHistoryList"></div>
       </div>
-
-      <!-- Plan Summary -->
-      <div class="profile-card plan-summary-card">
-        <div class="profile-card-title">💳 Plan Summary</div>
-        <div id="planSummaryContent"></div>
-        <a href="#" onclick="switchTab('subscription', document.getElementById('tab-subscription-btn'))" class="profile-upgrade-link">Manage Subscription →</a>
-      </div>
-
-      <!-- Quick Links -->
-      <div class="profile-card">
-        <div class="profile-card-title">⚡ Quick Links</div>
-        <div class="quick-links-list">
-          <a href="dashboard.html" class="quick-link-item">
-            <span class="quick-link-icon">📊</span>
-            <div>
-              <div class="quick-link-name">Dashboard</div>
-              <div class="quick-link-desc">View all trending products</div>
-            </div>
-            <span class="quick-link-arrow">→</span>
-          </a>
-          <a href="trends.html" class="quick-link-item">
-            <span class="quick-link-icon">🔥</span>
-            <div>
-              <div class="quick-link-name">Market Trends</div>
-              <div class="quick-link-desc">Browse by category</div>
-            </div>
-            <span class="quick-link-arrow">→</span>
-          </a>
-          <a href="index.html#pricing" class="quick-link-item">
-            <span class="quick-link-icon">💎</span>
-            <div>
-              <div class="quick-link-name">Upgrade Plan</div>
-              <div class="quick-link-desc">Unlock more features</div>
-            </div>
-            <span class="quick-link-arrow">→</span>
-          </a>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- SUBSCRIPTION TAB -->
-  <div class="profile-tab-panel" id="panel-subscription">
-    <div class="subscription-layout">
+    <!-- SETTINGS TAB -->
+    <div class="profile-tab-panel" id="panel-settings">
+      <div class="settings-layout">
 
-      <div class="profile-card subscription-current">
-        <div class="profile-card-title">Your Current Plan</div>
-        <div id="currentPlanDisplay"></div>
-      </div>
-
-      <div class="profile-card">
-        <div class="profile-card-title">Available Plans</div>
-        <div class="plan-options" id="planOptions"></div>
-      </div>
-
-      <div class="profile-card">
-        <div class="profile-card-title">Billing History</div>
-        <div class="billing-history" id="billingHistory"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- SEARCH HISTORY TAB -->
-  <div class="profile-tab-panel" id="panel-history">
-    <div class="profile-card" style="max-width:800px;margin:0 auto;">
-      <div class="profile-card-title" style="display:flex;align-items:center;justify-content:space-between;">
-        🕐 Full Search History
-        <button onclick="clearHistory()" style="font-size:0.8rem;color:var(--red-500);background:none;border:1px solid var(--red-200);border-radius:var(--radius-md);padding:6px 14px;cursor:pointer;font-weight:600;">🗑️ Clear All History</button>
-      </div>
-      <div id="fullHistoryList"></div>
-    </div>
-  </div>
-
-  <!-- SETTINGS TAB -->
-  <div class="profile-tab-panel" id="panel-settings">
-    <div class="settings-layout">
-
-      <div class="profile-card">
-        <div class="profile-card-title">👤 Account Details</div>
-        <form class="settings-form" id="settingsForm" onsubmit="saveSettings(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">First Name</label>
-              <input type="text" class="form-input" id="settingsFirstName" />
+        <div class="profile-card">
+          <div class="profile-card-title">👤 Account Details</div>
+          <form class="settings-form" id="settingsForm" onsubmit="saveSettings(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" id="settingsFirstName" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" id="settingsLastName" />
+              </div>
             </div>
             <div class="form-group">
-              <label class="form-label">Last Name</label>
-              <input type="text" class="form-input" id="settingsLastName" />
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-input" id="settingsEmail" />
             </div>
+            <div class="form-group">
+              <label class="form-label">New Password <span style="color:var(--gray-400);font-weight:400;">(leave blank
+                  to keep current)</span></label>
+              <input type="password" class="form-input" id="settingsPassword" placeholder="New password"
+                minlength="6" />
+            </div>
+            <button type="submit" class="auth-submit" style="max-width:200px;">Save Changes</button>
+          </form>
+        </div>
+
+        <div class="profile-card">
+          <div class="profile-card-title">🍪 Cookie Preferences</div>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Manage how we use cookies on your
+            account.</p>
+          <div class="pref-list">
+            <div class="pref-item">
+              <div class="pref-info">
+                <strong>Essential Cookies</strong>
+                <p>Required for login and core functionality.</p>
+              </div>
+              <div class="pref-toggle pref-toggle-locked">Always On</div>
+            </div>
+            <div class="pref-item">
+              <div class="pref-info">
+                <strong>Functional Cookies</strong>
+                <p>Search history and personalisation.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingsFunctional" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="pref-item">
+              <div class="pref-info">
+                <strong>Analytics Cookies</strong>
+                <p>Help us improve the platform.</p>
+              </div>
+              <label class="toggle-switch">
+                <input type="checkbox" id="settingsAnalytics" />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          <button onclick="saveCookieSettings()" class="auth-submit" style="max-width:200px;margin-top:16px;">Save
+            Preferences</button>
+        </div>
+
+        <div class="profile-card danger-zone">
+          <div class="profile-card-title" style="color:var(--red-500);">⚠️ Danger Zone</div>
+          <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">These actions are irreversible. Please
+            proceed with caution.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button onclick="clearHistory()"
+              style="padding:10px 20px;border:1.5px solid var(--gray-300);border-radius:var(--radius-md);background:none;font-size:0.875rem;font-weight:600;color:var(--gray-600);cursor:pointer;">Clear
+              Search History</button>
+            <button onclick="confirmDeleteAccount()"
+              style="padding:10px 20px;border:1.5px solid var(--red-300);border-radius:var(--radius-md);background:none;font-size:0.875rem;font-weight:600;color:var(--red-500);cursor:pointer;">Delete
+              Account</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EDIT PROFILE MODAL -->
+  <div class="modal-overlay" id="editModal" style="display:none;">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+        <button onclick="closeEditModal()" class="modal-close">✕</button>
+      </div>
+      <form onsubmit="saveProfile(event)" style="display:flex;flex-direction:column;gap:16px;">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" id="editFirstName" required />
           </div>
           <div class="form-group">
-            <label class="form-label">Email Address</label>
-            <input type="email" class="form-input" id="settingsEmail" />
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" id="editLastName" required />
           </div>
-          <div class="form-group">
-            <label class="form-label">New Password <span style="color:var(--gray-400);font-weight:400;">(leave blank to keep current)</span></label>
-            <input type="password" class="form-input" id="settingsPassword" placeholder="New password" minlength="6" />
-          </div>
-          <button type="submit" class="auth-submit" style="max-width:200px;">Save Changes</button>
-        </form>
-      </div>
-
-      <div class="profile-card">
-        <div class="profile-card-title">🍪 Cookie Preferences</div>
-        <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">Manage how we use cookies on your account.</p>
-        <div class="pref-list">
-          <div class="pref-item">
-            <div class="pref-info">
-              <strong>Essential Cookies</strong>
-              <p>Required for login and core functionality.</p>
-            </div>
-            <div class="pref-toggle pref-toggle-locked">Always On</div>
-          </div>
-          <div class="pref-item">
-            <div class="pref-info">
-              <strong>Functional Cookies</strong>
-              <p>Search history and personalisation.</p>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="settingsFunctional" checked />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-          <div class="pref-item">
-            <div class="pref-info">
-              <strong>Analytics Cookies</strong>
-              <p>Help us improve the platform.</p>
-            </div>
-            <label class="toggle-switch">
-              <input type="checkbox" id="settingsAnalytics" />
-              <span class="toggle-slider"></span>
-            </label>
-          </div>
-        </div>
-        <button onclick="saveCookieSettings()" class="auth-submit" style="max-width:200px;margin-top:16px;">Save Preferences</button>
-      </div>
-
-      <div class="profile-card danger-zone">
-        <div class="profile-card-title" style="color:var(--red-500);">⚠️ Danger Zone</div>
-        <p style="font-size:0.875rem;color:var(--gray-600);margin-bottom:16px;">These actions are irreversible. Please proceed with caution.</p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <button onclick="clearHistory()" style="padding:10px 20px;border:1.5px solid var(--gray-300);border-radius:var(--radius-md);background:none;font-size:0.875rem;font-weight:600;color:var(--gray-600);cursor:pointer;">Clear Search History</button>
-          <button onclick="confirmDeleteAccount()" style="padding:10px 20px;border:1.5px solid var(--red-300);border-radius:var(--radius-md);background:none;font-size:0.875rem;font-weight:600;color:var(--red-500);cursor:pointer;">Delete Account</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-
-<!-- EDIT PROFILE MODAL -->
-<div class="modal-overlay" id="editModal" style="display:none;">
-  <div class="modal-box">
-    <div class="modal-header">
-      <h3>Edit Profile</h3>
-      <button onclick="closeEditModal()" class="modal-close">✕</button>
-    </div>
-    <form onsubmit="saveProfile(event)" style="display:flex;flex-direction:column;gap:16px;">
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First Name</label>
-          <input type="text" class="form-input" id="editFirstName" required />
         </div>
         <div class="form-group">
-          <label class="form-label">Last Name</label>
-          <input type="text" class="form-input" id="editLastName" required />
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" id="editEmail" required />
         </div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-input" id="editEmail" required />
-      </div>
-      <div style="display:flex;gap:12px;justify-content:flex-end;">
-        <button type="button" onclick="closeEditModal()" style="padding:10px 20px;border:1.5px solid var(--gray-300);border-radius:var(--radius-md);background:none;font-size:0.875rem;font-weight:600;color:var(--gray-600);cursor:pointer;">Cancel</button>
-        <button type="submit" class="auth-submit" style="max-width:140px;margin:0;">Save</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- ============================================================ FOOTER ============================================================ -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
-      <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
-    </div>
-    <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR Compliant</span>
-    <div class="footer-links">
-      <a href="index.html#pricing" class="footer-link">Pricing</a>
-      <button class="footer-link" onclick="openPrivacyModal()" style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
-      <button class="footer-link" onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)" style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
-      <button class="footer-link" onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)',|ookies'))},100)" style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
-      <a href="signin.html" class="footer-link">Sign In</a>
+        <div style="display:flex;gap:12px;justify-content:flex-end;">
+          <button type="button" onclick="closeEditModal()"
+            style="padding:10px 20px;border:1.5px solid var(--gray-300);border-radius:var(--radius-md);background:none;font-size:0.875rem;font-weight:600;color:var(--gray-600);cursor:pointer;">Cancel</button>
+          <button type="submit" class="auth-submit" style="max-width:140px;margin:0;">Save</button>
+        </div>
+      </form>
     </div>
   </div>
-</footer>
 
-<script src="auth.js"></script>
-<script>
-// ---- Guard ----
-(function() {
-  if (!AUTH.isLoggedIn()) window.location.href = 'signin.html';
-})();
+  <!-- ============================================================ FOOTER ============================================================ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="brand-logo" style="width:28px;height:28px;font-size:14px;">MM</div>
+        <span class="brand-name" style="font-size:0.9rem;">Marketing <span>Mavericks</span></span>
+      </div>
+      <span class="footer-text">© 2026 Marketing Mavericks Inc. · All Rights Reserved · Privacy Secured & GDPR
+        Compliant</span>
+      <div class="footer-links">
+        <a href="index.html#pricing" class="footer-link">Pricing</a>
+        <button class="footer-link" onclick="openPrivacyModal()"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Privacy Policy</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(3)','imprint'))},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Imprint</button>
+        <button class="footer-link"
+          onclick="openPrivacyModal();setTimeout(function(){switchPrivacyTab(document.querySelector('.privacy-tab:nth-child(2)'), 'cookies')},100)"
+          style="background:none;border:none;cursor:pointer;font:inherit;">Cookies</button>
+        <a href="signin.html" class="footer-link">Sign In</a>
+      </div>
+    </div>
+  </footer>
 
-const PLAN_INFO = {
-  starter: { name: "Starter", price: "$0/mo", color: "var(--gray-400)", features: ["5 products/month", "Basic trending rank", "1 category", "7-day history"] },
-  growth:  { name: "Growth",  price: "$49/mo", color: "var(--blue-500)", features: ["50 products/month", "Full trending rank", "All categories", "TAM/SAM/SOM", "6-month projections", "90-day history"] },
-  pro:     { name: "Pro",     price: "$99/mo", color: "var(--yellow-500)", features: ["Unlimited products", "Real-time rank (4min)", "All categories + custom", "12-month projections", "API access", "2-year history"] },
-  enterprise: { name: "Enterprise", price: "Custom", color: "var(--blue-900)", features: ["Everything in Pro", "White-label", "Dedicated infra", "Custom ML models", "SLA guarantee"] }
-};
+  <script src="auth.js"></script>
+  <script>
+    // ---- Guard ----
+    (function () {
+      if (!AUTH.isLoggedIn()) window.location.href = 'signin.html';
+    })();
 
-function init() {
-  const user = AUTH.current();
-  if (!user) return;
+    const PLAN_INFO = {
+      starter: { name: "Starter", price: "$0/mo", color: "var(--gray-400)", features: ["5 products/month", "Basic trending rank", "1 category", "7-day history"] },
+      growth: { name: "Growth", price: "$49/mo", color: "var(--blue-500)", features: ["50 products/month", "Full trending rank", "All categories", "TAM/SAM/SOM", "6-month projections", "90-day history"] },
+      pro: { name: "Pro", price: "$99/mo", color: "var(--yellow-500)", features: ["Unlimited products", "Real-time rank (4min)", "All categories + custom", "12-month projections", "API access", "2-year history"] },
+      enterprise: { name: "Enterprise", price: "Custom", color: "var(--blue-900)", features: ["Everything in Pro", "White-label", "Dedicated infra", "Custom ML models", "SLA guarantee"] }
+    };
 
-  // Hero
-  const initials = (user.firstName[0] + user.lastName[0]).toUpperCase();
-  document.getElementById("profileAvatarLarge").textContent = initials;
-  document.getElementById("profileHeroName").textContent = user.firstName + " " + user.lastName;
-  document.getElementById("profileHeroEmail").textContent = user.email;
-  const plan = PLAN_INFO[user.plan] || PLAN_INFO.starter;
-  document.getElementById("profilePlanBadge").textContent = plan.name;
-  document.getElementById("profilePlanBadge").style.background = plan.color;
-  const joined = new Date(user.createdAt);
-  document.getElementById("profileJoined").textContent = "Joined " + joined.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    function init() {
+      const user = AUTH.current();
+      if (!user) return;
 
-  // Stats
-  const history = AUTH.getSearchHistory();
-  document.getElementById("statSearches").textContent = history.length;
-  document.getElementById("statPlan").textContent = plan.name;
-  const days = Math.max(1, Math.floor((Date.now() - new Date(user.createdAt)) / 86400000) + 1);
-  document.getElementById("statDaysActive").textContent = days;
+      // Hero
+      const initials = (user.firstName[0] + user.lastName[0]).toUpperCase();
+      document.getElementById("profileAvatarLarge").textContent = initials;
+      document.getElementById("profileHeroName").textContent = user.firstName + " " + user.lastName;
+      document.getElementById("profileHeroEmail").textContent = user.email;
+      const plan = PLAN_INFO[user.plan] || PLAN_INFO.starter;
+      document.getElementById("profilePlanBadge").textContent = plan.name;
+      document.getElementById("profilePlanBadge").style.background = plan.color;
+      const joined = new Date(user.createdAt);
+      document.getElementById("profileJoined").textContent = "Joined " + joined.toLocaleDateString("en-GB", { month: "long", year: "numeric" });
 
-  // Recent searches
-  renderRecentSearches();
+      // Stats
+      const history = AUTH.getSearchHistory();
+      document.getElementById("statSearches").textContent = history.length;
+      document.getElementById("statPlan").textContent = plan.name;
+      const days = Math.max(1, Math.floor((Date.now() - new Date(user.createdAt)) / 86400000) + 1);
+      document.getElementById("statDaysActive").textContent = days;
 
-  // Plan summary
-  renderPlanSummary(user.plan);
+      // Recent searches
+      renderRecentSearches();
 
-  // Subscription tab
-  renderSubscriptionTab(user.plan);
+      // Plan summary
+      renderPlanSummary(user.plan);
 
-  // Settings form
-  document.getElementById("settingsFirstName").value = user.firstName;
-  document.getElementById("settingsLastName").value = user.lastName;
-  document.getElementById("settingsEmail").value = user.email;
+      // Subscription tab
+      renderSubscriptionTab(user.plan);
 
-  // Edit modal
-  document.getElementById("editFirstName").value = user.firstName;
-  document.getElementById("editLastName").value = user.lastName;
-  document.getElementById("editEmail").value = user.email;
+      // Settings form
+      document.getElementById("settingsFirstName").value = user.firstName;
+      document.getElementById("settingsLastName").value = user.lastName;
+      document.getElementById("settingsEmail").value = user.email;
 
-  // Check hash
-  const hash = window.location.hash;
-  if (hash === "#subscription") switchTab("subscription", document.getElementById("tab-subscription-btn"));
-  if (hash === "#history") switchTab("history", document.getElementById("tab-history-btn"));
-}
+      // Edit modal
+      document.getElementById("editFirstName").value = user.firstName;
+      document.getElementById("editLastName").value = user.lastName;
+      document.getElementById("editEmail").value = user.email;
 
-function renderRecentSearches() {
-  const history = AUTH.getSearchHistory();
-  const container = document.getElementById("recentSearchesList");
-  if (history.length === 0) {
-    container.innerHTML = '<div class="empty-history">No searches yet. Start exploring products!</div>';
-    return;
-  }
-  container.innerHTML = history.slice(0, 8).map(h => `
+      // Check hash
+      const hash = window.location.hash;
+      if (hash === "#subscription") switchTab("subscription", document.getElementById("tab-subscription-btn"));
+      if (hash === "#history") switchTab("history", document.getElementById("tab-history-btn"));
+    }
+
+    function renderRecentSearches() {
+      const history = AUTH.getSearchHistory();
+      const container = document.getElementById("recentSearchesList");
+      if (history.length === 0) {
+        container.innerHTML = '<div class="empty-history">No searches yet. Start exploring products!</div>';
+        return;
+      }
+      container.innerHTML = history.slice(0, 8).map(h => `
     <div class="search-history-item" onclick="window.location.href='trends.html'">
       <span class="search-history-icon">🔍</span>
       <div class="search-history-text">
@@ -379,11 +408,11 @@ function renderRecentSearches() {
       <span class="search-history-arrow">→</span>
     </div>
   `).join("");
-}
+    }
 
-function renderPlanSummary(planKey) {
-  const plan = PLAN_INFO[planKey] || PLAN_INFO.starter;
-  document.getElementById("planSummaryContent").innerHTML = `
+    function renderPlanSummary(planKey) {
+      const plan = PLAN_INFO[planKey] || PLAN_INFO.starter;
+      document.getElementById("planSummaryContent").innerHTML = `
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
       <div style="width:40px;height:40px;border-radius:var(--radius-md);background:${plan.color};display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:0.9rem;">${plan.name[0]}</div>
       <div>
@@ -395,12 +424,12 @@ function renderPlanSummary(planKey) {
       ${plan.features.map(f => `<li style="font-size:0.8rem;color:var(--gray-600);display:flex;align-items:center;gap:6px;"><span style="color:var(--green-500);">✓</span>${f}</li>`).join("")}
     </ul>
   `;
-}
+    }
 
-function renderSubscriptionTab(currentPlan) {
-  // Current plan display
-  const plan = PLAN_INFO[currentPlan] || PLAN_INFO.starter;
-  document.getElementById("currentPlanDisplay").innerHTML = `
+    function renderSubscriptionTab(currentPlan) {
+      // Current plan display
+      const plan = PLAN_INFO[currentPlan] || PLAN_INFO.starter;
+      document.getElementById("currentPlanDisplay").innerHTML = `
     <div style="display:flex;align-items:center;gap:16px;padding:20px;background:var(--blue-50);border-radius:var(--radius-lg);border:2px solid var(--blue-100);margin-bottom:16px;">
       <div style="width:48px;height:48px;border-radius:var(--radius-md);background:${plan.color};display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:1.1rem;">${plan.name[0]}</div>
       <div>
@@ -412,8 +441,8 @@ function renderSubscriptionTab(currentPlan) {
     <p style="font-size:0.8rem;color:var(--gray-500);">Next billing date: 28 March 2026 · Cancel anytime</p>
   `;
 
-  // Plan options
-  document.getElementById("planOptions").innerHTML = Object.entries(PLAN_INFO).filter(([k]) => k !== "enterprise").map(([key, p]) => `
+      // Plan options
+      document.getElementById("planOptions").innerHTML = Object.entries(PLAN_INFO).filter(([k]) => k !== "enterprise").map(([key, p]) => `
     <div class="plan-option ${key === currentPlan ? 'current' : ''}" onclick="changePlan('${key}')">
       <div style="display:flex;align-items:center;gap:12px;">
         <div style="width:32px;height:32px;border-radius:var(--radius-sm);background:${p.color};display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:0.8rem;">${p.name[0]}</div>
@@ -426,54 +455,54 @@ function renderSubscriptionTab(currentPlan) {
     </div>
   `).join("");
 
-  // Billing history
-  document.getElementById("billingHistory").innerHTML = `
+      // Billing history
+      document.getElementById("billingHistory").innerHTML = `
     <div class="billing-row"><span>28 Feb 2026</span><span>${plan.name} Plan</span><span style="color:var(--green-500);font-weight:700;">${plan.price}</span><span style="color:var(--green-500);">✓ Paid</span></div>
     <div class="billing-row"><span>28 Jan 2026</span><span>${plan.name} Plan</span><span style="color:var(--green-500);font-weight:700;">${plan.price}</span><span style="color:var(--green-500);">✓ Paid</span></div>
     <div class="billing-row"><span>28 Dec 2025</span><span>Starter Plan</span><span style="color:var(--gray-500);font-weight:700;">$0/mo</span><span style="color:var(--green-500);">✓ Free</span></div>
   `;
-}
+    }
 
-function changePlan(planKey) {
-  const user = AUTH.current();
-  if (!user) return;
-  if (planKey === user.plan) return;
-  const plan = PLAN_INFO[planKey];
-  if (confirm(`Switch to ${plan.name} plan (${plan.price})?`)) {
-    user.plan = planKey;
-    localStorage.setItem("mm_user", JSON.stringify(user));
-    const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
-    const idx = users.findIndex(u => u.id === user.id);
-    if (idx >= 0) { users[idx].plan = planKey; localStorage.setItem("mm_users", JSON.stringify(users)); }
-    alert(`✅ Plan updated to ${plan.name}!`);
-    location.reload();
-  }
-}
+    function changePlan(planKey) {
+      const user = AUTH.current();
+      if (!user) return;
+      if (planKey === user.plan) return;
+      const plan = PLAN_INFO[planKey];
+      if (confirm(`Switch to ${plan.name} plan (${plan.price})?`)) {
+        user.plan = planKey;
+        localStorage.setItem("mm_user", JSON.stringify(user));
+        const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
+        const idx = users.findIndex(u => u.id === user.id);
+        if (idx >= 0) { users[idx].plan = planKey; localStorage.setItem("mm_users", JSON.stringify(users)); }
+        alert(`✅ Plan updated to ${plan.name}!`);
+        location.reload();
+      }
+    }
 
-function switchTab(tabId, btn) {
-  document.querySelectorAll(".profile-tab").forEach(t => t.classList.remove("active"));
-  document.querySelectorAll(".profile-tab-panel").forEach(p => p.classList.remove("active"));
-  if (btn) btn.classList.add("active");
-  const panel = document.getElementById("panel-" + tabId);
-  if (panel) panel.classList.add("active");
-  if (tabId === "history") renderFullHistory();
-}
+    function switchTab(tabId, btn) {
+      document.querySelectorAll(".profile-tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".profile-tab-panel").forEach(p => p.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+      const panel = document.getElementById("panel-" + tabId);
+      if (panel) panel.classList.add("active");
+      if (tabId === "history") renderFullHistory();
+    }
 
-function renderFullHistory() {
-  const history = AUTH.getSearchHistory();
-  const container = document.getElementById("fullHistoryList");
-  if (history.length === 0) {
-    container.innerHTML = '<div class="empty-history" style="padding:40px 0;text-align:center;">No search history yet. Start exploring products on the <a href="dashboard.html" style="color:var(--blue-400);">Dashboard</a>!</div>';
-    return;
-  }
-  // Group by date
-  const grouped = {};
-  history.forEach(h => {
-    const date = new Date(h.timestamp).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
-    if (!grouped[date]) grouped[date] = [];
-    grouped[date].push(h);
-  });
-  container.innerHTML = Object.entries(grouped).map(([date, items]) => `
+    function renderFullHistory() {
+      const history = AUTH.getSearchHistory();
+      const container = document.getElementById("fullHistoryList");
+      if (history.length === 0) {
+        container.innerHTML = '<div class="empty-history" style="padding:40px 0;text-align:center;">No search history yet. Start exploring products on the <a href="dashboard.html" style="color:var(--blue-400);">Dashboard</a>!</div>';
+        return;
+      }
+      // Group by date
+      const grouped = {};
+      history.forEach(h => {
+        const date = new Date(h.timestamp).toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+        if (!grouped[date]) grouped[date] = [];
+        grouped[date].push(h);
+      });
+      container.innerHTML = Object.entries(grouped).map(([date, items]) => `
     <div style="margin-bottom:20px;">
       <div style="font-size:0.75rem;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">${date}</div>
       ${items.map(h => `
@@ -488,88 +517,89 @@ function renderFullHistory() {
       `).join("")}
     </div>
   `).join("");
-}
-
-function clearHistory() {
-  if (confirm("Clear all search history?")) {
-    AUTH.clearSearchHistory();
-    renderRecentSearches();
-    renderFullHistory();
-    document.getElementById("statSearches").textContent = "0";
-    alert("✅ Search history cleared.");
-  }
-}
-
-function openEditModal() {
-  document.getElementById("editModal").style.display = "flex";
-}
-function closeEditModal() {
-  document.getElementById("editModal").style.display = "none";
-}
-
-function saveProfile(e) {
-  e.preventDefault();
-  const user = AUTH.current();
-  if (!user) return;
-  user.firstName = document.getElementById("editFirstName").value.trim();
-  user.lastName = document.getElementById("editLastName").value.trim();
-  user.email = document.getElementById("editEmail").value.trim();
-  localStorage.setItem("mm_user", JSON.stringify(user));
-  const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
-  const idx = users.findIndex(u => u.id === user.id);
-  if (idx >= 0) { users[idx] = { ...users[idx], ...user }; localStorage.setItem("mm_users", JSON.stringify(users)); }
-  closeEditModal();
-  alert("✅ Profile updated!");
-  location.reload();
-}
-
-function saveSettings(e) {
-  e.preventDefault();
-  const user = AUTH.current();
-  if (!user) return;
-  user.firstName = document.getElementById("settingsFirstName").value.trim();
-  user.lastName = document.getElementById("settingsLastName").value.trim();
-  user.email = document.getElementById("settingsEmail").value.trim();
-  const newPass = document.getElementById("settingsPassword").value;
-  if (newPass) user.password = newPass;
-  localStorage.setItem("mm_user", JSON.stringify(user));
-  const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
-  const idx = users.findIndex(u => u.id === user.id);
-  if (idx >= 0) { users[idx] = { ...users[idx], ...user }; localStorage.setItem("mm_users", JSON.stringify(users)); }
-  alert("✅ Settings saved!");
-  location.reload();
-}
-
-function saveCookieSettings() {
-  const functional = document.getElementById("settingsFunctional").checked;
-  const analytics = document.getElementById("settingsAnalytics").checked;
-  localStorage.setItem("mm_cookies_accepted", JSON.stringify({ essential: true, functional, analytics }));
-  alert("✅ Cookie preferences saved!");
-}
-
-function confirmDeleteAccount() {
-  if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
-    if (confirm("Last chance — this will permanently delete all your data.")) {
-      const user = AUTH.current();
-      const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
-      const filtered = users.filter(u => u.id !== user.id);
-      localStorage.setItem("mm_users", JSON.stringify(filtered));
-      AUTH.logout();
     }
-  }
-}
 
-function timeAgo(timestamp) {
-  const diff = Date.now() - new Date(timestamp);
-  const mins = Math.floor(diff / 60000);
-  if (mins < 1) return "Just now";
-  if (mins < 60) return `${mins}m ago`;
-  const hrs = Math.floor(mins / 60);
-  if (hrs < 24) return `${hrs}h ago`;
-  return `${Math.floor(hrs / 24)}d ago`;
-}
+    function clearHistory() {
+      if (confirm("Clear all search history?")) {
+        AUTH.clearSearchHistory();
+        renderRecentSearches();
+        renderFullHistory();
+        document.getElementById("statSearches").textContent = "0";
+        alert("✅ Search history cleared.");
+      }
+    }
 
-init();
-</script>
+    function openEditModal() {
+      document.getElementById("editModal").style.display = "flex";
+    }
+    function closeEditModal() {
+      document.getElementById("editModal").style.display = "none";
+    }
+
+    function saveProfile(e) {
+      e.preventDefault();
+      const user = AUTH.current();
+      if (!user) return;
+      user.firstName = document.getElementById("editFirstName").value.trim();
+      user.lastName = document.getElementById("editLastName").value.trim();
+      user.email = document.getElementById("editEmail").value.trim();
+      localStorage.setItem("mm_user", JSON.stringify(user));
+      const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
+      const idx = users.findIndex(u => u.id === user.id);
+      if (idx >= 0) { users[idx] = { ...users[idx], ...user }; localStorage.setItem("mm_users", JSON.stringify(users)); }
+      closeEditModal();
+      alert("✅ Profile updated!");
+      location.reload();
+    }
+
+    function saveSettings(e) {
+      e.preventDefault();
+      const user = AUTH.current();
+      if (!user) return;
+      user.firstName = document.getElementById("settingsFirstName").value.trim();
+      user.lastName = document.getElementById("settingsLastName").value.trim();
+      user.email = document.getElementById("settingsEmail").value.trim();
+      const newPass = document.getElementById("settingsPassword").value;
+      if (newPass) user.password = newPass;
+      localStorage.setItem("mm_user", JSON.stringify(user));
+      const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
+      const idx = users.findIndex(u => u.id === user.id);
+      if (idx >= 0) { users[idx] = { ...users[idx], ...user }; localStorage.setItem("mm_users", JSON.stringify(users)); }
+      alert("✅ Settings saved!");
+      location.reload();
+    }
+
+    function saveCookieSettings() {
+      const functional = document.getElementById("settingsFunctional").checked;
+      const analytics = document.getElementById("settingsAnalytics").checked;
+      localStorage.setItem("mm_cookies_accepted", JSON.stringify({ essential: true, functional, analytics }));
+      alert("✅ Cookie preferences saved!");
+    }
+
+    function confirmDeleteAccount() {
+      if (confirm("Are you sure you want to delete your account? This cannot be undone.")) {
+        if (confirm("Last chance — this will permanently delete all your data.")) {
+          const user = AUTH.current();
+          const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
+          const filtered = users.filter(u => u.id !== user.id);
+          localStorage.setItem("mm_users", JSON.stringify(filtered));
+          AUTH.logout();
+        }
+      }
+    }
+
+    function timeAgo(timestamp) {
+      const diff = Date.now() - new Date(timestamp);
+      const mins = Math.floor(diff / 60000);
+      if (mins < 1) return "Just now";
+      if (mins < 60) return `${mins}m ago`;
+      const hrs = Math.floor(mins / 60);
+      if (hrs < 24) return `${hrs}h ago`;
+      return `${Math.floor(hrs / 24)}d ago`;
+    }
+
+    init();
+  </script>
 </body>
+
 </html>

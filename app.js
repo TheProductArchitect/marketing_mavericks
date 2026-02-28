@@ -225,7 +225,7 @@ function bindSearch() {
     const matches = DB.products.filter(p =>
       p.name.toLowerCase().includes(val) ||
       p.category.toLowerCase().includes(val) ||
-      p.tags.some(t => t.includes(val))
+      (p.tags && p.tags.some(t => t.includes(val)))
     ).slice(0, 6);
 
     if (matches.length > 0) {
@@ -302,7 +302,7 @@ function applyFilters() {
         p.name.toLowerCase().includes(query) ||
         p.category.toLowerCase().includes(query) ||
         p.description.toLowerCase().includes(query) ||
-        p.tags.some((t) => t.includes(query))
+        (p.tags && p.tags.some((t) => t.includes(query)))
     );
   }
 

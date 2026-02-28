@@ -1,154 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sign In – Marketing Mavericks</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="landing.css" />
 </head>
+
 <body>
 
-<nav class="navbar">
-  <div class="navbar-inner">
-    <a href="index.html" class="navbar-brand">
-      <div class="brand-logo">MM</div>
-      <span class="brand-name">Marketing <span>Mavericks</span></span>
-    </a>
-    <nav class="navbar-nav">
-      <a href="index.html" class="nav-link">Home</a>
-      <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
-      <a href="dashboard.html" class="nav-link nav-protected" style="display:none;">Dashboard</a>
-      <a href="index.html#pricing" class="nav-link">Pricing</a>
-    </nav>
-    <div class="navbar-actions">
-      <a href="signin.html" class="nav-btn-outline">Sign In</a>
-      <a href="signup.html" class="nav-btn-primary">Get Started</a>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name">Marketing <span>Mavericks</span></span>
+      </a>
+
+      <nav class="navbar-nav">
+        <a href="landing.html" class="nav-link nav-public-only">Home</a>
+        <a href="trends.html" class="nav-link nav-protected" style="display:none;">Market Trends</a>
+        <a href="index.html" class="nav-link nav-protected">Dashboard</a>
+        <a href="index.html#pricing" class="nav-link nav-public-only">Pricing</a>
+      </nav>
+
+      <div class="navbar-actions">
+        <div class="live-badge">
+          <div class="live-dot"></div>Live Data
+        </div>
+        <a href="signin.html" class="nav-btn-outline nav-public-only active">Sign In</a>
+        <a href="signup.html" class="nav-btn-primary nav-public-only">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="brand-logo">MM</div>
+        <span class="brand-name" style="color:var(--gray-800);">Marketing <span>Mavericks</span></span>
+      </div>
+
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to your dropship intelligence dashboard</p>
+
+      <div class="auth-error" id="authError"></div>
+      <div class="auth-success" id="authSuccess"></div>
+
+      <form class="auth-form" id="signinForm" onsubmit="handleSignIn(event)">
+        <div class="form-group">
+          <label class="form-label">Email address</label>
+          <div class="form-input-icon">
+            <span class="input-icon">✉️</span>
+            <input type="email" class="form-input" id="email" placeholder="you@example.com" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="form-input-icon">
+            <span class="input-icon">🔒</span>
+            <input type="password" class="form-input" id="password" placeholder="Your password" required />
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;margin-top:-8px;">
+          <a href="#" style="font-size:0.8rem;color:var(--blue-400);font-weight:600;" onclick="showForgot(event)">Forgot
+            password?</a>
+        </div>
+
+        <button type="submit" class="auth-submit">Sign In →</button>
+      </form>
+
+      <div class="auth-divider"><span>or continue with</span></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <button class="auth-social-btn" onclick="socialLogin('Google')">
+          <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="Google" />
+          Google
+        </button>
+        <button class="auth-social-btn" onclick="socialLogin('Apple')">
+          🍎 Apple
+        </button>
+      </div>
+
+      <!-- Demo credentials hint -->
+      <div
+        style="margin-top:20px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-md);padding:12px 16px;">
+        <div style="font-size:0.75rem;font-weight:700;color:var(--blue-500);margin-bottom:6px;">🎓 Demo Account</div>
+        <div style="font-size:0.78rem;color:var(--gray-600);">Email: <strong>demo@mavericks.io</strong></div>
+        <div style="font-size:0.78rem;color:var(--gray-600);">Password: <strong>demo1234</strong></div>
+        <button onclick="fillDemo()"
+          style="margin-top:8px;font-size:0.75rem;font-weight:700;color:var(--blue-500);background:none;border:none;cursor:pointer;padding:0;">Use
+          demo credentials →</button>
+      </div>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="signup.html">Create one free →</a>
+      </div>
     </div>
   </div>
-</nav>
 
-<div class="auth-page">
-  <div class="auth-card">
-    <div class="auth-logo">
-      <div class="brand-logo">MM</div>
-      <span class="brand-name" style="color:var(--gray-800);">Marketing <span>Mavericks</span></span>
-    </div>
+  <script src="auth.js"></script>
+  <script>
+    // Pre-create demo account
+    (function () {
+      const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
+      if (!users.find(u => u.email === "demo@mavericks.io")) {
+        users.push({
+          id: "demo_user",
+          firstName: "Demo",
+          lastName: "User",
+          email: "demo@mavericks.io",
+          password: "demo1234",
+          plan: "growth",
+          createdAt: new Date().toISOString()
+        });
+        localStorage.setItem("mm_users", JSON.stringify(users));
+      }
+    })();
 
-    <h1 class="auth-title">Welcome back</h1>
-    <p class="auth-subtitle">Sign in to your dropship intelligence dashboard</p>
-
-    <div class="auth-error" id="authError"></div>
-    <div class="auth-success" id="authSuccess"></div>
-
-    <form class="auth-form" id="signinForm" onsubmit="handleSignIn(event)">
-      <div class="form-group">
-        <label class="form-label">Email address</label>
-        <div class="form-input-icon">
-          <span class="input-icon">✉️</span>
-          <input type="email" class="form-input" id="email" placeholder="you@example.com" required />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Password</label>
-        <div class="form-input-icon">
-          <span class="input-icon">🔒</span>
-          <input type="password" class="form-input" id="password" placeholder="Your password" required />
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:flex-end;margin-top:-8px;">
-        <a href="#" style="font-size:0.8rem;color:var(--blue-400);font-weight:600;" onclick="showForgot(event)">Forgot password?</a>
-      </div>
-
-      <button type="submit" class="auth-submit">Sign In →</button>
-    </form>
-
-    <div class="auth-divider"><span>or continue with</span></div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <button class="auth-social-btn" onclick="socialLogin('Google')">
-        <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="Google" />
-        Google
-      </button>
-      <button class="auth-social-btn" onclick="socialLogin('Apple')">
-        🍎 Apple
-      </button>
-    </div>
-
-    <!-- Demo credentials hint -->
-    <div style="margin-top:20px;background:var(--blue-50);border:1px solid var(--blue-100);border-radius:var(--radius-md);padding:12px 16px;">
-      <div style="font-size:0.75rem;font-weight:700;color:var(--blue-500);margin-bottom:6px;">🎓 Demo Account</div>
-      <div style="font-size:0.78rem;color:var(--gray-600);">Email: <strong>demo@mavericks.io</strong></div>
-      <div style="font-size:0.78rem;color:var(--gray-600);">Password: <strong>demo1234</strong></div>
-      <button onclick="fillDemo()" style="margin-top:8px;font-size:0.75rem;font-weight:700;color:var(--blue-500);background:none;border:none;cursor:pointer;padding:0;">Use demo credentials →</button>
-    </div>
-
-    <div class="auth-footer">
-      Don't have an account? <a href="signup.html">Create one free →</a>
-    </div>
-  </div>
-</div>
-
-<script src="auth.js"></script>
-<script>
-  // Pre-create demo account
-  (function() {
-    const users = JSON.parse(localStorage.getItem("mm_users") || "[]");
-    if (!users.find(u => u.email === "demo@mavericks.io")) {
-      users.push({
-        id: "demo_user",
-        firstName: "Demo",
-        lastName: "User",
-        email: "demo@mavericks.io",
-        password: "demo1234",
-        plan: "growth",
-        createdAt: new Date().toISOString()
-      });
-      localStorage.setItem("mm_users", JSON.stringify(users));
+    function fillDemo() {
+      document.getElementById("email").value = "demo@mavericks.io";
+      document.getElementById("password").value = "demo1234";
     }
-  })();
 
-  function fillDemo() {
-    document.getElementById("email").value = "demo@mavericks.io";
-    document.getElementById("password").value = "demo1234";
-  }
-
-  function handleSignIn(e) {
-    e.preventDefault();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value;
-    const result = AUTH.login(email, password);
-    if (result.ok) {
-      document.getElementById("authSuccess").textContent = `✅ Welcome back, ${result.user.firstName}! Redirecting...`;
-      document.getElementById("authSuccess").classList.add("visible");
-      document.getElementById("authError").classList.remove("visible");
-      setTimeout(() => { window.location.href = "dashboard.html"; }, 1200);
-    } else {
-      document.getElementById("authError").textContent = "❌ " + result.error;
-      document.getElementById("authError").classList.add("visible");
-      document.getElementById("authSuccess").classList.remove("visible");
+    function handleSignIn(e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const result = AUTH.login(email, password);
+      if (result.ok) {
+        document.getElementById("authSuccess").textContent = `✅ Welcome back, ${result.user.firstName}! Redirecting...`;
+        document.getElementById("authSuccess").classList.add("visible");
+        document.getElementById("authError").classList.remove("visible");
+        setTimeout(() => { window.location.href = "dashboard.html"; }, 1200);
+      } else {
+        document.getElementById("authError").textContent = "❌ " + result.error;
+        document.getElementById("authError").classList.add("visible");
+        document.getElementById("authSuccess").classList.remove("visible");
+      }
     }
-  }
 
-  function socialLogin(provider) {
-    // Simulate social login for demo
-    const result = AUTH.register("Demo", "User", `demo_${provider.toLowerCase()}@mavericks.io`, "social123", "growth");
-    if (result.ok || result.error === "An account with this email already exists.") {
-      AUTH.login(`demo_${provider.toLowerCase()}@mavericks.io`, "social123");
-      document.getElementById("authSuccess").textContent = `✅ Signed in with ${provider}! Redirecting...`;
-      document.getElementById("authSuccess").classList.add("visible");
-      setTimeout(() => { window.location.href = "dashboard.html"; }, 1200);
+    function socialLogin(provider) {
+      // Simulate social login for demo
+      const result = AUTH.register("Demo", "User", `demo_${provider.toLowerCase()}@mavericks.io`, "social123", "growth");
+      if (result.ok || result.error === "An account with this email already exists.") {
+        AUTH.login(`demo_${provider.toLowerCase()}@mavericks.io`, "social123");
+        document.getElementById("authSuccess").textContent = `✅ Signed in with ${provider}! Redirecting...`;
+        document.getElementById("authSuccess").classList.add("visible");
+        setTimeout(() => { window.location.href = "dashboard.html"; }, 1200);
+      }
     }
-  }
 
-  function showForgot(e) {
-    e.preventDefault();
-    alert("Password reset link sent to your email! (Demo: use demo@mavericks.io / demo1234)");
-  }
-</script>
+    function showForgot(e) {
+      e.preventDefault();
+      alert("Password reset link sent to your email! (Demo: use demo@mavericks.io / demo1234)");
+    }
+  </script>
 </body>
+
 </html>
