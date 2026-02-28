@@ -292,7 +292,7 @@ function formatTag(tag) {
 }
 
 function goToProduct(id) {
-  window.location.href = `product.html ? id = ${id}`;
+  window.location.href = `product.html?id=${id}`;
 }
 
 // ============================================================
