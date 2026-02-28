@@ -6250,5 +6250,170 @@ function loadDB() {
   }
 }
 
+// Generate realistic varied data for charts
+function generateRealisticData() {
+  const patterns = [
+    'steady_growth',      // Consistent upward trend
+    'explosive_growth',   // Sharp hockey stick growth
+    'seasonal_peak',      // Peak in middle months (holiday)
+    'gradual_decline',    // Slight downward trend
+    'recovery',           // Dip then recovery
+    'volatile',           // Up and down fluctuations
+    'plateau',            // Growth then flat
+    'late_bloomer'        // Flat then sudden growth
+  ];
+
+  DB.products.forEach((product, index) => {
+    // Assign pattern based on product characteristics
+    const patternIndex = index % patterns.length;
+    const pattern = patterns[patternIndex];
+    
+    // Base values from product data
+    const baseRevenue = product.monthlyRevenue || 100000;
+    const baseSearch = product.searchVolume || 200000;
+    const baseTAM = product.tam || 1000000000;
+    
+    // Generate historical data (6 months: Sep-Feb)
+    const historical = generatePattern(pattern, baseRevenue, 6, 'historical');
+    const historicalSearch = generatePattern(pattern, baseSearch, 6, 'historical');
+    
+    // Generate projections (6 months: Mar-Aug) - generally optimistic
+    const projections = generatePattern(pattern, historical[5], 6, 'projection');
+    const projectionsSearch = generatePattern(pattern, historicalSearch[5], 6, 'projection');
+    
+    // TAM growth rate projections (percentage points)
+    const tamGrowthBase = parseFloat(product.tamGrowthRate) || 10;
+    const tamGrowth = generateTAMGrowth(pattern, tamGrowthBase);
+    
+    // Update product data
+    product.historicalData = {
+      labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb"],
+      revenue: historical.map(v => Math.round(v)),
+      searchVolume: historicalSearch.map(v => Math.round(v))
+    };
+    
+    product.projections = {
+      labels: ["Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+      revenue: projections.map(v => Math.round(v)),
+      searchVolume: projectionsSearch.map(v => Math.round(v)),
+      tamGrowth: tamGrowth
+    };
+  });
+}
+
+function generatePattern(pattern, baseValue, length, type) {
+  const data = [];
+  const variance = 0.08; // 8% random variance
+  
+  for (let i = 0; i < length; i++) {
+    let multiplier = 1;
+    const progress = i / (length - 1); // 0 to 1
+    
+    switch (pattern) {
+      case 'steady_growth':
+        multiplier = type === 'historical' 
+          ? 0.7 + (0.3 * progress)  // 70% to 100%
+          : 1.0 + (0.5 * progress); // 100% to 150%
+        break;
+        
+      case 'explosive_growth':
+        multiplier = type === 'historical'
+          ? 0.4 + (0.6 * Math.pow(progress, 2))  // Exponential ramp up
+          : 1.0 + (1.2 * Math.pow(progress, 1.5)); // Continue explosive
+        break;
+        
+      case 'seasonal_peak':
+        // Peak in Dec (index 3 for historical)
+        const peakIndex = type === 'historical' ? 3 : 2;
+        const distFromPeak = Math.abs(i - peakIndex) / length;
+        multiplier = type === 'historical'
+          ? 0.7 + (0.5 * (1 - distFromPeak))
+          : 0.85 + (0.3 * progress); // Recovery after holiday
+        break;
+        
+      case 'gradual_decline':
+        multiplier = type === 'historical'
+          ? 1.1 - (0.2 * progress)  // 110% to 90%
+          : 0.9 - (0.15 * progress); // 90% to 75%
+        break;
+        
+      case 'recovery':
+        // Dip in middle, then recover
+        const dipPoint = type === 'historical' ? 0.5 : 0.3;
+        const dipDepth = 0.25;
+        const dipCurve = Math.abs(progress - dipPoint) / dipPoint;
+        multiplier = type === 'historical'
+          ? 0.85 + (dipDepth * dipCurve)
+          : 0.9 + (0.4 * progress);
+        break;
+        
+      case 'volatile':
+        const swings = [1.0, 0.85, 1.1, 0.9, 1.05, 0.95];
+        const projSwings = [1.0, 1.12, 0.95, 1.18, 1.05, 1.25];
+        multiplier = type === 'historical' ? swings[i] : projSwings[i];
+        break;
+        
+      case 'plateau':
+        multiplier = type === 'historical'
+          ? 0.6 + (0.4 * Math.min(progress * 1.5, 1)) // Quick growth then flatten
+          : 1.0 + (0.1 * progress); // Slight growth
+        break;
+        
+      case 'late_bloomer':
+        multiplier = type === 'historical'
+          ? 0.6 + (0.4 * Math.pow(progress, 3))  // Slow start, late surge
+          : 1.0 + (0.8 * progress); // Strong continued growth
+        break;
+    }
+    
+    // Add random variance
+    const randomFactor = 1 + (Math.random() - 0.5) * variance;
+    data.push(baseValue * multiplier * randomFactor);
+  }
+  
+  return data;
+}
+
+function generateTAMGrowth(pattern, baseRate) {
+  const growth = [];
+  
+  for (let i = 0; i < 6; i++) {
+    let rate = baseRate;
+    const progress = i / 5;
+    
+    switch (pattern) {
+      case 'steady_growth':
+        rate = baseRate * (1 + 0.1 * progress);
+        break;
+      case 'explosive_growth':
+        rate = baseRate * (1.2 + 0.5 * progress);
+        break;
+      case 'seasonal_peak':
+        rate = baseRate * (0.9 + 0.2 * Math.sin(progress * Math.PI));
+        break;
+      case 'gradual_decline':
+        rate = baseRate * (1 - 0.3 * progress);
+        break;
+      case 'recovery':
+        rate = baseRate * (0.8 + 0.4 * progress);
+        break;
+      case 'volatile':
+        rate = baseRate * (0.9 + 0.3 * Math.random());
+        break;
+      case 'plateau':
+        rate = baseRate * (1 + 0.05 * progress);
+        break;
+      case 'late_bloomer':
+        rate = baseRate * (0.7 + 0.6 * Math.pow(progress, 2));
+        break;
+    }
+    
+    growth.push(Math.round(rate * 10) / 10);
+  }
+  
+  return growth;
+}
+
 // Initialize
 loadDB();
+generateRealisticData();
