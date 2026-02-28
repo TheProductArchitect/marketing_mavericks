@@ -107,7 +107,7 @@ function buildNavHTML(activePage) {
   // Nav links: public vs protected
   const publicLinks = `
     <a href="index.html" class="nav-link${activePage === 'home' ? ' active' : ''}">Home</a>
-    <a href="pricing.html" class="nav-link${activePage === 'pricing' ? ' active' : ''}">Pricing</a>
+    <a href="index.html#pricing" class="nav-link${activePage === 'pricing' ? ' active' : ''}">Pricing</a>
   `;
 
   const protectedLinks = isLoggedIn ? `
@@ -150,15 +150,28 @@ document.addEventListener('click', () => {
 });
 
 // ============================================================
-// GUARD: Redirect protected pages if not logged in
+// GUARD: Redirect appropriately based on auth status
 // ============================================================
 function guardPage() {
-  const protectedPages = ['dashboard.html', 'trends.html', 'product.html'];
-  const currentPage = window.location.pathname.split('/').pop() || 'dashboard.html';
-  if (protectedPages.includes(currentPage) && !AUTH.isLoggedIn()) {
-    window.location.href = 'signin.html?redirect=' + encodeURIComponent(currentPage);
+  const protectedPages = ['dashboard.html', 'trends.html', 'product.html', 'profile.html'];
+  const publicPages = ['index.html', 'index.html#pricing', 'signin.html', 'signup.html'];
+
+  // Clean up current page (handle root '/' as 'index.html')
+  let currentPage = window.location.pathname.split('/').pop();
+  if (!currentPage || currentPage === '') currentPage = 'index.html';
+
+  const isLoggedIn = AUTH.isLoggedIn();
+
+  // Redirect users accordingly
+  if (isLoggedIn && publicPages.includes(currentPage)) {
+    window.location.href = 'dashboard.html';
+  } else if (!isLoggedIn && protectedPages.includes(currentPage)) {
+    window.location.href = 'index.html';
   }
 }
+
+// Automatically invoke guardPage on load
+guardPage();
 
 // ============================================================
 // COOKIE BANNER
@@ -383,12 +396,53 @@ function savePreferences() {
 }
 
 // ============================================================
+// AI DEMO DISCLAIMER MODAL
+// ============================================================
+function initAiDisclaimer() {
+  if (localStorage.getItem('mm_ai_disclaimer_accepted')) return;
+
+  const modal = document.createElement('div');
+  modal.id = 'aiDisclaimerModal';
+  modal.className = 'privacy-modal-overlay open';
+  modal.innerHTML = `
+    <div class="privacy-modal" style="text-align: center; padding: 40px 32px; max-width: 520px;">
+      <div style="font-size: 3rem; margin-bottom: 16px;">🤖</div>
+      <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--gray-800); margin-bottom: 16px;">Educational & Demonstration Project — Not Financial or Business Advice</h2>
+      <p style="font-size: 0.95rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 24px;">
+        Marketing Mavericks is a simulated MVP built for demonstration and research purposes only. No guarantees of profitability, sales performance, or investment returns are made.
+      </p>
+      <div style="background: var(--red-50); border: 1px solid var(--red-100); border-radius: var(--radius-md); padding: 16px; margin-bottom: 32px; text-align: left;">
+        <p style="font-size: 0.85rem; color: var(--red-500); line-height: 1.5; margin: 0;">
+          <strong>Disclaimer:</strong> All product scores, opportunity ratings, TAM estimates, margin projections, and trend indicators are algorithmically generated and may be illustrative. Users are responsible for conducting their own due diligence before launching or investing in any product.
+        </p>
+      </div>
+      <button onclick="acceptAiDisclaimer()" class="cta-btn-primary" style="width: 100%; border-radius: var(--radius-full); padding: 14px 24px; font-weight: 700; font-size: 1rem;">
+        I Understand
+      </button>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function acceptAiDisclaimer() {
+  localStorage.setItem('mm_ai_disclaimer_accepted', 'true');
+  const modal = document.getElementById('aiDisclaimerModal');
+  if (modal) {
+    modal.classList.remove('open');
+    setTimeout(() => modal.remove(), 300);
+  }
+}
+
+// ============================================================
 // INIT ON DOM READY
 // ============================================================
 document.addEventListener("DOMContentLoaded", () => {
   guardPage();
   updateNavAuth();
   initCookieBanner();
+
+  // Show AI disclaimer on slight delay to avoid jarring load
+  setTimeout(initAiDisclaimer, 500);
 });
 
 function updateNavAuth() {

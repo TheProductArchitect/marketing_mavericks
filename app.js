@@ -11,6 +11,7 @@ let activeChartType = "revenue";
 
 // ---- Init ----
 document.addEventListener("DOMContentLoaded", () => {
+  populateFilterOptions();
   updateOverviewStats();
   renderProducts(currentProducts);
   initOverviewChart("revenue");
@@ -20,8 +21,24 @@ document.addEventListener("DOMContentLoaded", () => {
   bindFilters();
   bindChartTabs();
   startLiveClock();
-  showToast("📡 Live data loaded — 4 products analysed", "info");
+  showToast("📡 Live data loaded — " + DB.products.length + " products analysed", "info");
 });
+
+function populateFilterOptions() {
+  const categorySelect = document.getElementById("categoryFilter");
+  const platformSelect = document.getElementById("platformFilter");
+
+  if (categorySelect && platformSelect) {
+    const categories = [...new Set(DB.products.map(p => p.category))].sort();
+    const platforms = [...new Set(DB.products.map(p => p.platform))].sort();
+
+    categorySelect.innerHTML = '<option value="all">All Categories</option>' +
+      categories.map(c => `<option value="${c}">${c}</option>`).join("");
+
+    platformSelect.innerHTML = '<option value="all">All Platforms</option>' +
+      platforms.map(p => `<option value="${p}">${p}</option>`).join("");
+  }
+}
 
 // ============================================================
 // OVERVIEW STATS
@@ -49,7 +66,7 @@ function renderProducts(products) {
   const empty = document.getElementById("emptyState");
   const count = document.getElementById("resultsCount");
 
-  count.innerHTML = `Showing <strong>${products.length}</strong> product${products.length !== 1 ? "s" : ""}`;
+  count.innerHTML = `Showing < strong > ${products.length}</strong > product${products.length !== 1 ? "s" : ""}`;
 
   if (products.length === 0) {
     grid.innerHTML = "";
@@ -71,29 +88,29 @@ function renderProducts(products) {
 function buildProductCard(p, index) {
   const rankChangeHtml =
     p.trendingRankChange > 0
-      ? `<span class="rank-change up">▲ ${p.trendingRankChange}</span>`
+      ? `< span class= "rank-change up" >▲ ${p.trendingRankChange}</span > `
       : p.trendingRankChange < 0
-        ? `<span class="rank-change down">▼ ${Math.abs(p.trendingRankChange)}</span>`
+        ? `< span class= "rank-change down" >▼ ${Math.abs(p.trendingRankChange)}</span > `
         : "";
 
   const undersoldClass =
     p.undersoldScore >= 85 ? "high" : p.undersoldScore >= 60 ? "medium" : "low";
 
   const tagsHtml = p.tags
-    .map((t) => `<span class="tag ${t}">${formatTag(t)}</span>`)
+    .map((t) => `< span class= "tag ${t}" > ${formatTag(t)}</span > `)
     .join("");
 
   const platformsHtml = p.sourcePlatforms
     .map(
       (pl) =>
-        `<span class="platform-badge ${pl.toLowerCase().replace(" ", "-")}">${pl}</span>`
+        `< span class= "platform-badge ${pl.toLowerCase().replace(" ", " - ")}" > ${pl}</span > `
     )
     .join("");
 
   const starsHtml = buildStars(p.rating);
 
   return `
-    <div class="product-card animate-fade-in-up" style="animation-delay:${index * 0.08}s" onclick="goToProduct('${p.id}')">
+      < div class= "product-card animate-fade-in-up" style = "animation-delay:${index * 0.08}s" onclick = "goToProduct('${p.id}')" >
       <div class="product-card-header">
         <span class="product-emoji">${p.emoji}</span>
         <div class="product-rank-badge">
@@ -143,12 +160,16 @@ function buildProductCard(p, index) {
         <div class="product-tags">${tagsHtml}</div>
       </div>
 
+      <div class="future-trend-outlook" style="padding: 12px 16px; border-top: 1px solid var(--gray-100); background-color: var(--gray-50); font-size: 0.85rem; color: var(--gray-700);">
+        <strong>Outlook:</strong> ${p.futureTrendOutlook || 'Moderate growth, stable demand'}
+      </div>
+
       <div class="product-card-footer">
         <div class="platform-badges">${platformsHtml}</div>
         <span class="view-details-btn">View Details →</span>
       </div>
-    </div>
-  `;
+    </div >
+        `;
 }
 
 function buildStars(rating) {
@@ -178,7 +199,7 @@ function formatTag(tag) {
 }
 
 function goToProduct(id) {
-  window.location.href = `product.html?id=${id}`;
+  window.location.href = `product.html ? id = ${id}`;
 }
 
 // ============================================================
@@ -245,6 +266,10 @@ function applyFilters() {
 
   currentProducts = filtered;
   renderProducts(filtered);
+  // Re-render chart with new filtered data (max 5 lines for readability)
+  initOverviewChart(activeChartType);
+  initTAMChart();
+  initUndersoldChart();
 }
 
 // ============================================================
@@ -260,8 +285,11 @@ function initOverviewChart(type) {
   const labels = ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"];
 
   // Aggregate historical + projections
-  const datasets = DB.products.map((p, i) => {
-    const colors = ["#2563b0", "#f5c518", "#22c55e", "#f97316"];
+  const displayProducts = currentProducts.slice(0, 5); // Limit to top 5 for readability
+  const colors = ["#2563b0", "#f5c518", "#22c55e", "#f97316", "#8b5cf6", "#ec4899", "#14b8a6"];
+
+  const datasets = displayProducts.map((p, i) => {
+    const color = colors[i % colors.length];
     const historical = p.historicalData[type === "revenue" ? "revenue" : type === "search" ? "searchVolume" : "revenue"];
     const projected = p.projections[type === "revenue" ? "revenue" : type === "search" ? "searchVolume" : "tamGrowth"];
 
@@ -270,8 +298,8 @@ function initOverviewChart(type) {
     return {
       label: p.name,
       data: allData,
-      borderColor: colors[i],
-      backgroundColor: colors[i] + "18",
+      borderColor: color,
+      backgroundColor: color + "18",
       borderWidth: 2.5,
       pointRadius: 3,
       pointHoverRadius: 6,
@@ -388,10 +416,14 @@ function bindChartTabs() {
 function initTAMChart() {
   const ctx = document.getElementById("tamChart").getContext("2d");
 
-  const products = DB.products;
-  const labels = products.map((p) => p.name);
-  const tamValues = products.map((p) => p.tam / 1e9);
-  const growthRates = products.map((p) => p.tamGrowthRate);
+  if (tamChartInstance) {
+    tamChartInstance.destroy();
+  }
+
+  const displayProducts = currentProducts.slice(0, 5);
+  const labels = displayProducts.map((p) => p.name);
+  const tamValues = displayProducts.map((p) => p.tam / 1e9);
+  const growthRates = displayProducts.map((p) => p.tamGrowthRate);
 
   tamChartInstance = new Chart(ctx, {
     type: "bar",
@@ -401,8 +433,8 @@ function initTAMChart() {
         {
           label: "TAM ($ Billions)",
           data: tamValues,
-          backgroundColor: ["#2563b0cc", "#f5c518cc", "#22c55ecc", "#f97316cc"],
-          borderColor: ["#2563b0", "#f5c518", "#22c55e", "#f97316"],
+          backgroundColor: ["#2563b0cc", "#f5c518cc", "#22c55ecc", "#f97316cc", "#8b5cf6cc"],
+          borderColor: ["#2563b0", "#f5c518", "#22c55e", "#f97316", "#8b5cf6"],
           borderWidth: 2,
           borderRadius: 8,
           borderSkipped: false,
@@ -447,7 +479,7 @@ function initTAMChart() {
             label(ctx) {
               if (ctx.datasetIndex === 0)
                 return ` TAM: $${ctx.parsed.y.toFixed(1)}B`;
-              return ` Growth: ${ctx.parsed.y}% YoY`;
+              return ` Growth: ${ctx.parsed.y} % YoY`;
             },
           },
         },
@@ -487,11 +519,15 @@ function initTAMChart() {
 function initUndersoldChart() {
   const ctx = document.getElementById("undersoldChart").getContext("2d");
 
-  const products = DB.products;
-  const labels = products.map((p) => p.name);
-  const actual = products.map((p) => p.rating);
-  const expected = products.map((p) => p.expectedRating);
-  const scores = products.map((p) => p.undersoldScore);
+  if (undersoldChartInstance) {
+    undersoldChartInstance.destroy();
+  }
+
+  const displayProducts = currentProducts.slice(0, 5);
+  const labels = displayProducts.map((p) => p.name);
+  const actual = displayProducts.map((p) => p.rating);
+  const expected = displayProducts.map((p) => p.expectedRating);
+  const scores = displayProducts.map((p) => p.undersoldScore);
 
   undersoldChartInstance = new Chart(ctx, {
     type: "bar",
@@ -559,7 +595,7 @@ function initUndersoldChart() {
                 return ` Actual: ${ctx.parsed.y}★`;
               if (ctx.datasetIndex === 1)
                 return ` Expected: ${ctx.parsed.y}★`;
-              return ` Undersold Score: ${ctx.parsed.y}/100`;
+              return ` Undersold Score: ${ctx.parsed.y} / 100`;
             },
           },
         },
